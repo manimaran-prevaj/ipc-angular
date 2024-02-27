@@ -15,17 +15,18 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 	-	TabSpacer
 
 ## Used technologies
--	Angualr 17.2.0
+-	Angular Cli 17.2.0
+-	Angular SSR 
 -	Node JS 20.9.0
 -	Package manager NPM 10.1.0
 -	TypeScript 5.2.2
 -	RxJS 7.8.0
--	Angular Material
+-	Google Material Design
 -	SCSS
 
 ## Getting Started / Installing
 -	Clone github repository from [BitBucket](https://bitbucket.org/pizzapizzateam/ppl-ccc-fe-phx2/src/ccc-uat/).
--	Install depoendencies via npm install.
+-	Install dependencies via npm install.
 -	npm run start / ng serve to run development server.
 
 ## Development server

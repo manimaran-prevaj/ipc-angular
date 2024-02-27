@@ -1,7 +1,6 @@
 {
 	"name": "pizza-pizza-ccc",
 	"version": "0.0.1",
-	"type": "module",
 	"description": "This is front end for PizzaPizza CCC",
 	"scripts": {
 		"ng": "ng",
@@ -9,7 +8,10 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
-		"lint": "ng lint"
+		"e2e": "ng e2e",
+		"sass-lint": "node ./node_modules/sass-lint/bin/sass-lint.js -c sass-lint.yml -v -q",
+		"lint": "npm run sass-lint && ng lint",
+		"serve:ssr:pizza-pizza-ccc": "node dist/pizza-pizza-ccc/server/server.mjs"
 	},
 	"license": "ISC",
 	"private": true,
@@ -21,11 +23,13 @@
 		"@angular/forms": "^17.2.0",
 		"@angular/platform-browser": "^17.2.0",
 		"@angular/platform-browser-dynamic": "^17.2.0",
+		"@angular/platform-server": "^17.2.0",
 		"@angular/router": "^17.2.0",
-		"@typescript-eslint/eslint-plugin": "^7.0.2",
+		"@angular/ssr": "^17.2.1",
+		"express": "^4.18.2",
 		"rxjs": "~7.8.0",
 		"tslib": "^2.3.0",
-		"zone.js": "~0.14.4"
+		"zone.js": "~0.14.3"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^17.2.0",
@@ -34,16 +38,21 @@
 		"@angular-eslint/eslint-plugin-template": "17.2.1",
 		"@angular-eslint/schematics": "17.2.1",
 		"@angular-eslint/template-parser": "17.2.1",
-		"@angular/cli": "~17.2.0",
+		"@angular/cli": "^17.2.0",
 		"@angular/compiler-cli": "^17.2.0",
-		"@types/jasmine": "~4.3.0",
+		"@types/express": "^4.17.17",
+		"@types/jasmine": "~5.1.0",
+		"@types/node": "^18.18.0",
+		"@typescript-eslint/eslint-plugin": "6.19.0",
+		"@typescript-eslint/parser": "6.19.0",
 		"eslint": "^8.56.0",
-		"jasmine-core": "~4.6.0",
+		"jasmine-core": "~5.1.0",
 		"karma": "~6.4.0",
 		"karma-chrome-launcher": "~3.2.0",
 		"karma-coverage": "~2.2.0",
 		"karma-jasmine": "~5.1.0",
 		"karma-jasmine-html-reporter": "~2.1.0",
-		"typescript": "^5.2.2"
+		"sass-lint": "^1.13.1",
+		"typescript": "~5.3.2"
 	}
 }

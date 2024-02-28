@@ -6,8 +6,27 @@
 		"pizza-pizza-ccc": {
 			"projectType": "application",
 			"schematics": {
+				"@schematics/angular:class": {
+					"skipTests": false
+				},
 				"@schematics/angular:component": {
+					"skipTests": false,
 					"style": "scss"
+				},
+				"@schematics/angular:directive": {
+					"skipTests": false
+				},
+				"@schematics/angular:guard": {
+					"skipTests": false
+				},
+				"@schematics/angular:module": {
+					"skipTests": false
+				},
+				"@schematics/angular:pipe": {
+					"skipTests": false
+				},
+				"@schematics/angular:service": {
+					"skipTests": false
 				}
 			},
 			"root": "",
@@ -15,11 +34,11 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/pizza-pizza-ccc",
+						"outputPath": "dist/build-browser",
 						"index": "src/index.html",
-						"browser": "src/main.ts",
+						"main": "src/main.ts",
 						"polyfills": [
 							"zone.js"
 						],
@@ -27,17 +46,22 @@
 						"inlineStyleLanguage": "scss",
 						"assets": [
 							"src/favicon.ico",
-							"src/assets"
+							"src/assets",
+							{
+								"glob": "**/*",
+								"input": "./dist/static-files",
+								"output": "/static-files/"
+							}
 						],
 						"styles": [
-							"src/styles.scss"
+							"src/global-scss/index.scss"
 						],
-						"scripts": [],
-						"server": "src/main.server.ts",
-						"prerender": true,
-						"ssr": {
-							"entry": "server.ts"
-						}
+						"stylePreprocessorOptions": {
+							"includePaths": [
+								"src/global-scss-mixing"
+							]
+						},
+						"scripts": []
 					},
 					"configurations": {
 						"production": {
@@ -45,21 +69,27 @@
 								{
 									"type": "initial",
 									"maximumWarning": "500kb",
-									"maximumError": "1mb"
+									"maximumError": "5mb"
 								},
 								{
 									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
+									"maximumWarning": "5kb",
+									"maximumError": "20kb"
 								}
 							],
-							"outputHashing": "all",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.prod.ts"
 								}
-							]
+							],
+							"optimization": true,
+							"outputHashing": "none",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true
 						},
 						"development": {
 							"optimization": false,
@@ -71,6 +101,27 @@
 									"with": "src/environments/environment.dev.ts"
 								}
 							]
+						},
+						"ppl-ccc-uat-fe": {
+							"budgets": [
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "5kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.uat.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "none",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true
 						}
 					},
 					"defaultConfiguration": "production"
@@ -83,14 +134,63 @@
 						},
 						"development": {
 							"buildTarget": "pizza-pizza-ccc:build:development"
+						},
+						"ppl-ccc-uat-fe": {
+							"buildTarget": "pizza-pizza-ccc:build:ppl-ccc-uat-fe"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
+				"server": {
+					"builder": "@angular-devkit/build-angular:server",
+					"options": {
+						"outputPath": "dist/build-server/en",
+						"main": "src/main.server.ts",
+						"tsConfig": "tsconfig.server.json",
+						"stylePreprocessorOptions": {
+							"includePaths": [
+								"src/global-scss-mixing"
+							]
+						},
+						"sourceMap": false
+					},
+					"configurations": {
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true
+						},
+						"development": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.dev.ts"
+								}
+							],
+							"optimization": true
+						},
+						"ppl-ccc-uat-fe": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.uat.ts"
+								}
+							],
+							"optimization": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"buildTarget": "pizza-pizza-ccc:build"
+						"buildTarget": "pizza-pizza-ccc:build",
+						"format": "xlf",
+						"outputPath": "src/locale"
 					}
 				},
 				"test": {

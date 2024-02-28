@@ -1,0 +1,64 @@
+# Docker image to base build upon
+# Same as GCP standart runtime 10.14.0
+image: node:20.9.0
+
+definitions:
+  steps:
+    - step: &angular-install
+        name: Angular CLI and packages installation
+        script:
+          - npm install -g @angular/cli@17.2.0 # Install Angular CLI
+          - npm install # Install npm packages
+        artifacts:
+          - node_modules/**
+
+    - step: &linting
+        name: Linting
+        script:
+		  	- sh CI/lint-all.sh
+
+    - step: &web-en
+        name: Web EN
+        script:
+          - sh CI/build.sh web-en
+        artifacts:
+          - dist/**
+
+    - step: &server-en
+        name: Server EN
+        script:
+          - sh CI/build.sh server-en
+        artifacts:
+          - dist/**
+
+    - step: &ssr-server
+        name: SSR server
+        script:
+          - sh CI/build.sh ssr-server
+        artifacts:
+          - dist/**
+
+    - step: &deploy-all
+        name: Deploy all components
+        script:
+          - source ./CI/deploy-all.sh
+
+
+pipelines:
+  # Linting, AOT build for all orders
+  branches:
+	 ccc_uat:
+      - step:
+          name: Set target environment
+          script:
+            - sh CI/set-deployment-params.sh ppl-ccc-uat-fe
+          artifacts:
+            - dist/project-id.txt
+            - dist/gae-version.txt
+            - src/revision.ts
+      - step: *angular-install
+      - parallel:
+        - step: *web-en
+        - step: *server-en
+		  - step: *ssr-server
+		  - step: *deploy-all

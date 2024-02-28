@@ -1,0 +1,23 @@
+# Any route that isn't defined here, gets matched to the 'default' service.
+
+dispatch:
+
+  # Angular website index page
+  - url: '*/'
+    service: angular-ssr
+
+  - url: '*/store/*'
+    service: angular-ssr
+
+  # Angular compiled assets
+  - url: '*/build/*'
+    service: angular-ssr
+
+  # Angular SDK
+  - url: '*/js-sdk/*'
+    service: angular-ssr
+
+
+  # Angular static files
+  - url: '*/static-files/*'
+    service: angular-ssr

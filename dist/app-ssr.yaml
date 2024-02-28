@@ -1,6 +1,6 @@
 # Uses node js server for server side rendering
 runtime: nodejs20
-service: angular-ssr
+service: default
 
 instance_class: F2
 

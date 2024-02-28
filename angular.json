@@ -144,25 +144,34 @@
 				"server": {
 					"builder": "@angular-devkit/build-angular:server",
 					"options": {
-						"outputPath": "dist/build-server/en",
-						"main": "src/main.server.ts",
+						"outputPath": "dist/build-server/",
+						"main": "server.ts",
 						"tsConfig": "tsconfig.server.json",
 						"stylePreprocessorOptions": {
 							"includePaths": [
 								"src/global-scss-mixing"
 							]
 						},
-						"sourceMap": false
+						"buildOptimizer": false,
+						"optimization": false,
+						"sourceMap": true,
+						"extractLicenses": false,
+						"vendorChunk": true
 					},
 					"configurations": {
 						"production": {
+							"buildOptimizer": true,
+							"outputHashing": "media",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
-							"optimization": true
+							"optimization": true,
+							"sourceMap": false,
+							"extractLicenses": true,
+							"vendorChunk": false
 						},
 						"development": {
 							"fileReplacements": [
@@ -171,19 +180,40 @@
 									"with": "src/environments/environment.dev.ts"
 								}
 							],
-							"optimization": true
+							"optimization": false,
+							"sourceMap": true,
+							"extractLicenses": false
 						},
 						"ppl-ccc-uat-fe": {
+							"buildOptimizer": true,
+							"outputHashing": "media",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
 									"with": "src/environments/environment.uat.ts"
 								}
 							],
-							"optimization": true
+							"optimization": true,
+							"sourceMap": false,
+							"extractLicenses": true,
+							"vendorChunk": false
 						}
 					},
 					"defaultConfiguration": "production"
+				},
+				"serve-ssr": {
+					"builder": "@angular-devkit/build-angular:ssr-dev-server",
+					"configurations": {
+						"development": {
+							"browserTarget": "pizza-pizza-ccc:build:development",
+							"serverTarget": "pizza-pizza-ccc:server:development"
+						},
+						"production": {
+							"browserTarget": "pizza-pizza-ccc:build:production",
+							"serverTarget": "pizza-pizza-ccc:server:production"
+						}
+					},
+					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",

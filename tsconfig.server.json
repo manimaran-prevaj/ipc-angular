@@ -1,5 +1,5 @@
 {
-	"extends": "./tsconfig.json",
+	"extends": "./tsconfig.app.json",
 	"compilerOptions": {
 		"outDir": "./dist/build-server",
 		"types": [
@@ -7,7 +7,6 @@
 		]
 	},
 	"files": [
-		"src/main.ts",
 		"src/main.server.ts",
 		"server.ts"
 	]

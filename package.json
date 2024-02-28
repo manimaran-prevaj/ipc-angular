@@ -13,6 +13,7 @@
 		"build:dev": "ng build --configuration development",
 		"build:prod": "ng build --aot --configuration production",
 		"build:uat": "ng build --aot --configuration ppl-ccc-uat-fe",
+		"dev:ssr": "ng run pizza-pizza-ccc:serve-ssr",
 		"serve:ssr": "node dist/build-server/main.js",
 		"build:ssr": "ng build --aot --configuration production && ng run pizza-pizza-ccc:server"
 	},
@@ -54,6 +55,7 @@
 		"@types/node": "^18.18.0",
 		"@typescript-eslint/eslint-plugin": "6.19.0",
 		"@typescript-eslint/parser": "6.19.0",
+		"browser-sync": "^3.0.2",
 		"eslint": "^8.56.0",
 		"jasmine-core": "~5.1.0",
 		"karma": "~6.4.0",

@@ -15,7 +15,7 @@ definitions:
     - step: &linting
         name: Linting
         script:
-		  	- sh CI/lint-all.sh
+          - sh CI/lint-all.sh
 
     - step: &web-en
         name: Web EN
@@ -47,7 +47,7 @@ definitions:
 pipelines:
   # Linting, AOT build for all orders
   branches:
-	 ccc_uat:
+    ccc_uat:
       - step:
           name: Set target environment
           script:
@@ -57,8 +57,9 @@ pipelines:
             - dist/gae-version.txt
             - src/revision.ts
       - step: *angular-install
+      - step: *linting
       - parallel:
         - step: *web-en
         - step: *server-en
-		  - step: *ssr-server
-		  - step: *deploy-all
+      - step: *ssr-server
+      - step: *deploy-all

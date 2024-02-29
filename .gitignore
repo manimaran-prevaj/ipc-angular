@@ -4,6 +4,7 @@
 dist/build
 dist/build-browser
 dist/build-server
+dist/server.js
 /out-tsc
 /bazel-out
 

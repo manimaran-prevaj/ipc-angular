@@ -47,7 +47,7 @@ definitions:
 pipelines:
   # Linting, AOT build for all orders
   branches:
-    ccc_uat:
+    ccc-uat:
       - step:
           name: Set target environment
           script:

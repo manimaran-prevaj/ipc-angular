@@ -29,5 +29,5 @@ if [ $BUILD_TASK = "server-en" ]; then
 fi
 
 if [ $BUILD_TASK = "ssr-server" ]; then
-    node_modules/.bin/ng run pizza-pizza-ccc:server
+	 ./node_modules/webpack/bin/webpack.js --config webpack.server.config.js --progress
 fi

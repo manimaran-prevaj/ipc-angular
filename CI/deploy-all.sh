@@ -36,4 +36,5 @@ gcloud app deploy app-ssr.yaml --version=$(cat gae-version.txt) --quiet --no-pro
 
 
 # deploy dispatch file
+cd ../
 gcloud app deploy dispatch.yaml --quiet --no-promote

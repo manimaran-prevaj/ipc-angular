@@ -4,20 +4,20 @@ dispatch:
 
   # Angular website index page
   - url: '*/'
-    service: angular-ssr
+    service: default
 
   - url: '*/store/*'
-    service: angular-ssr
+    service: default
 
   # Angular compiled assets
   - url: '*/build/*'
-    service: angular-ssr
+    service: default
 
   # Angular SDK
   - url: '*/js-sdk/*'
-    service: angular-ssr
+    service: default
 
 
   # Angular static files
   - url: '*/static-files/*'
-    service: angular-ssr
+    service: default

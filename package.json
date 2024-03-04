@@ -1,8 +1,8 @@
 {
 	"name": "pizza-pizza-ccc",
 	"version": "0.0.1",
-	"type": "module",
 	"description": "This is front end for PizzaPizza CCC",
+	"type": "module",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve --open",

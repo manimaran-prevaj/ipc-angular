@@ -26,7 +26,7 @@ export default {
 	},
 	output: {
 		path: path.join(__dirname, `dist`),
-		filename: 'server.js',
+		filename: 'server.mjs',
 		library: {
 			type: 'module'
 		}

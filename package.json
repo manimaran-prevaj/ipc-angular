@@ -8,7 +8,7 @@
 		"start": "ng serve --open",
 		"test": "ng test",
 		"e2e": "ng e2e",
-		"sass-lint": "node ./node_modules/sass-lint/bin/sass-lint.js -c sass-lint.yml -v -q",
+		"sass-lint": "node ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml -v -q",
 		"lint": "npm run sass-lint && ng lint",
 		"watch": "ng build --watch --configuration development",
 		"build:dev": "ng build --configuration development",

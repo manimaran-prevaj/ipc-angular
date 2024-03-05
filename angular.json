@@ -39,12 +39,15 @@
 						"outputPath": "dist/build-browser",
 						"index": "src/index.html",
 						"main": "src/main.ts",
-						"polyfills": "src/polyfills.ts",
+						"polyfills": [
+							"zone.js"
+						],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
 							"src/favicon.ico",
 							"src/assets",
+							"src/worker.js",
 							{
 								"glob": "**/*",
 								"input": "./dist/static-files",

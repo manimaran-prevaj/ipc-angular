@@ -28,6 +28,6 @@ if [ $BUILD_TASK = "server-en" ]; then
     node_modules/.bin/ng run pizza-pizza-ccc:server:$ANGULAR_CONFIG
 fi
 
-if [ $BUILD_TASK = "ssr-server" ]; then
-	 ./node_modules/webpack/bin/webpack.js --config webpack.server.config.js --progress
-fi
+# if [ $BUILD_TASK = "ssr-server" ]; then
+# 	 ./node_modules/webpack/bin/webpack.js --config webpack.server.config.js --progress
+# fi

@@ -1,3 +1,5 @@
+import 'zone.js/node';
+
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr';
 import express from 'express';
@@ -8,7 +10,7 @@ import bootstrap from './src/main.server';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
 	const server = express();
-	const distFolder = join(process.cwd(), 'dist/build-browser');
+	const distFolder = join(process.cwd(), '/build-browser');
 	const indexHtml = existsSync(join(distFolder, 'index.original.html'))
 		? join(distFolder, 'index.original.html')
 		: join(distFolder, 'index.html');
@@ -28,7 +30,6 @@ export function app(): express.Express {
 	// All regular routes use the Angular engine
 	server.get('*', (req, res, next) => {
 		const { protocol, originalUrl, baseUrl, headers } = req;
-
 		commonEngine
 			.render({
 				bootstrap,
@@ -45,7 +46,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-	const port = process.env['PORT'] || 4000;
+	const port = process.env['PORT'] || 4200;
 
 	// Start up the Node server
 	const server = app();

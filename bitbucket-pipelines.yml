@@ -61,5 +61,5 @@ pipelines:
       - parallel:
         - step: *web-en
         - step: *server-en
-      - step: *ssr-server
+      # - step: *ssr-server
       - step: *deploy-all

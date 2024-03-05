@@ -2,10 +2,9 @@
 	"name": "pizza-pizza-ccc",
 	"version": "0.0.1",
 	"description": "This is front end for PizzaPizza CCC",
-	"type": "module",
 	"scripts": {
 		"ng": "ng",
-		"start": "ng serve --open",
+		"start": "npm run serve:ssr",
 		"test": "ng test",
 		"e2e": "ng e2e",
 		"sass-lint": "node ./node_modules/sass-lint/bin/sass-lint.js -c .sass-lint.yml -v -q",

@@ -13,8 +13,8 @@ dispatch:
   - url: '*/build/*'
     service: default
 
-  # Angular SDK
-  - url: '*/js-sdk/*'
+  # Angular hosted service worker
+  - url: '*/worker.js'
     service: default
 
 

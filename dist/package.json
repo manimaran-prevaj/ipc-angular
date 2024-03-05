@@ -1,0 +1,16 @@
+{
+	"name": "pp-ccc-web-node",
+	"version": "0.0.1",
+	"description": "",
+	"author": "",
+	"license": "ISC",
+	"engines": {
+		"node": "20.9.x"
+	},
+	"scripts": {
+		"start": "node build-server/main.js"
+	},
+	"dependencies": {
+		"express": "^4.18.2"
+	}
+}

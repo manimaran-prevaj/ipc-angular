@@ -1,0 +1,34 @@
+# Uses node js server for server side rendering
+runtime: nodejs20
+service: default
+
+instance_class: F2
+
+handlers:
+- url: /build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-browser/\1
+  upload: build-browser/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /build/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|)(|\.map))$
+  static_files: build-server/\1
+  upload: build-server/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|ico|)(|\.map))$
+  static_files: static-files/\1
+  upload: static-files/(.*)(|\.map)
+  secure: always
+  expiration: '1m'
+
+- url: /worker.js
+  static_files: static-files/worker.js
+  upload: static-files/worker.js
+  secure: always
+  expiration: '1m'
+
+- url: /.*
+  secure: always
+  script: auto

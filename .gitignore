@@ -13,6 +13,7 @@ dist/server.mjs
 /node_modules
 npm-debug.log
 yarn-error.log
+src-web-mw/node_modules
 
 # IDEs and editors
 .idea/

@@ -34,7 +34,10 @@ cd dist
 # deploy SSR website
 gcloud app deploy app.yaml --version=$(cat gae-version.txt) --quiet --no-promote
 
+# deploy mw
+cd ../src-web-mw
+gcloud app deploy app.yaml --version=$(cat gae-version.txt) --quiet --no-promote
+cd ../
 
 # deploy dispatch file
-cd ../
 gcloud app deploy dispatch.yaml --quiet --no-promote

@@ -55,6 +55,7 @@ pipelines:
           artifacts:
             - dist/project-id.txt
             - dist/gae-version.txt
+            - src-web-mw/gae-version.txt
             - src/revision.ts
       - step: *angular-install
       - step: *linting

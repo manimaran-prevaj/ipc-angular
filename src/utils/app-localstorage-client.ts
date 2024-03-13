@@ -4,11 +4,11 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 
 @Injectable()
 export class AppLocalStorageClient {
-	constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: object) { }
 	/**
 		* Sets local storage
 	*/
-	public set(key: string, value: string | number | boolean | Object | Array<Object> | Array<Number> | Array<String>) {
+	public set(key: string, value: string | number | boolean | object | Array<object> | Array<number> | Array<string>) {
 		if (isPlatformBrowser(this.platformId)) {
 			localStorage.setItem(key, JSON.stringify(value));
 		}
@@ -17,7 +17,7 @@ export class AppLocalStorageClient {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | Object | Array<Object> | Array<Number> | Array<String> | null {
+	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
 		if (!isPlatformBrowser(this.platformId)) {
 			return null;
 		}

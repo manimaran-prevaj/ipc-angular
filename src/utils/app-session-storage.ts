@@ -12,14 +12,14 @@ export class AppSessionsStorage {
 		* The session data would be saved to js runtime memory if
 		* session storage is not accessible.
 	*/
-	constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+	constructor(@Inject(PLATFORM_ID) private platformId: object) {
 		this.isSessionStorageAvail = typeof sessionStorage === 'object' && 'setItem' in sessionStorage;
 	}
 
 	/**
 		* Sets local storage
 	*/
-	public set(key: string, value: string | number | boolean | Object | Array<Object> | Array<Number> | Array<String>) {
+	public set(key: string, value: string | number | boolean | object | Array<object> | Array<number> | Array<string>) {
 		if (isPlatformBrowser(this.platformId)) {
 			if (this.isSessionStorageAvail) {
 				sessionStorage.setItem(key, JSON.stringify(value));
@@ -32,7 +32,7 @@ export class AppSessionsStorage {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | Object | Array<Object> | Array<Number> | Array<String> | null {
+	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
 		if (!isPlatformBrowser(this.platformId)) {
 			return null;
 		}

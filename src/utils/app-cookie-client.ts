@@ -1,40 +1,19 @@
 import { isPlatformBrowser } from "@angular/common"
 import { Inject, Injectable, Optional, PLATFORM_ID } from "@angular/core"
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import Cookies from 'js-cookie';
 
 
-export interface ICookieService {
-	// tslint:disable:no-any
-	readonly cookies$: Observable<{ readonly [key: string]: any }>
-	/**
-	 * get all cookies
-	 */
-	getAll(): any
-	/**
-	 * get cookie
-	 */
-	get(name: string): any
-	/**
-	 * set cookies
-	 */
-	set(name: string, value: any, options?): void
-	/**
-	 * remove cookies
-	 */
-	remove(name: string, options?): void
-}
-
 @Injectable()
 export class AppCookieClient {
-	private readonly cookieSource = new Subject<{ readonly [key: string]: any }>()
+	private readonly cookieSource = new Subject<{ readonly [key: string]: [string] }>()
 	public readonly cookies$ = this.cookieSource.asObservable();
 
-	constructor(@Inject(PLATFORM_ID) private platformId: Object, @Optional() @Inject(Request) private req: any) { }
+	constructor(@Inject(PLATFORM_ID) private platformId: object, @Optional() @Inject(Request) private req) { }
 	/**
 		* Sets local storage
 	*/
-	public set(key: string, value: any, options?) {
+	public set(key: string, value, options?) {
 		if (isPlatformBrowser(this.platformId)) {
 			const defaultOptions = {
 				sameSite: 'Strict'
@@ -50,7 +29,7 @@ export class AppCookieClient {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | Object | Array<Object> | Array<Number> | Array<String> | null {
+	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
 		if (isPlatformBrowser(this.platformId)) {
 			return JSON.stringify(key)
 		} else {
@@ -82,7 +61,7 @@ export class AppCookieClient {
 	/**
 		* get all
 	*/
-	public getAll(): any {
+	public getAll() {
 		if (isPlatformBrowser(this.platformId)) {
 			return
 		} else {

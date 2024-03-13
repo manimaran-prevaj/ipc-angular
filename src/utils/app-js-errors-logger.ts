@@ -25,6 +25,7 @@ export class AppGlobalErrorHandler extends ErrorHandler {
 			eventAction: stack,
 			eventLabel: url
 		};
+		console.log(customError);
 		super.handleError(error);
 	}
 }

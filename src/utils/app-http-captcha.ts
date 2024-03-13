@@ -4,8 +4,7 @@ import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Observable, mergeMap } from "rxjs";
 
 // Config dictates which methods needs to have captcha
-const captchaProtectedMethods = require('../../src-web-mw/config-captcha-paths.js');
-// import captchaProtectedMethods from '../../src-web-mw/config-captcha-paths.js'
+import captchaProtectedMethods from '../../src-web-mw/config-captcha-paths.js'
 
 @Injectable()
 export class AppHttpCaptcha implements HttpInterceptor {
@@ -28,7 +27,7 @@ export class AppHttpCaptcha implements HttpInterceptor {
 		* @param req - Request issues by http client
 		* @param next
 	*/
-	intercept(req: HttpRequest<{}>, next: HttpHandler): Observable<HttpEvent<{}>> {
+	intercept(req: HttpRequest<object>, next: HttpHandler): Observable<HttpEvent<object>> {
 		const methodPath = `${req.method}_${req.url.replace('/ajax/', '')}`;
 
 		if (methodPath in this.protectedMethodsDict) {

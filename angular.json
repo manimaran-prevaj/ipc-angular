@@ -129,6 +129,10 @@
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"open": true,
+						"proxyConfig": "proxy.config.json"
+					},
 					"configurations": {
 						"production": {
 							"buildTarget": "pizza-pizza-ccc:build:production"

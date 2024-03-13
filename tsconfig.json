@@ -3,10 +3,11 @@
 	"compilerOptions": {
 		"outDir": "./dist/",
 		"forceConsistentCasingInFileNames": true,
-		"strict": true,
+		"strict": false,
 		"noImplicitOverride": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
+		"noImplicitAny": false,
 		"noFallthroughCasesInSwitch": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,

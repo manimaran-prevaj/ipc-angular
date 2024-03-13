@@ -11,7 +11,7 @@ BUILD_TASK=$1
 ANGULAR_CONFIG='ppl-ccc-uat-fe'
 
 #
-# Project ID to Anular environment map
+# Project ID to Angular environment map
 #
 if [ $PROJECT_ID = "ppl-ccc-uat-fe" ]; then
     ANGULAR_CONFIG='ppl-ccc-uat-fe'
@@ -27,7 +27,3 @@ fi
 if [ $BUILD_TASK = "server-en" ]; then
     node_modules/.bin/ng run pizza-pizza-ccc:server:$ANGULAR_CONFIG
 fi
-
-# if [ $BUILD_TASK = "ssr-server" ]; then
-# 	 ./node_modules/webpack/bin/webpack.js --config webpack.server.config.js --progress
-# fi

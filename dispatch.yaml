@@ -21,3 +21,7 @@ dispatch:
   # Angular static files
   - url: '*/static-files/*'
     service: default
+
+# Web middleware path
+  - url: '*/ajax/*'
+    service: web-middleware

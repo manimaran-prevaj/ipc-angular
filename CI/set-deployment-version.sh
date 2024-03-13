@@ -11,6 +11,7 @@ echo "export const buildRevision = '$DATE_STR, Version: $PACKAGE_VERSION, Build:
 # Deploy to GAE service version defined in package.json
 
 echo $PACKAGE_VERSION > ./dist/gae-version.txt
+echo $PACKAGE_VERSION > ./src-web-mw/gae-version.txt
 
 cat ./src/revision.ts
 cat ./dist/gae-version.txt

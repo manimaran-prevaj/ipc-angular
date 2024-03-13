@@ -11,16 +11,19 @@ DEPLOYMENT_PROJECT=$1
 echo $DEPLOYMENT_PROJECT > ./dist/project-id.txt
 
 PV_ANGULAR=$(node -p -e "require('./package.json').version" | tr . -)
+PV_WEB_MW=$(node -p -e "require('./src-web-mw/package.json').version" | tr . -)
 DATE_STR=$(date)
 
 # Build TS revision file for footer component
-echo "export const buildRevision = '$DATE_STR, Angular: $PV_ANGULAR, Build: $BITBUCKET_BUILD_NUMBER'; export const buildNumber = '$BITBUCKET_BUILD_NUMBER';" > ./src/revision.ts
+echo "export const buildRevision = '$DATE_STR, Angular: $PV_ANGULAR, MW: $PV_WEB_MW Build: $BITBUCKET_BUILD_NUMBER'; export const buildNumber = '$BITBUCKET_BUILD_NUMBER';" > ./src/revision.ts
 
 # The file is used by CI script
 # Deploy to GAE service version defined in package.json
 echo $PV_ANGULAR > ./dist/gae-version.txt
+echo $PV_WEB_MW > ./src-web-mw/gae-version.txt
 
 echo TARGET ENVIRONMENT:
 cat ./dist/project-id.txt
 cat ./dist/gae-version.txt
+cat ./src-web-mw/gae-version.txt
 cat ./src/revision.ts

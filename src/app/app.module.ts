@@ -27,27 +27,25 @@ import {
 		StoreModule.forRoot()
 	],
 	providers: [
-		{ provide: APP_ID, useValue: 'pizza-pizza-ccc' },
 		provideClientHydration(),
-		// Util for Client LocalStorage
+		// Client LocalStorage
 		AppLocalStorageClient,
-		// Util for Client Cookie
+		// Client Cookie
 		AppCookieClient,
-		// Util for SessionStorage
+		// SessionStorage
 		AppSessionsStorage,
 		// Proxy to catch JS errors
 		{
 			provide: ErrorHandler,
 			useClass: AppGlobalErrorHandler
 		},
-		// Register captcha http interceptor
+		// Captcha http interceptor
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AppHttpCaptcha,
 			multi: true
 		},
-
-		// Register global error http interceptor
+		// Global error http interceptor
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AppHttpErrors,

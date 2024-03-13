@@ -27,14 +27,14 @@ const appsEnv = {
 const envConfig = {
 	'ppl-ccc-uat-fe': {
 		sessionIpLimits: devSessionIpLimits,
-		session_secret_key: '',
-		base_api_host: '',
-		recaptcha_key: '',
+		session_secret_key: 'asd234234234234asdasd',
+		base_api_host: 'https://ppluat-lb-be.pizzapizza.ca',
+		recaptcha_key: '6LdbxLMUAAAAAM4_SFPvctk4n8FFLLCRGzmJfq6w',
 		allowed_api_hosts: [
 		],
 		auth: {
-			private: '',
-			public: ''
+			private: 'rs7YpJUvJZaFJYw9t68yMu3rAEW6xWkTaKq8Mxg7wXZswXYZ',
+			public: 'abceNz4Bv9VV3GF4YQBL6q4wHK'
 		}
 	},
 }

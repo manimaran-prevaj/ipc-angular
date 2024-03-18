@@ -6,12 +6,12 @@
 */
 
 import { uuid } from 'uuidv4';
-import * as CryptoJS from 'crypto-js';
-import * as btoa from 'btoa';
-import * as atob from 'atob';
+import CryptoJS from 'crypto-js';
+import btoa from 'btoa';
+import atob from 'atob';
 
 // Environment config
-import * as envConfig from './../server-environment.js';
+import EnvConfig from './../server-environment.js';
 
 // https://cloud.google.com/appengine/docs/standard/nodejs/runtime
 const gaeAppId = process.env.GOOGLE_CLOUD_PROJECT;
@@ -23,7 +23,7 @@ const WebSession = (() => {
 		* Wrapper to handle session is shared with Angular SSR implementation.
 		* Device id is encoded into session token using symmetric encryption
 	*/
-	const sessionSecretKey = envConfig.session_secret_key;
+	const sessionSecretKey = EnvConfig.session_secret_key;
 	const isSecureCookie = !isRunningLocally;
 
 	/**

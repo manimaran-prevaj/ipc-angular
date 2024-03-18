@@ -14,7 +14,7 @@ const Captcha = (() => {
 	// need data
 	const recaptchaKey = envConfig.recaptcha_key;
 
-	protectedMethodsDict = {};
+	let protectedMethodsDict = {};
 	captchaProtectedMethods.forEach(value => {
 		protectedMethodsDict[`${value.method}_${value.path}`] = value.action;
 	})

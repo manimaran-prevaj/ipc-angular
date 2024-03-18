@@ -52,8 +52,8 @@ if (appsEnv[gaeAppId]) {
 }
 
 const obj = {
-	isRunningLocally,
-	...envConfig[currentEnv]
+	isRunningLocally
 }
+const EnvConfig = Object.assign({}, obj, envConfig[currentEnv]);
 
-export default obj;
+export default EnvConfig;

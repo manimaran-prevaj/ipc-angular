@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 // Environment config
-import * as envConfig from './../server-environment.js';
+import EnvConfig from './../server-environment.js';
 
 // App imports
 import Captcha from './captcha.js';
@@ -41,7 +41,7 @@ app.all('*', async (req, res) => {
 	const params = req.body;
 
 	// Allow CORS requested ONLY for local
-	if (envConfig.isRunningLocally) {
+	if (EnvConfig.isRunningLocally) {
 		const originHeader = req.header('Origin');
 		// If you run server side rendering request would go cross domain.
 		if (originHeader) {

@@ -15,7 +15,8 @@
 		"build:uat": "ng build --aot --configuration ppl-ccc-uat-fe",
 		"dev:ssr": "ng run pizza-pizza-ccc:serve-ssr",
 		"serve:ssr": "node dist/build-server/main.js",
-		"build:ssr": "ng build --aot --configuration production && ng run pizza-pizza-ccc:server"
+		"build:ssr": "ng build --aot --configuration production && ng run pizza-pizza-ccc:server",
+		"middleware": "cd src-web-mw && npm i && npm run dev"
 	},
 	"license": "ISC",
 	"private": true,

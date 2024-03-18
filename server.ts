@@ -11,21 +11,20 @@ import { existsSync } from 'node:fs';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
 	const server = express();
-	const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-	const browserDistFolder = resolve(serverDistFolder, './dist/build-browser');
-	const indexHtml = existsSync(join(browserDistFolder, 'index.original.html'))
-		? join(browserDistFolder, 'index.original.html')
-		: join(browserDistFolder, 'index.html');
+	const distFolder = join(process.cwd(), '/build-browser');
+	const indexHtml = existsSync(join(distFolder, 'index.original.html'))
+		? join(distFolder, 'index.original.html')
+		: join(distFolder, 'index.html');
 
 	const commonEngine = new CommonEngine();
 
 	server.set('view engine', 'html');
-	server.set('views', browserDistFolder);
+	server.set('views', distFolder);
 
 	// Example Express Rest API endpoints
 	// server.get('/api/**', (req, res) => { });
 	// Serve static files from /browser
-	server.get('*.*', express.static(browserDistFolder, {
+	server.get('*.*', express.static(distFolder, {
 		maxAge: '1y'
 	}));
 
@@ -38,7 +37,7 @@ export function app(): express.Express {
 				bootstrap: AppServerModule,
 				documentFilePath: indexHtml,
 				url: `${protocol}://${headers.host}${originalUrl}`,
-				publicPath: browserDistFolder,
+				publicPath: distFolder,
 				providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
 			})
 			.then((html) => res.send(html))

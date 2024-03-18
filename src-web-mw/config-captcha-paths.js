@@ -8,7 +8,11 @@
 	* action - Unique identifier used for check if generate captcha was for specific method
 */
 const captchaProtectedMethods = [
-
+	{
+		path: 'user/api/v1/auth/login',
+		method: 'POST',
+		action: 'user_v1_auth_login'
+	},
 ]
 
 export default captchaProtectedMethods;

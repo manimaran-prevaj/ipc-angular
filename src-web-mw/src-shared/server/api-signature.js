@@ -6,18 +6,18 @@
 import WebSession from './../../src/web-session.js';
 
 // Libs for symmetric encryption
-import * as CryptoJS from 'crypto-js';
-import * as btoa from 'btoa';
+import CryptoJS from 'crypto-js';
+import btoa from 'btoa';
 
 // Env config
-import * as envConfig from './../../server-environment.js';
+import EnvConfig from './../../server-environment.js';
 
 const ApiSignature = (() => {
 	/**
 		* Generates signature for api
 		* Used in web middleware and angular SSR
 	*/
-	const privateKey = envConfig.auth.private;
+	const privateKey = EnvConfig.auth.private;
 
 	const generateSignature = (timeStamp) => {
 		const message = privateKey.concat(timeStamp);
@@ -26,15 +26,15 @@ const ApiSignature = (() => {
 	}
 
 	const getApiBaseUrl = () => {
-		return envConfig.base_api_host;
+		return EnvConfig.base_api_host;
 	}
 
 	const getPublicKey = () => {
-		return envConfig.auth.public;
+		return EnvConfig.auth.public;
 	}
 
 	const isBaseUrlAllowedForEnvironment = (baseUrl) => {
-		return envConfig.allowed_api_hosts.indexOf(baseUrl) != -1;
+		return EnvConfig.allowed_api_hosts.indexOf(baseUrl) != -1;
 	}
 
 	/**

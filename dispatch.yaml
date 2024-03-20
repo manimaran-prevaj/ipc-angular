@@ -15,7 +15,7 @@ dispatch:
 
   # Angular SDK
   - url: '*/js-sdk/*'
-    service: angular-ssr
+    service: default
 
   # Angular hosted service worker
   - url: '*/worker.js'

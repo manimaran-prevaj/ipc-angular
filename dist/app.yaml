@@ -23,6 +23,12 @@ handlers:
   secure: always
   expiration: '1m'
 
+- url: /js-sdk/pp-sdk-bundle.js
+  static_files: build-sdk/pp-sdk-bundle.js
+  upload: build-sdk/pp-sdk-bundle.js
+  expiration: '6h'
+  secure: always
+
 - url: /worker.js
   static_files: static-files/worker.js
   upload: static-files/worker.js

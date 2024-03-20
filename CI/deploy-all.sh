@@ -30,6 +30,20 @@ if [ ${DEPLOYMENT_PROJECT} = "ppl-ccc-uat-fe" ]; then
     activate_service_account_and_deploy $GCLOUD_API_KEY_CCC_UAT
 fi
 
+# Deploy SDK to bucket
+deploy_sdk() {
+    # Deploy sdk file to google bucket
+    gsutil -h Cache-Control:private cp -a public-read ./dist/build-sdk/pp-sdk-bundle.js gs://${DEPLOYMENT_PROJECT}.appspot.com/js_sdk/pp-sdk-bundle.js
+
+    # Make file publicly available
+    gsutil acl ch -u AllUsers:R gs://${DEPLOYMENT_PROJECT}.appspot.com/js_sdk/pp-sdk-bundle.js
+
+    # Get public link
+    printf "\n\nDeployed to\n"
+    gsutil ls gs://${DEPLOYMENT_PROJECT}.appspot.com/js_sdk/pp-sdk-bundle.js | sed 's/gs:\//https:\/\/storage.googleapis.com/'
+}
+deploy_sdk
+
 cd dist
 # deploy SSR website
 gcloud app deploy app.yaml --version=$(cat gae-version.txt) --quiet --no-promote

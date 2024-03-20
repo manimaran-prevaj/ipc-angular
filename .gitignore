@@ -2,6 +2,7 @@
 
 # Compiled output
 dist/build
+dist/build-sdk
 dist/build-browser
 dist/build-server
 dist/server.js
@@ -14,6 +15,7 @@ dist/server.mjs
 npm-debug.log
 yarn-error.log
 src-web-mw/node_modules
+src-sdk/node_modules
 
 # IDEs and editors
 .idea/
@@ -40,7 +42,7 @@ src-web-mw/node_modules
 /libpeerconnection.log
 testem.log
 /typings
-
+src-sdk/dist/*
 # System files
 .DS_Store
 Thumbs.db

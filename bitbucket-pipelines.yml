@@ -17,6 +17,13 @@ definitions:
         script:
           - sh CI/lint-all.sh
 
+    - step: &sdk
+        name: SDK packages installation and build
+        script:
+          - sh CI/build.sh sdk
+        artifacts:
+          - dist/**
+
     - step: &web-en
         name: Web EN
         script:
@@ -60,7 +67,7 @@ pipelines:
       - step: *angular-install
       - step: *linting
       - parallel:
+        - step: *sdk
         - step: *web-en
         - step: *server-en
-      # - step: *ssr-server
       - step: *deploy-all

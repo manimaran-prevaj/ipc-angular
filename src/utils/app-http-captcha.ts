@@ -27,6 +27,7 @@ export class AppHttpCaptcha implements HttpInterceptor {
 		* @param req - Request issues by http client
 		* @param next
 	*/
+	/** Diabling eslint as HttpRequest<T> is of type generic  */
 	/* eslint-disable */
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<object>> {
 		const methodPath = `${req.method}_${req.url.replace('/ajax/', '')}`;

@@ -27,9 +27,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Getting Started / Installing
 -	Clone github repository from [BitBucket](https://bitbucket.org/pizzapizzateam/ppl-ccc-fe-phx2/src/ccc-uat/).
 -	Install dependencies via npm install.
--	npm run start / ng serve to run development server.
+-	Start the middleware
+-	Start the development server.
+
+## Middleware
+-	`npm run middleware` to start the middleware.
 
 ## Development server
+-	npm run start / ng serve to start development server
 -	Navigate to `http://localhost:4200/`.
 -	The application will automatically reload if you change any of the source files.
 
@@ -44,12 +49,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 -	All styling/scss need to be isolated withing the component
 
 ### Linting
+-	Run `npm run lint` to execute the linting.
 -	Before committing the code make sure that all linting issue are fixed in *.ts, *.scss *.html .
+-	Use proper type checking while defining variable, function arguements, etc. Use type unknow if the type is 
+	not know instaed of any as it more type safe. Only disable linting rules using inline commands if the type is
+	generic.
 -	Continuous integration server will check every commit and notify bitbucket status.
--	Run `ng lint` to execute the linting.
 
 ## Build
--	Run `ng build` to build the project.
+-	Run `npm run build: dev/prod/uat` to build the project.
+-	Run `npm run build: ssr` to build the server side rendering project.
 -	you need to build ahead of time compilation build for production build.
 -	The build artifacts will be stored in the `dist/` directory.
 

@@ -6,7 +6,7 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 export class AppSessionsStorage {
 
 	private isSessionStorageAvail = false;
-	private sessionStorageEmulator = {};
+	private sessionStorageEmulator: { key?: string } = {};
 
 	/**
 		* The session data would be saved to js runtime memory if
@@ -19,7 +19,7 @@ export class AppSessionsStorage {
 	/**
 		* Sets local storage
 	*/
-	public set(key: string, value: string | number | boolean | object | Array<object> | Array<number> | Array<string>) {
+	public set(key: string, value: string | number | boolean | object | object[] | number[] | string[]) {
 		if (isPlatformBrowser(this.platformId)) {
 			if (this.isSessionStorageAvail) {
 				sessionStorage.setItem(key, JSON.stringify(value));
@@ -32,17 +32,17 @@ export class AppSessionsStorage {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
+	public get(key: string): string | number | boolean | object | object[] | number[] | string[] | null {
 		if (!isPlatformBrowser(this.platformId)) {
 			return null;
 		}
 
 		if (this.isSessionStorageAvail) {
 			const value = sessionStorage.getItem(key);
-			return JSON.parse(value);
+			return value ? JSON.parse(value) : null;
 		} else {
 			const value = this.sessionStorageEmulator[key];
-			return JSON.parse(value);
+			return value ? JSON.parse(value) : null;
 
 		}
 	}
@@ -71,8 +71,10 @@ export class AppSessionsStorage {
 		}
 		if (this.isSessionStorageAvail) {
 			sessionStorage.removeItem(key);
+			return;
 		} else {
-			delete this.sessionStorageEmulator;
+			delete this.sessionStorageEmulator.key;
+			return;
 		}
 	}
 }

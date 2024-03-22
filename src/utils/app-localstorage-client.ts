@@ -8,7 +8,7 @@ export class AppLocalStorageClient {
 	/**
 		* Sets local storage
 	*/
-	public set(key: string, value: string | number | boolean | object | Array<object> | Array<number> | Array<string>) {
+	public set(key: string, value: string | number | boolean | object | object[] | number[] | string[]) {
 		if (isPlatformBrowser(this.platformId)) {
 			localStorage.setItem(key, JSON.stringify(value));
 		}
@@ -17,12 +17,12 @@ export class AppLocalStorageClient {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
+	public get(key: string): string | number | boolean | object | object[] | number[] | string[] | null {
 		if (!isPlatformBrowser(this.platformId)) {
 			return null;
 		}
 		const localStore = localStorage.getItem(key);
-		return JSON.parse(localStore);
+		return localStore ? JSON.parse(localStore) : null;
 	}
 
 	/**
@@ -43,5 +43,6 @@ export class AppLocalStorageClient {
 			return null;
 		}
 		localStorage.removeItem(key);
+		return;
 	}
 }

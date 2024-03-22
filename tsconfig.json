@@ -8,6 +8,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noImplicitReturns": true,
 		"noImplicitAny": false,
+		"strictNullChecks": true,
 		"noFallthroughCasesInSwitch": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,

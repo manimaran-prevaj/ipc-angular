@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 
 @Injectable()
 export class AppCookieClient {
-	private readonly cookieSource = new Subject<{ readonly [key: string]: [string] }>()
+	private readonly cookieSource = new Subject<Readonly<Record<string, [string]>>>()
 	public readonly cookies$ = this.cookieSource.asObservable();
 
 	constructor(@Inject(PLATFORM_ID) private platformId: object, @Optional() @Inject(Request) private req) { }
@@ -29,7 +29,7 @@ export class AppCookieClient {
 	/**
 		* Gets local storage
 	*/
-	public get(key: string): string | number | boolean | object | Array<object> | Array<number> | Array<string> | null {
+	public get(key: string): string | number | boolean | object | object[] | number[] | string[] | null {
 		if (isPlatformBrowser(this.platformId)) {
 			return JSON.stringify(key)
 		} else {

@@ -6,9 +6,6 @@ import { Observable, catchError, map, throwError } from "rxjs";
 export class AppHttpErrors implements HttpInterceptor {
 	private SHOW_GLOBAL_ERROR_CODES = [429];
 
-	constructor(
-		// private store: Store<fromCommon.State>
-	) { }
 
 	/**
 	 * Check if HTTP code

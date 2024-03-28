@@ -14,6 +14,7 @@ import {
 	AppLocalStorageClient,
 	AppSessionsStorage
 } from '../utils';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
 	declarations: [
@@ -50,7 +51,8 @@ import {
 			provide: HTTP_INTERCEPTORS,
 			useClass: AppHttpErrors,
 			multi: true
-		}
+		},
+		provideAnimationsAsync()
 	],
 	bootstrap: [AppComponent]
 })

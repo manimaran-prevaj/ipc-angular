@@ -1,0 +1,36 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+
+@import 'global-scss-mixing';
+@import './ccc-startup-loader';
+@import './ccc-font-sizing';
+@import './ccc-ghost';
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	@include font-regular;
+	margin: 0;
+	color: $ccc-default-text-colour;
+	font-size: 1rem;
+}
+
+// No blue glow for a on focus
+a:focus {
+	outline: none;
+}
+
+//show cursor pointer over any link
+a {
+	cursor: pointer;
+	color: $ccc-bg-maincolour;
+
+	&:hover,
+	&:active,
+	&:focus {
+		color: $ccc-bg-maincolour;
+	}
+}

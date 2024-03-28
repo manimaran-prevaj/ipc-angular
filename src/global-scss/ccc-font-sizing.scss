@@ -1,0 +1,60 @@
+/**
+* General Heading sizes and font weight classes
+*/
+h1,
+.h1 {
+	font-size: 3rem; // 48px
+}
+
+h2,
+.h2 {
+	font-size: 2rem; // 32px
+}
+
+h3,
+.h3 {
+	font-size: 1.875rem; // 30px
+}
+
+h4,
+.h4 {
+	font-size: 1.5rem; // 24px
+}
+
+h5,
+.h5 {
+	font-size: 1.25rem; // 20px
+}
+
+h6,
+.h6 {
+	font-size: 1.125rem; // 18px
+}
+
+.smaller {
+	font-size: .813rem; // 13px
+}
+
+.smallest {
+	font-size: .7rem; // 11px
+}
+
+.fw-normal {
+	@include font-regular;
+}
+
+.fw-semi-bold {
+	@include font-semi-bold;
+}
+
+.fw-bold {
+	@include font-bold;
+}
+
+.fw-extra-bold {
+	@include font-extra-bold;
+}
+
+.fw-black {
+	@include font-black;
+}

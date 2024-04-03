@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
 	AppCookieClient,
 	AppGlobalErrorHandler,
@@ -14,38 +15,55 @@ import {
 	AppLocalStorageClient,
 	AppSessionsStorage
 } from '../utils';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
+import { MaterialModule } from './material/material.module';
+import { LogoDateComponent } from './header/components/logo-date/logo-date.component';
+import { BannerComponent } from './header/components/banner/banner.component';
+import { HeaderComponent } from './header/containers/header/header.component';
+
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		LogoDateComponent,
+		BannerComponent,
+		HeaderComponent
 	],
 	imports: [
 		CommonModule,
 		HttpClientModule,
 		BrowserModule,
 		AppRoutingModule,
-		StoreModule.forRoot()
+		StoreModule.forRoot(),
+
+		// Imported components of Angular Material
+		MaterialModule
 	],
 	providers: [
 		provideClientHydration(),
+
 		// Client LocalStorage
 		AppLocalStorageClient,
+
 		// Client Cookie
 		AppCookieClient,
+
 		// SessionStorage
 		AppSessionsStorage,
+
 		// Proxy to catch JS errors
 		{
 			provide: ErrorHandler,
 			useClass: AppGlobalErrorHandler
 		},
+
 		// Captcha http interceptor
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AppHttpCaptcha,
 			multi: true
 		},
+
 		// Global error http interceptor
 		{
 			provide: HTTP_INTERCEPTORS,

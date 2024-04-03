@@ -6,6 +6,14 @@
 @import './ccc-font-sizing';
 @import './ccc-ghost';
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+}
+
 html,
 body {
 	height: 100%;
@@ -33,4 +41,19 @@ a {
 	&:focus {
 		color: $ccc-bg-maincolour;
 	}
+}
+
+.container {
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	max-width: 100%;
+}
+
+.row {
+	display: flex;
+}
+
+.col {
+	flex: 1;
 }

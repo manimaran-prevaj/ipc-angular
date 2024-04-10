@@ -8,7 +8,8 @@ module.exports = {
 			colors: {
 				'banner-green': '#148119',
 				"color-brown": "#49454F",
-				"border-color-gray": "#E6E6E6"
+				"border-color-gray": "#E6E6E6",
+				"border-sidenav": "#CACACA"
 			},
 		},
 	},

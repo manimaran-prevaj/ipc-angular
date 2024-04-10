@@ -1,0 +1,12 @@
+@import 'global-scss-mixing';
+
+.app-sidenav-item {
+	&:hover {
+		border-radius: 100px;
+		background-color: $ccc-sidenav-bg;
+
+		.text {
+			color: $ccc-btn-darker-orange;
+		}
+	}
+}

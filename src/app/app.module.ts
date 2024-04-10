@@ -20,6 +20,8 @@ import { MaterialModule } from './material/material.module';
 import { LogoDateComponent } from './header/components/logo-date/logo-date.component';
 import { BannerComponent } from './header/components/banner/banner.component';
 import { HeaderComponent } from './header/containers/header/header.component';
+import { SideNavComponent } from './sidenav/containers/sidenav/sidenav.component';
+import { SideNavItemComponent } from './sidenav/components/sidenav-item/sidenav-item.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { HeaderComponent } from './header/containers/header/header.component';
 		AppComponent,
 		LogoDateComponent,
 		BannerComponent,
-		HeaderComponent
+		HeaderComponent,
+		SideNavComponent,
+		SideNavItemComponent
 	],
 	imports: [
 		CommonModule,

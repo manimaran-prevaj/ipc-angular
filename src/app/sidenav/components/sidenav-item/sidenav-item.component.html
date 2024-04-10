@@ -1,0 +1,17 @@
+<a class="app-sidenav-item p-4 h-[56px] row">
+	<div *ngIf="!isSideNavExpanded" class="row items-center">
+		<div class="w-[18px] h-[18px]">
+			<img alt="{{sideNavItem.alt}}" class="img w-full h-auto"
+				src="./static-files/images/{{sideNavItem.icon}}.png" />
+		</div>
+	</div>
+	<div *ngIf="isSideNavExpanded" class="row items-center">
+		<div class="w-[18px] h-[18px]">
+			<img alt="{{sideNavItem.alt}}" class="img w-full h-auto"
+				src="./static-files/images/{{sideNavItem.icon}}.png" />
+		</div>
+		<div class="text smaller ms-4 w-[150px] leading-5 text-color-brown">
+			<span>{{sideNavItem.text}}</span>
+		</div>
+	</div>
+</a>

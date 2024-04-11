@@ -17,21 +17,13 @@ import {
 } from '../utils';
 
 import { MaterialModule } from './material/material.module';
-import { LogoDateComponent } from './header/components/logo-date/logo-date.component';
-import { BannerComponent } from './header/components/banner/banner.component';
-import { HeaderComponent } from './header/containers/header/header.component';
-import { SideNavComponent } from './sidenav/containers/sidenav/sidenav.component';
-import { SideNavItemComponent } from './sidenav/components/sidenav-item/sidenav-item.component';
-
+import { HeaderModule } from './header/header.module';
+import { SideNavModule } from './sidenav/sidenav.module';
+import { CommonComponentsModule } from './common/common.module';
 
 @NgModule({
 	declarations: [
-		AppComponent,
-		LogoDateComponent,
-		BannerComponent,
-		HeaderComponent,
-		SideNavComponent,
-		SideNavItemComponent
+		AppComponent
 	],
 	imports: [
 		CommonModule,
@@ -41,7 +33,10 @@ import { SideNavItemComponent } from './sidenav/components/sidenav-item/sidenav-
 		StoreModule.forRoot(),
 
 		// Imported components of Angular Material
-		MaterialModule
+		MaterialModule,
+		HeaderModule,
+		SideNavModule,
+		CommonComponentsModule
 	],
 	providers: [
 		provideClientHydration(),

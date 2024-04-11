@@ -1,0 +1,21 @@
+::ng-deep {
+	mat-expansion-panel {
+		.mat-content {
+			margin: 0 !important;
+
+			mat-panel-title {
+				display: flex;
+				justify-content: space-between;
+				margin: 0;
+			}
+		}
+
+		.mat-expansion-panel-content {
+			.mat-expansion-panel-body {
+				padding: 0 16px 16px;
+				line-height: 1.5rem;
+				font-size: 1.125rem;
+			}
+		}
+	}
+}

@@ -9,7 +9,8 @@ module.exports = {
 				'banner-green': '#148119',
 				"color-brown": "#49454F",
 				"border-color-gray": "#E6E6E6",
-				"border-sidenav": "#CACACA"
+				"border-sidenav": "#CACACA",
+				"dark-orange": "#d4400f"
 			},
 		},
 	},

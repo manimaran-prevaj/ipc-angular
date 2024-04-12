@@ -1,18 +1,23 @@
 <mat-expansion-panel [id]="id" [disabled]="disabled" class="!rounded !mb-4 !bg-white" (opened)="panelOpenState = true"
 	(closed)="panelOpenState = false" hideToggle="true">
 	<mat-expansion-panel-header class="!px-4 !py-[18px]">
-		<mat-panel-title class="!flex !justify-between !items-center">
-			<h5 class="fw-bold capitalize text-black w-1/5">{{title}}</h5>
-			<div class="w-4/5">
-				<ng-content select="[description]"></ng-content>
+		<mat-panel-title class="!flex !flex-col !justify-between !items-center">
+			<div class="topRow w-full row">
+				<h5 class="fw-bold capitalize text-black w-1/4">{{title}}</h5>
+				<div class="w-3/4">
+					<ng-content select="[titleDesc]"></ng-content>
+				</div>
+				<div class="toggle-icon cursor-pointer w-[24px] bg-dark-orange rounded-[5px]">
+					<div *ngIf="panelOpenState">
+						<img alt="panel_open" class="w-[24px] h-[24px]" src="./static-files/images/up_caret.png" />
+					</div>
+					<div *ngIf="!panelOpenState">
+						<img alt="panel_close" class="w-[24px] h-[24px]" src="./static-files/images/down_caret.png" />
+					</div>
+				</div>
 			</div>
-			<div class="toggle-icon cursor-pointer w-[24px] bg-dark-orange rounded-[5px]">
-				<div *ngIf="panelOpenState">
-					<img alt="panel_open" class="w-[24px] h-[24px]" src="./static-files/images/up_caret.png" />
-				</div>
-				<div *ngIf="!panelOpenState">
-					<img alt="panel_close" class="w-[24px] h-[24px]" src="./static-files/images/down_caret.png" />
-				</div>
+			<div class="bottomRow w-full row">
+				<ng-content select="[collapsedDesc]"></ng-content>
 			</div>
 		</mat-panel-title>
 	</mat-expansion-panel-header>

@@ -19,7 +19,6 @@ import {
 import { MaterialModule } from './material/material.module';
 import { HeaderModule } from './header/header.module';
 import { SideNavModule } from './sidenav/sidenav.module';
-import { CommonComponentsModule } from './common/common.module';
 
 @NgModule({
 	declarations: [
@@ -35,8 +34,7 @@ import { CommonComponentsModule } from './common/common.module';
 		// Imported components of Angular Material
 		MaterialModule,
 		HeaderModule,
-		SideNavModule,
-		CommonComponentsModule
+		SideNavModule
 	],
 	providers: [
 		provideClientHydration(),

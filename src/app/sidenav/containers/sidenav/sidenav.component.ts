@@ -4,7 +4,8 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 export interface SideNavItem {
 	icon: string;
 	alt: string;
-	text: string
+	text: string;
+	routeLink: string;
 }
 
 @Component({
@@ -32,11 +33,11 @@ export interface SideNavItem {
 export class SideNavComponent {
 	public isSideNavExpanded: boolean;
 	public sideNavItemsList: SideNavItem[] = [
-		{ icon: "customer", alt: "new customer", text: "New Customer" },
-		{ icon: "search", alt: "new customer", text: "Find Order" },
-		{ icon: "feedback", alt: "feedback", text: "Feedback" },
-		{ icon: "edit", alt: "change order id", text: "Change Order ID" },
-		{ icon: "checkbox", alt: "verifications", text: "Verifications" }
+		{ icon: "customer", alt: "new customer", text: "New Customer", routeLink: '/new-customer' },
+		{ icon: "search", alt: "new customer", text: "Find Order", routeLink: '/search-order' },
+		{ icon: "feedback", alt: "feedback", text: "Feedback", routeLink: '/feedback' },
+		{ icon: "edit", alt: "change order id", text: "Change Order ID", routeLink: '/change-order-id' },
+		{ icon: "checkbox", alt: "verifications", text: "Verifications", routeLink: '/verification' }
 	]
 
 	onSideNavToggle() {

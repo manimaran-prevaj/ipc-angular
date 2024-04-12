@@ -3,6 +3,14 @@
 .app-sidenav-item {
 	&:hover {
 		border-radius: 100px;
+
+		.text {
+			color: $ccc-btn-darker-orange;
+		}
+	}
+
+	&.sidenav-item-active {
+		border-radius: 100px;
 		background-color: $ccc-sidenav-bg;
 
 		.text {

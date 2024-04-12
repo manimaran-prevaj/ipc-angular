@@ -1,39 +1,11 @@
 <div class="container">
 	<app-header></app-header>
 
-	<div class="row justify-between items-start">
-		<app-sidenav class="row"></app-sidenav>
-		<div class="w-full row">
-			<div class="col p-4 bg-slate-100 main-content">
-				<mat-accordion>
-					<!-- TODO:: Change while developing customer entry section -->
-					<app-ccc-accordion [title]="'customer entry'" [id]="'customerEntryExpansionPanel'" [disabled]="false">
-						<div description class="row">
-							<div class="row smaller leading-6 font-normal w-2/3 justify-end me-20">
-								<span class="fw-semi-bold">Call ID: </span><span>--</span>
-							</div>
-							<div class="row smaller leading-6 font-normal w-1/3 justify-center">
-								<span class="fw-semi-bold">Today's orders: </span><span>--</span>
-							</div>
-						</div>
-						<div body>
-							<h2>Customer Entry Content</h2>
-						</div>
-					</app-ccc-accordion>
-					<!-- TODO:: Change while developing order entry section -->
-					<app-ccc-accordion [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false">
-						<div body>
-							<h2>Order Entry Content</h2>
-						</div>
-					</app-ccc-accordion>
-					<!-- TODO:: Change while developing payment information section -->
-					<app-ccc-accordion [title]="'payment information'" [id]="'orderEntryExpansionPanel'" [disabled]="false">
-						<div body>
-							<h2>Payment Information Content</h2>
-						</div>
-					</app-ccc-accordion>
-				</mat-accordion>
-			</div>
+	<div class="row">
+		<app-sidenav></app-sidenav>
+		<!-- <app-new-customer class="row w-full"></app-new-customer> -->
+		<div class="w-full">
+			<router-outlet></router-outlet>
 		</div>
 	</div>
 </div>

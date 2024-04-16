@@ -9,6 +9,10 @@ dispatch:
   - url: '*/store/*'
     service: default
 
+  # Angular website base URLs
+  - url: '*/new-customer/*'
+    service: default
+
   # Angular compiled assets
   - url: '*/build/*'
     service: default

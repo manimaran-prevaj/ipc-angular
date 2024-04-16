@@ -1,0 +1,105 @@
+<div class="app-customer-details row flex-col ">
+	<div class="row">
+		<span class="h6 font-bold leading-6 text-color-brown">Customer Details</span>
+	</div>
+
+	<form [formGroup]="customerDetailsForm">
+		<div class="row mt-4">
+			<div class="row w-1/2 mr-2">
+				<div class="flex-auto w-2/3 mr-2">
+					<mat-form-field color="accent" [hideRequiredMarker]="true">
+						<mat-label>Phone</mat-label>
+						<input type="tel" matInput formControlName="phone" maxlength="10" (keypress)="onlyNumber($event)">
+					</mat-form-field>
+					<mat-error
+						*ngIf="customerDetailsForm.controls['phone'].touched && customerDetailsForm.controls['phone'].errors">
+						<span *ngIf="customerDetailsForm.controls['phone'].errors['required']">You must enter a value</span>
+						<span *ngIf="customerDetailsForm.controls['phone'].errors['minlength']">Not a valid phone
+							number</span>
+						<span *ngIf="customerDetailsForm.controls['phone'].errors['maxlength']">Not a valid phone
+							number</span>
+					</mat-error>
+				</div>
+				<div class="flex-auto w-1/3 ml-2">
+					<mat-form-field color="accent">
+						<mat-label>Ext.</mat-label>
+						<input matInput formControlName="phoneExt" maxlength="5">
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="w-1/2 ml-2">
+				<mat-button-toggle-group class="delivery-mode-toggle-group" name="modeOfDelivery"
+					formControlName="modeOfDelivery">
+					<mat-button-toggle class="delivery-mode-toggle-button" value="delivery">Delivery</mat-button-toggle>
+					<mat-button-toggle class="delivery-mode-toggle-button" value="pickup">Pickup</mat-button-toggle>
+				</mat-button-toggle-group>
+			</div>
+		</div>
+
+
+		<div class="row mt-4">
+			<div class="w-1/2 mr-2">
+				<mat-form-field color="accent" [hideRequiredMarker]="true">
+					<mat-label>First Name</mat-label>
+					<input matInput formControlName="firstName">
+				</mat-form-field>
+				<mat-error
+					*ngIf="customerDetailsForm.controls['firstName'].touched && customerDetailsForm.controls['firstName'].errors">
+					<span *ngIf="customerDetailsForm.controls['firstName'].errors['required']">You must enter a value</span>
+				</mat-error>
+			</div>
+			<div class="w-1/2 ml-2">
+				<mat-form-field color="accent" [hideRequiredMarker]="true">
+					<mat-label>Last Name</mat-label>
+					<input matInput formControlName="lastName">
+				</mat-form-field>
+				<mat-error
+					*ngIf="customerDetailsForm.controls['lastName'].touched && customerDetailsForm.controls['lastName'].errors">
+					<span *ngIf="customerDetailsForm.controls['lastName'].errors['required']">You must enter a value</span>
+				</mat-error>
+			</div>
+		</div>
+
+
+		<div class="row mt-4">
+			<div class="w-1/2 mr-2">
+				<mat-form-field [hideRequiredMarker]="true">
+					<mat-label>Order date</mat-label>
+					<input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="datePicker">
+					<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field>
+				<mat-error
+					*ngIf="customerDetailsForm.controls['datePicker'].touched && customerDetailsForm.controls['datePicker'].errors">
+					<span *ngIf="customerDetailsForm.controls['datePicker'].errors['required']">You must enter a value</span>
+				</mat-error>
+			</div>
+			<div class="w-1/2 ml-2">
+				<mat-form-field color="accent" [hideRequiredMarker]="true">
+					<mat-label>Email Address</mat-label>
+					<input matInput formControlName="email">
+				</mat-form-field>
+				<mat-error
+					*ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">
+					<span *ngIf="customerDetailsForm.controls['email'].errors['required']">You must enter a value</span>
+					<span *ngIf="customerDetailsForm.controls['email'].errors['email']">Not a valid email</span>
+				</mat-error>
+			</div>
+		</div>
+
+
+		<div class="row mt-4">
+			<div class="w-1/2 mr-2">
+				<button mat-stroked-button color="primary">Add Additional Information</button>
+			</div>
+			<div class="row w-1/2 ml-2">
+				<div class="w-1/2 mr-2">
+					<mat-checkbox class="email-opt-in" color="primary">Email Opt-In: </mat-checkbox>
+				</div>
+				<div class="w-1/2 ml-2">
+					<mat-checkbox class="email-opt-out" color="primary">Email Opt-Out: </mat-checkbox>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

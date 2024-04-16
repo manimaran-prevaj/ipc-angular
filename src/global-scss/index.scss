@@ -1,5 +1,7 @@
 // Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+// Plus imports for other components in your app.
 
 @import 'global-scss-mixing';
 @import './ccc-startup-loader';
@@ -9,6 +11,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+$md-primary: (
+	50 : #fae8e2,
+	100 : #f2c6b7,
+	200 : #eaa087,
+	300 : #e17957,
+	400 : #da5d33,
+	500 : #d4400f,
+	600 : #cf3a0d,
+	700 : #c9320b,
+	800 : #c32a08,
+	900 : #b91c04,
+	A100 : #ffe5e2,
+	A200 : #ffb6af,
+	A400 : #ff887c,
+	A700 : #ff7163,
+	contrast: (50 : #000000,
+		100 : #000000,
+		200 : #000000,
+		300 : #000000,
+		400 : #ffffff,
+		500 : #ffffff,
+		600 : #ffffff,
+		700 : #ffffff,
+		800 : #ffffff,
+		900 : #ffffff,
+		A100 : #000000,
+		A200 : #000000,
+		A400 : #000000,
+		A700 : #000000,
+	)
+);
+
+$md-accent: (
+	50 : #eae6e3,
+	100 : #c9c1b9,
+	200 : #a6988b,
+	300 : #826e5d,
+	400 : #674f3a,
+	500 : #4c3017,
+	600 : #452b14,
+	700 : #3c2411,
+	800 : #331e0d,
+	900 : #241307,
+	A100 : #ff9861,
+	A200 : #ff772e,
+	A400 : #fa5700,
+	A700 : #e04f00,
+	contrast: (50 : #000000,
+		100 : #000000,
+		200 : #000000,
+		300 : #ffffff,
+		400 : #ffffff,
+		500 : #ffffff,
+		600 : #ffffff,
+		700 : #ffffff,
+		800 : #ffffff,
+		900 : #ffffff,
+		A100 : #000000,
+		A200 : #000000,
+		A400 : #ffffff,
+		A700 : #ffffff,
+	)
+);
+
+// sass-lint:disable-block
+@include mat.core();
+$pizza-pizza-ccc-primary: mat.define-palette($md-primary);
+$pizza-pizza-ccc-accent: mat.define-palette($md-accent);
+$pizza-pizza-ccc-warn: mat.define-palette(mat.$red-palette);
+
+$pizza-pizza-ccc-theme: mat.define-light-theme((color: (primary: $pizza-pizza-ccc-primary,
+				accent: $pizza-pizza-ccc-accent,
+				warn: $pizza-pizza-ccc-warn,
+			),
+			typography: mat.define-typography-config($font-family: "'proxima-nova', sans-serif"),
+			density: 0));
+
+@include mat.all-component-themes($pizza-pizza-ccc-theme);
 
 * {
 	box-sizing: border-box;
@@ -56,4 +138,35 @@ a {
 
 .col {
 	flex: 1;
+}
+
+mat-form-field {
+	width: 100%;
+	margin-top: 0;
+
+	.mdc-text-field {
+		background-color: $ccc-bg-grey !important;
+		padding: 0 12px;
+
+		.mat-mdc-form-field-infix {
+			width: auto;
+		}
+	}
+}
+
+button {
+	&.mat-mdc-outlined-button {
+		border: 1px solid $ccc-btn-darker-orange !important;
+		border-radius: 100px;
+
+		.mdc-button__label {
+			font-size: 0.75rem;
+			line-height: 1.25rem;
+		}
+	}
+}
+
+mat-error {
+	font-size: 0.75rem;
+	line-height: 1rem;
 }

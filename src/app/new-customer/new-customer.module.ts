@@ -7,11 +7,14 @@ import { routes } from './new-customer.routes';
 
 
 import { NewCustomerComponent } from './containers/new-customer/new-customer.component';
+import { CustomerEntryComponent } from './containers/customer-entry/customer-entry.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const COMPONENTS = [
 	NewCustomerComponent,
-	CustomerDetailsComponent
+	CustomerDetailsComponent,
+	CustomerEntryComponent
 ];
 
 @NgModule({
@@ -20,6 +23,8 @@ export const COMPONENTS = [
 		RouterModule.forChild(routes),
 		CommonModule,
 		MaterialModule,
+		FormsModule,
+		ReactiveFormsModule,
 		CommonComponentsModule
 	],
 	exports: COMPONENTS

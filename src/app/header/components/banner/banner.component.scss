@@ -1,5 +1,17 @@
+@import 'global-scss-mixing';
+
 $box-shadow-color: rgba(0, 0, 0, .3);
 
 .app-banner {
 	box-shadow: 0 1px 3px 0 $box-shadow-color;
+}
+
+::ng-deep {
+	mat-card {
+		&.banner-card {
+			&.mat-mdc-card {
+				background-color: $ccc-banner-green;
+			}
+		}
+	}
 }

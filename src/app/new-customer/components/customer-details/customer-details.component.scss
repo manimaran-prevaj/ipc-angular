@@ -1,0 +1,47 @@
+@import 'global-scss-mixing';
+
+mat-button-toggle-group {
+	&.delivery-mode-toggle-group {
+		border-radius: 100px;
+		width: 100%;
+
+
+	}
+}
+
+
+mat-button-toggle {
+	&.delivery-mode-toggle-button {
+		width: 50%;
+
+		&.mat-button-toggle-checked {
+			background-color: $ccc-btn-darker-orange;
+		}
+	}
+}
+
+::ng-deep {
+	mat-button-toggle-group {
+		mat-button-toggle {
+			.mat-button-toggle-button {
+				line-height: 1.25rem;
+				font-size: .875rem;
+			}
+
+			&.mat-button-toggle-checked {
+				.mat-button-toggle-button {
+					color: $white;
+
+					mat-pseudo-checkbox {
+						&::after {
+							left: 5px;
+							width: 12px;
+							height: 5px;
+							color: $white;
+						}
+					}
+				}
+			}
+		}
+	}
+}

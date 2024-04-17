@@ -9,7 +9,8 @@
 				<div class="flex-auto w-2/3 mr-2">
 					<mat-form-field color="accent" [hideRequiredMarker]="true">
 						<mat-label>Phone</mat-label>
-						<input type="tel" matInput formControlName="phone" maxlength="10" (keypress)="onlyNumber($event)">
+						<input type="tel" matInput appPhoneMask formControlName="phone" maxlength="14"
+							(keypress)="onlyNumber($event)">
 					</mat-form-field>
 					<mat-error
 						*ngIf="customerDetailsForm.controls['phone'].touched && customerDetailsForm.controls['phone'].errors">
@@ -65,7 +66,8 @@
 			<div class="w-1/2 mr-2">
 				<mat-form-field [hideRequiredMarker]="true">
 					<mat-label>Order date</mat-label>
-					<input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="datePicker">
+					<input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="datePicker"
+						[min]="minDate" [max]="maxDate">
 					<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 					<mat-datepicker #picker></mat-datepicker>
 				</mat-form-field>
@@ -92,7 +94,7 @@
 			<div class="w-1/2 mr-2">
 				<button mat-stroked-button color="primary">Add Additional Information</button>
 			</div>
-			<div class="row w-1/2 ml-2">
+			<div class=" row w-1/2 ml-2">
 				<div class="w-1/2 mr-2">
 					<mat-checkbox class="email-opt-in" color="primary">Email Opt-In: </mat-checkbox>
 				</div>

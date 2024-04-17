@@ -9,19 +9,26 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export class CustomerDetailsComponent implements OnInit {
 	public customerDetailsForm: FormGroup;
+	public minDate = new Date();
+	public maxDate = new Date();
+
 	constructor(
 		private formBuilder: FormBuilder
 	) { }
 
 	ngOnInit() {
+		this.minDate.setDate(this.minDate.getDate() - 0);
+		// TODO :: revisit maxdate logic later
+		this.maxDate.setDate(this.maxDate.getDate() + 21);
 		this.customerDetailsForm = this.formBuilder.group({
 			firstName: ["", [Validators.required]],
 			lastName: ["", [Validators.required]],
 			email: ["", [Validators.required, Validators.email]],
-			phone: ["", [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+			phone: ["", [Validators.required, Validators.maxLength(14), Validators.minLength(14)]],
 			phoneExt: [""],
-			datePicker: ["", [Validators.required]],
-			modeOfDelivery: ["delivery", [Validators.required]]
+			datePicker: [this.minDate, [Validators.required]],
+			modeOfDelivery: ["delivery", [Validators.required]],
+			emailOpt: [""]
 		});
 	}
 

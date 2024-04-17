@@ -86,7 +86,7 @@
 								}
 							],
 							"optimization": true,
-							"outputHashing": "all",
+							"outputHashing": "none",
 							"sourceMap": false,
 							"namedChunks": false,
 							"extractLicenses": true,
@@ -118,7 +118,7 @@
 								}
 							],
 							"optimization": true,
-							"outputHashing": "all",
+							"outputHashing": "none",
 							"sourceMap": false,
 							"namedChunks": false,
 							"extractLicenses": true,
@@ -167,7 +167,7 @@
 					"configurations": {
 						"production": {
 							"buildOptimizer": true,
-							"outputHashing": "all",
+							"outputHashing": "media",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -192,7 +192,7 @@
 						},
 						"ppl-ccc-uat-fe": {
 							"buildOptimizer": true,
-							"outputHashing": "all",
+							"outputHashing": "media",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",

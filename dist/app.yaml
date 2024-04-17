@@ -38,3 +38,4 @@ handlers:
 - url: /.*
   secure: always
   script: auto
+  expiration: '0s'

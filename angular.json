@@ -167,7 +167,7 @@
 					"configurations": {
 						"production": {
 							"buildOptimizer": true,
-							"outputHashing": "all",
+							"outputHashing": "none",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -198,7 +198,7 @@
 									"with": "src/environments/environment.uat.ts"
 								}
 							],
-							"outputHashing": "all",
+							"outputHashing": "none",
 							"optimization": true,
 							"sourceMap": false,
 							"extractLicenses": true,

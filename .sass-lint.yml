@@ -29,7 +29,7 @@ rules:
   extends-before-mixins: 1
   final-newline:
     - 1
-    - include: false
+    - include: true
   force-attribute-nesting: 1
   force-element-nesting: 1
   force-pseudo-nesting: 0

@@ -35,7 +35,6 @@ definitions:
         name: Server EN
         script:
           - sh CI/build.sh server-en
-          - sh CI/rename-hash.sh
         artifacts:
           - dist/**
 

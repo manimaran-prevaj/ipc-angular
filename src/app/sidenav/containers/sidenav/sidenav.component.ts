@@ -33,7 +33,7 @@ export interface SideNavItem {
 export class SideNavComponent {
 	public isSideNavExpanded: boolean;
 	public sideNavItemsList: SideNavItem[] = [
-		{ icon: "customer", alt: "new customer", text: "New Customer", routeLink: '/new-customer' },
+		{ icon: "customer", alt: "new customer", text: "New Customer", routeLink: '' },
 		{ icon: "search", alt: "new customer", text: "Find Order", routeLink: '/search-order' },
 		{ icon: "feedback", alt: "feedback", text: "Feedback", routeLink: '/feedback' },
 		{ icon: "edit", alt: "change order id", text: "Change Order ID", routeLink: '/change-order-id' },

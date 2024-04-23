@@ -4,8 +4,8 @@ import { TempComponent } from './temp/temp-component';
 
 const routes: Routes = [
 	{
-		path: 'new-customer',
-		loadChildren: () => import('./new-customer/new-customer.module').then(m => m.NewCustomerModule)
+		path: '',
+		loadChildren: () => import('./new-customer/new-customer.module').then(m => m.NewCustomerModule),
 	},
 	// TODO:: Routes for remaining sidenav items
 	{
@@ -24,15 +24,10 @@ const routes: Routes = [
 		path: 'verification',
 		component: TempComponent
 	},
-	{
-		path: '',
-		redirectTo: '/new-customer',
-		pathMatch: 'full'
-	},
 	// TODO:: Create a page not found to handle wild routes
 	{
 		path: '**',
-		redirectTo: '/new-customer',
+		redirectTo: '',
 		pathMatch: 'full'
 	},
 

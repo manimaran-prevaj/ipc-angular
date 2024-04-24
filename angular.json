@@ -45,6 +45,7 @@
 						],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
+						"baseHref": "/",
 						"assets": [
 							"src/favicon.ico",
 							"src/assets",
@@ -85,6 +86,7 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
+							"baseHref": "/build/",
 							"optimization": true,
 							"outputHashing": "none",
 							"sourceMap": false,
@@ -117,6 +119,7 @@
 									"with": "src/environments/environment.uat.ts"
 								}
 							],
+							"baseHref": "/build/",
 							"optimization": true,
 							"outputHashing": "none",
 							"sourceMap": false,

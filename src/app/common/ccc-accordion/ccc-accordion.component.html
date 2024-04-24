@@ -1,5 +1,5 @@
-<mat-expansion-panel [id]="id" [disabled]="disabled" class="!rounded !mb-4 !bg-white" (opened)="panelOpenState = true"
-	(closed)="panelOpenState = false" hideToggle="true">
+<mat-expansion-panel [id]="id" [disabled]="disabled" class="!rounded !mb-4 !bg-white" [expanded]="expanded"
+	(opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle="true">
 	<mat-expansion-panel-header class="!px-4 !py-[18px]">
 		<mat-panel-title class="!flex !flex-col !justify-between !items-center">
 			<div class="topRow w-full row">

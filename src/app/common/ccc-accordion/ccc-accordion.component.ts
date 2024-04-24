@@ -9,6 +9,7 @@ export class CCCAccordionComponent {
 	@Input() title: string;
 	@Input() id: string;
 	@Input() disabled: boolean;
+	@Input() expanded: boolean;
 
 	public panelOpenState: boolean;
 }

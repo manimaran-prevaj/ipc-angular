@@ -18,9 +18,9 @@ handlers:
   secure: always
   expiration: '1m'
 
-- url: /static-files/(.*\.(gif|png|jpg|css|js|eot|woff2|woff|ttf|svg|ico|)(|\.map))$
-  static_files: static-files/\1
-  upload: static-files/(.*)(|\.map)
+- url: /static-files/(.*\.(html|css|js|png|jpg|gif|ico|woff2|svg|ttf|eot|woff|json))
+  static_files: build-browser/static-files/\1
+  upload: build-browser/static-files/(.*\.(html|css|js|png|jpg|gif|ico|woff2|svg|ttf|eot|woff|json))
   secure: always
   expiration: '1m'
 

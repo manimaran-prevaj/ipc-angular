@@ -1,0 +1,13 @@
+<h2 mat-dialog-title class="!text-black !p-4 !leading-7 border-b border-b-border-sidenav">{{title}}</h2>
+<mat-dialog-content class="!text-black !p-4">
+	<ng-container *ngTemplateOutlet="content"></ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="!p-4 !pb-8">
+	<button mat-stroked-button color="primary" class="!py-2 !px-8 !text-sm !mr-2" mat-dialog-close>
+		{{cancelText}}
+	</button>
+	<button mat-flat-button color="primary" class="!rounded-[100px] !py-2 !px-8 !text-sm" [mat-dialog-close]="true"
+		cdkFocusInitial>
+		{{confirmText}}
+	</button>
+</mat-dialog-actions>

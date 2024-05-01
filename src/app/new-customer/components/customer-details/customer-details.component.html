@@ -2,9 +2,9 @@
 	<div class="row">
 		<span class="h6 font-bold leading-6 text-color-brown">Customer Details</span>
 	</div>
-
 	<form [formGroup]="customerDetailsForm">
 		<div class="row mt-4">
+			<!-- Phone number and Extension -->
 			<div class="row w-1/2 mr-2">
 				<div class="flex-auto w-2/3 mr-2">
 					<mat-form-field color="accent" [hideRequiredMarker]="true">
@@ -28,6 +28,7 @@
 					</mat-form-field>
 				</div>
 			</div>
+			<!-- Delivery or Pickup -->
 			<div class="w-1/2 ml-2">
 				<mat-button-toggle-group class="delivery-mode-toggle-group" name="modeOfDelivery"
 					formControlName="modeOfDelivery">
@@ -36,9 +37,8 @@
 				</mat-button-toggle-group>
 			</div>
 		</div>
-
-
 		<div class="row mt-4">
+			<!-- First name -->
 			<div class="w-1/2 mr-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>First Name</mat-label>
@@ -49,6 +49,7 @@
 					<span *ngIf="customerDetailsForm.controls['firstName'].errors['required']">You must enter a value</span>
 				</mat-error>
 			</div>
+			<!-- Last name -->
 			<div class="w-1/2 ml-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>Last Name</mat-label>
@@ -60,22 +61,21 @@
 				</mat-error>
 			</div>
 		</div>
-
-
 		<div class="row mt-4">
+			<!-- Date and time selector -->
 			<div class="w-1/2 mr-2">
-				<mat-form-field [hideRequiredMarker]="true">
+				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>Order date</mat-label>
-					<input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="datePicker"
-						[min]="minDate" [max]="maxDate">
-					<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-					<mat-datepicker #picker></mat-datepicker>
+					<input matInput formControlName="datePicker">
+					<mat-datepicker-toggle matIconSuffix
+						(click)="openDateTimeModal('Choose date & time','Cancel','Done', dateTimeTemplate)"></mat-datepicker-toggle>
 				</mat-form-field>
 				<mat-error
 					*ngIf="customerDetailsForm.controls['datePicker'].touched && customerDetailsForm.controls['datePicker'].errors">
 					<span *ngIf="customerDetailsForm.controls['datePicker'].errors['required']">You must enter a value</span>
 				</mat-error>
 			</div>
+			<!-- Email address -->
 			<div class="w-1/2 ml-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>Email Address</mat-label>
@@ -88,20 +88,49 @@
 				</mat-error>
 			</div>
 		</div>
-
-
 		<div class="row mt-4">
+			<!-- Additional information btn -->
 			<div class="w-1/2 mr-2">
 				<button mat-stroked-button color="primary">Add Additional Information</button>
 			</div>
+			<!-- Email opt in/out -->
 			<div class=" row w-1/2 ml-2">
 				<div class="w-1/2 mr-2">
-					<mat-checkbox class="email-opt-in" color="primary">Email Opt-In: </mat-checkbox>
+					<mat-checkbox formControlName="emailOptIn" (change)="onSelectionChange('emailOptIn')" class="
+						email-opt-in" color="primary">Email
+						Opt-In: </mat-checkbox>
 				</div>
 				<div class="w-1/2 ml-2">
-					<mat-checkbox class="email-opt-out" color="primary">Email Opt-Out: </mat-checkbox>
+					<mat-checkbox formControlName="emailOptOut" (change)="onSelectionChange('emailOptOut')" class="
+						email-opt-out" color="primary">Email
+						Opt-Out: </mat-checkbox>
 				</div>
 			</div>
 		</div>
 	</form>
 </div>
+
+<!-- Date and time picker modal template -->
+<ng-template #dateTimeTemplate>
+	<div class="row">
+		<form [formGroup]="dateTimeForm" class="row w-full">
+			<div class="w-1/2 mr-2">
+				<mat-form-field>
+					<mat-label>Select Date</mat-label>
+					<mat-select color="accent" formControlName="date" [(value)]="selectedDate"
+						(selectionChange)="onDateChange()">
+						<mat-option *ngFor="let item of orderDateTimeData" [value]="item.date">{{item.date}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="w-1/2 ml-2">
+				<mat-form-field>
+					<mat-label>Select Time</mat-label>
+					<mat-select color="accent" formControlName="time" [(value)]="selectedTime">
+						<mat-option *ngFor="let time of filteredTimes" [value]="time">{{time}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</form>
+	</div>
+</ng-template>

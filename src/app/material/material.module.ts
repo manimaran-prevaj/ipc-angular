@@ -9,6 +9,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/mat
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
 	imports: [
@@ -20,7 +22,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 		MatButtonModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
-		MatButtonToggleModule
+		MatButtonToggleModule,
+		MatDialogModule,
+		MatSelectModule
 	],
 	exports: [
 		MatCardModule,
@@ -31,7 +35,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 		MatButtonModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
-		MatButtonToggleModule
+		MatButtonToggleModule,
+		MatDialogModule,
+		MatSelectModule
 	],
 	providers: [
 		{
@@ -39,6 +45,15 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 			useValue: {
 				subscriptSizing: 'dynamic',
 				appearance: 'fill',
+			}
+		},
+		{
+			provide: MAT_DIALOG_DEFAULT_OPTIONS,
+			useValue: {
+				hasBackdrop: true,
+				disableClose: true,
+				minWidth: '50%',
+				minHeight: '250px'
 			}
 		},
 		provideNativeDateAdapter()

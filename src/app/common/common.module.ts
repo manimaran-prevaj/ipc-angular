@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { CCCAccordionComponent } from './ccc-accordion/ccc-accordion.component';
 import { CCCPhoneMaskDirective } from './directives/phone-mask.directive';
+import { CCCModalComponent } from './ccc-modal/ccc-modal.component';
 
 export const COMPONENTS = [
 	CCCAccordionComponent,
-	CCCPhoneMaskDirective
+	CCCPhoneMaskDirective,
+	CCCModalComponent
 ];
 @NgModule({
 	declarations: COMPONENTS,

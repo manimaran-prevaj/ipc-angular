@@ -23,7 +23,7 @@ export class CustomerDetailsComponent implements OnInit {
 	public selectedDate: string;
 	public selectedTime: string;
 	public selectedOption: string;
-	public filteredTimes: string[] = [];
+	public filteredTimes: string[] = ['Now'];
 	public orderDateTimeData: OrderDateTime[] = [];
 
 	constructor(
@@ -35,8 +35,8 @@ export class CustomerDetailsComponent implements OnInit {
 		this.selectedOption = '';
 		this.mapOrderDateTime(orderDateTime);
 		this.dateTimeForm = this.formBuilder.group({
-			date: ['', [Validators.required]],
-			time: ['', [Validators.required]]
+			date: ['Today', [Validators.required]],
+			time: ['Now', [Validators.required]]
 		});
 		const todayDateTime = `${this.getTodayDate()} - Today - Now`;
 		this.customerDetailsForm = this.formBuilder.group({
@@ -69,7 +69,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 		data.map((item: OrderDateTime) => {
 			const [year, month, day] = item.date.split('-');
-			const formattedDate = `${month}/${day}/${year}`;
+			const formattedDate = `${day}/${month}/${year}`;
 			const option: OrderDateTime = {
 				date: formattedDate,
 				times: item.times
@@ -80,9 +80,9 @@ export class CustomerDetailsComponent implements OnInit {
 	}
 
 	getTodayDate(): string {
-		return new Date().toLocaleDateString('en-US', {
-			month: '2-digit',
+		return new Date().toLocaleDateString('en-GB', {
 			day: '2-digit',
+			month: '2-digit',
 			year: 'numeric'
 		});
 	}

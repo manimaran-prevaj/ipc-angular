@@ -2,6 +2,9 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
+import { CustomerEntryService } from "../../services/customer-entry.service";
+
+
 // TODO:: Order date and time to be obtained from BE API
 import { orderDateTime } from '../../../../mockdata/future-datetime.js';
 
@@ -28,7 +31,8 @@ export class CustomerDetailsComponent implements OnInit {
 
 	constructor(
 		private formBuilder: FormBuilder,
-		public dialog: MatDialog
+		public dialog: MatDialog,
+		private customerEntryService: CustomerEntryService
 	) { }
 
 	ngOnInit() {
@@ -46,7 +50,7 @@ export class CustomerDetailsComponent implements OnInit {
 			phone: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(14)]],
 			phoneExt: [''],
 			datePicker: [todayDateTime, [Validators.required]],
-			modeOfDelivery: ["delivery", [Validators.required]],
+			modeOfDelivery: ['delivery', [Validators.required]],
 			emailOptIn: [],
 			emailOptOut: [],
 		});
@@ -104,9 +108,14 @@ export class CustomerDetailsComponent implements OnInit {
 	}
 	/** Diabling eslint as TemplateRef<any> is of type generic  */
 	/* eslint-disable */
-	openDateTimeModal(title: string, cancelText: string, confirmText: string, content: TemplateRef<any>): void {
+	openDateTimeModal(content: TemplateRef<any>): void {
 		const dialogRef = this.dialog.open(CCCModalComponent, {
-			data: { title, cancelText, confirmText, content },
+			data: {
+				title: 'Choose date & time',
+				cancelText: 'Cancel',
+				confirmText: 'Done',
+				content
+			}
 		});
 
 		dialogRef.afterClosed().subscribe(confirm => {
@@ -120,4 +129,9 @@ export class CustomerDetailsComponent implements OnInit {
 		});
 	}
 	/* eslint-enable */
+
+	onDeliveryTypeChange() {
+		// TODO :: Remove this logic to NgRx Store
+		this.customerEntryService.setDeliveryType(this.customerDetailsForm.controls['modeOfDelivery'].value);
+	}
 }

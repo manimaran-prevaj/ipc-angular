@@ -1,0 +1,47 @@
+<div class="app-address-details row flex-col ">
+	<div class="row justify-between items-center">
+		<div class="h6 font-bold leading-6 text-dark-brown">
+			Address Details
+		</div>
+		<button class="row justify-between items-center cursor-pointer" (click)="openRecentAddresses(addressesTemplate)">
+			<div class="w-[16px] h-[16px] mr-2">
+				<img alt="access time" class="img w-full h-auto" src="./static-files/images/access_time.png" />
+			</div>
+			<div class="smaller text-dark-orange font-bold">Recent {{deliveryType}} addresses</div>
+		</button>
+	</div>
+</div>
+
+
+<ng-template #addressesTemplate>
+	<div>
+		@if (deliveryType === 'delivery') {
+		<mat-selection-list #deliveryAddresses color="primary" [multiple]="false"
+			class="bg-snow-grey !p-0 border border-pastel-grey">
+			@for (item of recentDeliveryAddresses; track item) {
+			<mat-list-option>
+				<div matListItemTitle>
+					<span>{{item.address_type}}</span>&nbsp;-&nbsp;<span>{{item.street_number}}</span>&nbsp;<span>{{item.street_address}}</span>,&nbsp;<span>{{item.city}}</span>,&nbsp;<span>{{item.province}}</span>
+				</div>
+				<div matListItemLine>
+					<span>{{item.entrance_specs}}</span>
+				</div>
+			</mat-list-option>
+			}
+		</mat-selection-list>
+		}
+		@else if (deliveryType === 'pickup') {
+		<mat-selection-list #deliveryAddresses color="primary" [multiple]="false"
+			class="bg-snow-grey !p-0 border border-pastel-grey">
+			@for (item of recentPickupAddresses; track item) {
+			<mat-list-option>
+				<div matListItemTitle>
+					<span>Store
+						#{{item.store_id}}</span>&nbsp;<span>{{item.street_number}}</span>&nbsp;<span>{{item.street_address}}</span>,&nbsp;<span>{{item.city}}</span>,&nbsp;<span>{{item.province}}</span>
+				</div>
+			</mat-list-option>
+			}
+		</mat-selection-list>
+		}
+	</div>
+</ng-template>

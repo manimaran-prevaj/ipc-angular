@@ -11,6 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 		MatDatepickerModule,
 		MatButtonToggleModule,
 		MatDialogModule,
-		MatSelectModule
+		MatSelectModule,
+		MatListModule
 	],
 	exports: [
 		MatCardModule,
@@ -37,7 +39,8 @@ import { MatSelectModule } from '@angular/material/select';
 		MatDatepickerModule,
 		MatButtonToggleModule,
 		MatDialogModule,
-		MatSelectModule
+		MatSelectModule,
+		MatListModule
 	],
 	providers: [
 		{

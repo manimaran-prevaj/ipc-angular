@@ -1,6 +1,6 @@
 <div class="app-customer-details row flex-col ">
 	<div class="row">
-		<span class="h6 font-bold leading-6 text-color-brown">Customer Details</span>
+		<span class="h6 font-bold leading-6 text-dark-brown">Customer Details</span>
 	</div>
 	<form [formGroup]="customerDetailsForm">
 		<div class="row mt-4">
@@ -32,8 +32,10 @@
 			<div class="w-1/2 ml-2">
 				<mat-button-toggle-group class="delivery-mode-toggle-group" name="modeOfDelivery"
 					formControlName="modeOfDelivery">
-					<mat-button-toggle class="delivery-mode-toggle-button" value="delivery">Delivery</mat-button-toggle>
-					<mat-button-toggle class="delivery-mode-toggle-button" value="pickup">Pickup</mat-button-toggle>
+					<mat-button-toggle class="delivery-mode-toggle-button" value="delivery"
+						(change)="onDeliveryTypeChange()">Delivery</mat-button-toggle>
+					<mat-button-toggle class="delivery-mode-toggle-button" value="pickup"
+						(change)="onDeliveryTypeChange()">Pickup</mat-button-toggle>
 				</mat-button-toggle-group>
 			</div>
 		</div>
@@ -68,7 +70,7 @@
 					<mat-label>Order date</mat-label>
 					<input matInput [readonly]="true" formControlName="datePicker">
 					<mat-datepicker-toggle matIconSuffix
-						(click)="openDateTimeModal('Choose date & time','Cancel','Done', dateTimeTemplate)"></mat-datepicker-toggle>
+						(click)="openDateTimeModal(dateTimeTemplate)"></mat-datepicker-toggle>
 				</mat-form-field>
 				<mat-error
 					*ngIf="customerDetailsForm.controls['datePicker'].touched && customerDetailsForm.controls['datePicker'].errors">
@@ -119,7 +121,9 @@
 					<mat-label>Select Date</mat-label>
 					<mat-select color="accent" formControlName="date" [(value)]="selectedDate"
 						(selectionChange)="onDateChange()">
-						<mat-option *ngFor="let item of orderDateTimeData" [value]="item.date">{{item.date}}</mat-option>
+						@for (item of orderDateTimeData; track item) {
+						<mat-option [value]="item.date">{{item.date}}</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 			</div>
@@ -127,7 +131,9 @@
 				<mat-form-field>
 					<mat-label>Select Time</mat-label>
 					<mat-select color="accent" formControlName="time" [(value)]="selectedTime">
-						<mat-option *ngFor="let time of filteredTimes" [value]="time">{{time}}</mat-option>
+						@for (time of filteredTimes; track time) {
+						<mat-option [value]="time">{{time}}</mat-option>
+						}
 					</mat-select>
 				</mat-form-field>
 			</div>

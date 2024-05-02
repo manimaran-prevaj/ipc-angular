@@ -1,9 +1,32 @@
+@import 'global-scss-mixing';
+
 ::ng-deep {
 	.mat-mdc-dialog-container {
 		.mat-mdc-dialog-title {
 			&::before {
 				display: none;
 				height: 0;
+			}
+		}
+	}
+
+	.mat-mdc-list-option {
+		.mdc-radio__outer-circle {
+			border-radius: 0 !important;
+		}
+
+		.mdc-radio__inner-circle {
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background-color: $ccc-btn-darker-orange;
+				padding: 8px;
+				color: $white;
+				font-size: 32px;
+				font-weight: 700;
+				content: '\2713';
 			}
 		}
 	}

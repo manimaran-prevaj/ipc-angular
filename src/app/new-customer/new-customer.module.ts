@@ -10,11 +10,13 @@ import { NewCustomerComponent } from './containers/new-customer/new-customer.com
 import { CustomerEntryComponent } from './containers/customer-entry/customer-entry.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddressDetailsComponent } from './components/address-details/address-details.component';
 
 export const COMPONENTS = [
 	NewCustomerComponent,
 	CustomerDetailsComponent,
-	CustomerEntryComponent
+	CustomerEntryComponent,
+	AddressDetailsComponent
 ];
 
 @NgModule({

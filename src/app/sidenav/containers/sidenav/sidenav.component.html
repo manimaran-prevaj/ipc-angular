@@ -1,11 +1,12 @@
-<div class="app-sidenav row border-r border-r-border-sidenav" (mouseenter)="onSideNavToggle()"
+<div class="app-sidenav row border-r border-r-pastel-grey" (mouseenter)="onSideNavToggle()"
 	(mouseleave)="onSideNavToggle()">
 	<mat-sidenav mode="side" opened>
 		<div class="sidenav-container cursor-pointer" [@onSideNavChange]="isSideNavExpanded ? 'open' : 'close'">
 			<div class="sidenavitems-container p-3 mt-4">
-				<div *ngFor="let sideNavItem of sideNavItemsList">
-					<app-sidenav-item [sideNavItem]="sideNavItem" [isSideNavExpanded]="isSideNavExpanded"></app-sidenav-item>
-				</div>
+				@for (sideNavItem of sideNavItemsList; track sideNavItem) {
+				<app-sidenav-item [sideNavItem]="sideNavItem"
+					[isSideNavExpanded]="isSideNavExpanded"></app-sidenav-item>
+				}
 			</div>
 		</div>
 	</mat-sidenav>

@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"outDir": "./dist/build-server",
 		"types": [
-			"node"
+			"node",
+			"google.maps"
 		]
 	},
 	"files": [

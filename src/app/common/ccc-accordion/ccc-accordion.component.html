@@ -7,12 +7,12 @@
 				<div class="flex-auto">
 					<ng-content select="[titleDesc]"></ng-content>
 				</div>
-				<div class="toggle-icon cursor-pointer w-[24px] bg-dark-orange rounded-[5px]">
+				<div class="toggle-icon cursor-pointer w-[24px] h-[24px] bg-dark-orange rounded-[5px]">
 					<div *ngIf="panelOpenState">
-						<img alt="panel_open" class="w-[24px] h-[24px]" src="./static-files/images/up_caret.png" />
+						<img alt="panel_open" class="w-full h-auto" src="./static-files/images/up_caret.png" />
 					</div>
 					<div *ngIf="!panelOpenState">
-						<img alt="panel_close" class="w-[24px] h-[24px]" src="./static-files/images/down_caret.png" />
+						<img alt="panel_close" class="w-full h-auto" src="./static-files/images/down_caret.png" />
 					</div>
 				</div>
 			</div>

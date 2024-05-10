@@ -1,9 +1,10 @@
-<div class="app-address-details row flex-col ">
+<div class="app-address-details row flex-col">
 	<div class="row justify-between items-center">
 		<div class="h6 font-bold leading-6 text-dark-brown">
 			Address Details
 		</div>
-		<button class="row justify-between items-center cursor-pointer" (click)="openRecentAddresses(addressesTemplate)">
+		<button class="row justify-between items-center cursor-pointer"
+			(click)="openRecentAddresses(addressesTemplate)">
 			<div class="w-[16px] h-[16px] mr-2">
 				<img alt="access time" class="img w-full h-auto" src="./static-files/images/access_time.png" />
 			</div>
@@ -16,14 +17,21 @@
 			<div class="w-3/4 mr-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>{{deliveryType === 'delivery' ? 'Delivery Address' : 'Restaurant Search'}}</mat-label>
-					<input formControlName="autocompleteAddress" matInput #inputfield (keyup)="onAddressSearch($event)">
+					<input formControlName="autocompleteAddress" matInput #inputfield>
 				</mat-form-field>
+
+				<div #noResults class="no-results cursor-pointer" [ngClass]="{'row': !isAutoCompleteEmpty}">
+					<div class="row no-results-row justify-between items-center">
+						<a tabindex="0" class="manual-address-link smaller text-dark-orange font-bold p-2"
+							*ngIf="!isAutoCompleteEmpty" (click)="onManualLookup()"
+							(keyup.enter)="onManualLookup()">Manual Address Lookup</a>
+					</div>
+				</div>
 			</div>
 			<div class="w-3/4 ml-2">
-				<mat-form-field>
+				<mat-form-field color="accent">
 					<mat-label>Dwelling Type</mat-label>
-					<mat-select color="accent" formControlName="dwellingType"
-						(selectionChange)="onDwellingTypeChange($event)">
+					<mat-select formControlName="dwellingType" (selectionChange)="onDwellingTypeChange($event)">
 						@for (option of dwellingTypeOptions; track option) {
 						<mat-option [value]="option">{{option}}</mat-option>
 						}
@@ -32,7 +40,6 @@
 			</div>
 		</div>
 	</form>
-
 </div>
 
 

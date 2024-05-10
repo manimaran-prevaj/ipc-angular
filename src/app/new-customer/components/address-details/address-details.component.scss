@@ -1,0 +1,27 @@
+.app-address-details {
+	.no-results {
+		flex-direction: column-reverse !important;
+
+		.manual-address-link {
+			text-decoration: none;
+		}
+
+		.pac-container {
+			display: block !important;
+			position: relative !important;
+			top: 0 !important;
+			left: 0 !important;
+			border: 0;
+			box-shadow: none;
+			max-width: 100%;
+
+			&.pac-logo::after {
+				background: none !important;
+				padding: 0 !important;
+				height: 0 !important;
+				content: '' !important;
+			}
+		}
+
+	}
+}

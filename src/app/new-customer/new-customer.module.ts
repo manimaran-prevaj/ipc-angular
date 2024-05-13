@@ -11,12 +11,14 @@ import { CustomerEntryComponent } from './containers/customer-entry/customer-ent
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddressDetailsComponent } from './components/address-details/address-details.component';
+import { DwellingTypeDetailsComponent } from './components/dwelling-type-details/dwelling-type-details.component';
 
 export const COMPONENTS = [
 	NewCustomerComponent,
 	CustomerDetailsComponent,
 	CustomerEntryComponent,
-	AddressDetailsComponent
+	AddressDetailsComponent,
+	DwellingTypeDetailsComponent
 ];
 
 @NgModule({

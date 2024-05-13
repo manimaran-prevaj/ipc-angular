@@ -14,7 +14,7 @@
 
 	<form [formGroup]="addressDetailsForm">
 		<div class="row mt-4">
-			<div class="w-3/4 mr-2">
+			<div class="w-3/5 mr-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>{{deliveryType === 'delivery' ? 'Delivery Address' : 'Restaurant Search'}}</mat-label>
 					<input formControlName="autocompleteAddress" matInput #inputfield>
@@ -28,17 +28,24 @@
 					</div>
 				</div>
 			</div>
-			<div class="w-3/4 ml-2">
-				<mat-form-field color="accent">
+			<div class="w-2/5 ml-2">
+				<mat-form-field color="accent" dis>
 					<mat-label>Dwelling Type</mat-label>
 					<mat-select formControlName="dwellingType" (selectionChange)="onDwellingTypeChange($event)">
 						@for (option of dwellingTypeOptions; track option) {
-						<mat-option [value]="option">{{option}}</mat-option>
+						<mat-option [value]="option?.value">{{option?.text}}</mat-option>
 						}
 					</mat-select>
 				</mat-form-field>
 			</div>
 		</div>
+		@if (selectedDwellingType && deliveryType === 'delivery') {
+		<div class="row mt-4">
+			<div class="w-full">
+				<app-dwelling-type-details [selectedDwellingType]="selectedDwellingType"></app-dwelling-type-details>
+			</div>
+		</div>
+		}
 	</form>
 </div>
 

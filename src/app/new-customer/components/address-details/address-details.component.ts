@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 // TODO:: Recent delivery/pickup addresses to be obtained from BE API
 import { deliveryAddresses, pickupAddresses } from './../../../../mockdata/addresses.js';
 import { Subscription } from "rxjs";
+import { DwellingTypeOptions } from "../models/customer-entry.model";
 declare let google;
 
 @Component({
@@ -28,20 +29,57 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	public recentPickupAddresses;
 	public autocomplete: google.maps.places.Autocomplete;
 	public isAutoCompleteEmpty: boolean;
-	public dwellingTypeOptions: string[] = [
-		'House',
-		'Apartment',
-		'Condo',
-		'Town House',
-		'Plex',
-		'Hotel',
-		'Mobile Park',
-		'Hospital',
-		'Business',
-		'University',
-		'College',
-		'School'
+	public dwellingTypeOptions: DwellingTypeOptions[] = [
+		{
+			text: 'House',
+			value: 'house'
+		},
+		{
+			text: 'Apartment',
+			value: 'apartment'
+		},
+		{
+			text: 'Condo',
+			value: 'condo'
+		},
+		{
+			text: 'Town House',
+			value: 'townHouse'
+		},
+		{
+			text: 'Plex',
+			value: 'plex'
+		},
+		{
+			text: 'Hotel',
+			value: 'hotel'
+		},
+		{
+			text: 'Mobile Park',
+			value: 'mobilePark'
+		},
+		{
+			text: 'Hospital',
+			value: 'hospital'
+		},
+		{
+			text: 'Business',
+			value: 'business'
+		},
+		{
+			text: 'University',
+			value: 'university'
+		},
+		{
+			text: 'College',
+			value: 'college'
+		},
+		{
+			text: 'School',
+			value: 'school'
+		}
 	];
+	public selectedDwellingType: string;
 
 	public nodeObserver: MutationObserver;
 	public formChangeRef: Subscription;
@@ -80,7 +118,9 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		this.deliveryType = 'delivery';
 		this.customerEntryService.deliveryType$.subscribe((deliveryType: string) => {
 			this.deliveryType = deliveryType;
+			this.selectedDwellingType = '';
 			this.addressDetailsForm.reset();
+			this.addressDetailsForm.controls['dwellingType'][this.deliveryType === 'pickup' ? 'disable' : 'enable']();
 		});
 
 		// TODO:: Recent delivery/pickup addresses to be obtained from BE API
@@ -152,7 +192,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	/* eslint-enable */
 
 	onDwellingTypeChange(event) {
-		console.log(event.value);
+		this.selectedDwellingType = event?.value;
 	}
 
 	onManualLookup() {

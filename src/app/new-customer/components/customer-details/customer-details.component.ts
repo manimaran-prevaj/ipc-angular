@@ -7,12 +7,8 @@ import { CustomerEntryService } from "../../services/customer-entry.service";
 
 // TODO:: Order date and time to be obtained from BE API
 import { orderDateTime } from '../../../../mockdata/future-datetime.js';
+import { OrderDateTime } from "../models/customer-entry.model";
 
-export interface OrderDateTime {
-	date: string;
-	times: [string];
-	day_code?: string;
-}
 
 @Component({
 	selector: 'app-customer-details',

@@ -1,0 +1,153 @@
+<div class="app-dwelling-type-details row flex-col">
+	<form [formGroup]="dwellingTypeDetailsForm">
+		<div class="row justify-between items-center row flex-col">
+			<div class="row w-full">
+				<!-- Dwelling type:: Apartment, Condo -->
+				@if (
+				selectedDwellingType === 'apartment' ||
+				selectedDwellingType === 'condo'
+				) {
+				<!-- Apartment Number -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Apt #</mat-label>
+						<input matInput formControlName="aptNumber">
+					</mat-form-field>
+				</div>
+				<!-- Buzzer Number -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Buzzer #</mat-label>
+						<input matInput formControlName="buzzerNumber">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: Town House, Plex -->
+				@if (
+				selectedDwellingType === 'townHouse' ||
+				selectedDwellingType === 'plex'
+				) {
+				<!-- Unit Number -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Unit #</mat-label>
+						<input matInput formControlName="unitNumber">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: Mobile Park -->
+				@if ( selectedDwellingType === 'mobilePark' ) {
+				<!-- Site Number -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Site #</mat-label>
+						<input matInput formControlName="siteNumber">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: Hotel -->
+				@if ( selectedDwellingType === 'hotel' ) {
+				<!-- Room Number -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Room #</mat-label>
+						<input matInput formControlName="roomNumber">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: Hospital -->
+				@if ( selectedDwellingType === 'hospital' ) {
+				<!-- Wing Name -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Wing Name</mat-label>
+						<input matInput formControlName="wingName">
+					</mat-form-field>
+				</div>
+				<!-- Floor Number -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Floor #</mat-label>
+						<input matInput formControlName="floorNumber">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: Business -->
+				@if ( selectedDwellingType === 'business' ) {
+				<!-- Business Name -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Business Name</mat-label>
+						<input matInput formControlName="businessName">
+					</mat-form-field>
+				</div>
+				<!-- Alternative Phone Number -->
+				<div class="w-1/3 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Alternative Phone #</mat-label>
+						<input type="tel" matInput appPhoneMask maxlength="14" formControlName="alternativePhoneNumber"
+							(keypress)="onlyNumber($event)">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Dwelling type:: University, college -->
+				@if (
+				selectedDwellingType === 'university' ||
+				selectedDwellingType === 'college'
+				) {
+				<!-- Hall Name -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Hall Name</mat-label>
+						<input matInput formControlName="hallName">
+					</mat-form-field>
+				</div>
+				}
+
+				<!-- Instructions -->
+				<div class="w-1/3" [ngClass]="{'!w-1/2':
+						selectedDwellingType === 'townHouse' ||
+						selectedDwellingType === 'plex' ||
+						selectedDwellingType === 'hotel' ||
+						selectedDwellingType === 'mobilePark' ||
+						selectedDwellingType === 'university' ||
+						selectedDwellingType === 'college'
+					}">
+					<mat-form-field color="accent">
+						<mat-label>Instructions</mat-label>
+						<mat-select formControlName="instructions" (selectionChange)="onInstructionsChange($event)">
+							@for (option of instructionsOptions; track option) {
+							<mat-option [value]="option?.value">{{option?.text}}</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="row w-full mt-4">
+				<!-- Dwelling type:: Hotel -->
+				@if ( selectedDwellingType === 'hotel' ) {
+				<!-- Guest Name -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Guest Name (optional)</mat-label>
+						<input matInput formControlName="guestName">
+					</mat-form-field>
+				</div>
+				<!-- Alternative Number -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent">
+						<mat-label>Alternative # (optional)</mat-label>
+						<input matInput formControlName="alternativeNumber">
+					</mat-form-field>
+				</div>
+				}
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { Instructions } from "../models/customer-entry.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { instructionsOptions } from "./../../../../mockdata/static-copy.js";
 
 @Component({
 	selector: 'app-dwelling-type-details',
@@ -12,16 +13,7 @@ export class DwellingTypeDetailsComponent implements OnChanges {
 	@Input() selectedDwellingType: string;
 
 	public dwellingTypeDetailsForm: FormGroup;
-	public instructionsOptions: Instructions[] = [
-		{
-			text: 'Front Door',
-			value: 'frontDoor'
-		},
-		{
-			text: 'Back Door',
-			value: 'backDoor'
-		}
-	]
+	public instructionsOptions: Instructions[] = instructionsOptions;
 
 	constructor(
 		private formBuilder: FormBuilder

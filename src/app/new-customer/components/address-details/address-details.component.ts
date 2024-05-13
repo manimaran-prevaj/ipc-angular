@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { deliveryAddresses, pickupAddresses } from './../../../../mockdata/addresses.js';
 import { Subscription } from "rxjs";
 import { DwellingTypeOptions } from "../models/customer-entry.model";
+import { dwellingTypeOptions } from "./../../../../mockdata/static-copy.js";
 declare let google;
 
 @Component({
@@ -29,56 +30,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	public recentPickupAddresses;
 	public autocomplete: google.maps.places.Autocomplete;
 	public isAutoCompleteEmpty: boolean;
-	public dwellingTypeOptions: DwellingTypeOptions[] = [
-		{
-			text: 'House',
-			value: 'house'
-		},
-		{
-			text: 'Apartment',
-			value: 'apartment'
-		},
-		{
-			text: 'Condo',
-			value: 'condo'
-		},
-		{
-			text: 'Town House',
-			value: 'townHouse'
-		},
-		{
-			text: 'Plex',
-			value: 'plex'
-		},
-		{
-			text: 'Hotel',
-			value: 'hotel'
-		},
-		{
-			text: 'Mobile Park',
-			value: 'mobilePark'
-		},
-		{
-			text: 'Hospital',
-			value: 'hospital'
-		},
-		{
-			text: 'Business',
-			value: 'business'
-		},
-		{
-			text: 'University',
-			value: 'university'
-		},
-		{
-			text: 'College',
-			value: 'college'
-		},
-		{
-			text: 'School',
-			value: 'school'
-		}
-	];
+	public dwellingTypeOptions: DwellingTypeOptions[] = dwellingTypeOptions;
 	public selectedDwellingType: string;
 
 	public nodeObserver: MutationObserver;

@@ -7,19 +7,21 @@
 				selectedDwellingType === 'apartment' ||
 				selectedDwellingType === 'condo'
 				) {
-				<!-- Apartment Number -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Apt #</mat-label>
-						<input matInput formControlName="aptNumber">
-					</mat-form-field>
-				</div>
-				<!-- Buzzer Number -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Buzzer #</mat-label>
-						<input matInput formControlName="buzzerNumber">
-					</mat-form-field>
+				<div class="row w-3/5 mr-4">
+					<!-- Apartment Number -->
+					<div class="w-1/2 mr-2">
+						<mat-form-field color="accent">
+							<mat-label>Apt #</mat-label>
+							<input matInput formControlName="aptNumber">
+						</mat-form-field>
+					</div>
+					<!-- Buzzer Number -->
+					<div class="w-1/2 ml-2">
+						<mat-form-field color="accent">
+							<mat-label>Buzzer #</mat-label>
+							<input matInput formControlName="buzzerNumber">
+						</mat-form-field>
+					</div>
 				</div>
 				}
 
@@ -29,7 +31,7 @@
 				selectedDwellingType === 'plex'
 				) {
 				<!-- Unit Number -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2 mr-4">
 					<mat-form-field color="accent">
 						<mat-label>Unit #</mat-label>
 						<input matInput formControlName="unitNumber">
@@ -40,7 +42,7 @@
 				<!-- Dwelling type:: Mobile Park -->
 				@if ( selectedDwellingType === 'mobilePark' ) {
 				<!-- Site Number -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2 mr-4">
 					<mat-form-field color="accent">
 						<mat-label>Site #</mat-label>
 						<input matInput formControlName="siteNumber">
@@ -51,7 +53,7 @@
 				<!-- Dwelling type:: Hotel -->
 				@if ( selectedDwellingType === 'hotel' ) {
 				<!-- Room Number -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2 mr-4">
 					<mat-form-field color="accent">
 						<mat-label>Room #</mat-label>
 						<input matInput formControlName="roomNumber">
@@ -61,38 +63,42 @@
 
 				<!-- Dwelling type:: Hospital -->
 				@if ( selectedDwellingType === 'hospital' ) {
-				<!-- Wing Name -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Wing Name</mat-label>
-						<input matInput formControlName="wingName">
-					</mat-form-field>
-				</div>
-				<!-- Floor Number -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Floor #</mat-label>
-						<input matInput formControlName="floorNumber">
-					</mat-form-field>
+				<div class="row w-3/5 mr-4">
+					<!-- Wing Name -->
+					<div class="w-1/2 mr-2">
+						<mat-form-field color="accent">
+							<mat-label>Wing Name</mat-label>
+							<input matInput formControlName="wingName">
+						</mat-form-field>
+					</div>
+					<!-- Floor Number -->
+					<div class="w-1/2 ml-2">
+						<mat-form-field color="accent">
+							<mat-label>Floor #</mat-label>
+							<input matInput formControlName="floorNumber">
+						</mat-form-field>
+					</div>
 				</div>
 				}
 
 				<!-- Dwelling type:: Business -->
 				@if ( selectedDwellingType === 'business' ) {
-				<!-- Business Name -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Business Name</mat-label>
-						<input matInput formControlName="businessName">
-					</mat-form-field>
-				</div>
-				<!-- Alternative Phone Number -->
-				<div class="w-1/3 mr-2">
-					<mat-form-field color="accent">
-						<mat-label>Alternative Phone #</mat-label>
-						<input type="tel" matInput appPhoneMask maxlength="14" formControlName="alternativePhoneNumber"
-							(keypress)="onlyNumber($event)">
-					</mat-form-field>
+				<div class="row w-3/5 mr-4">
+					<!-- Business Name -->
+					<div class="w-1/2 mr-2">
+						<mat-form-field color="accent">
+							<mat-label>Business Name</mat-label>
+							<input matInput formControlName="businessName">
+						</mat-form-field>
+					</div>
+					<!-- Alternative Phone Number -->
+					<div class="w-1/2 ml-2">
+						<mat-form-field color="accent">
+							<mat-label>Alternative Phone #</mat-label>
+							<input type="tel" matInput appPhoneMask maxlength="14" formControlName="alternativePhoneNumber"
+								(keypress)="onlyNumber($event)">
+						</mat-form-field>
+					</div>
 				</div>
 				}
 
@@ -102,7 +108,7 @@
 				selectedDwellingType === 'college'
 				) {
 				<!-- Hall Name -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2 mr-4">
 					<mat-form-field color="accent">
 						<mat-label>Hall Name</mat-label>
 						<input matInput formControlName="hallName">
@@ -111,13 +117,20 @@
 				}
 
 				<!-- Instructions -->
-				<div class="w-1/3" [ngClass]="{'!w-1/2':
+				<div [ngClass]="{'w-1/2':
 						selectedDwellingType === 'townHouse' ||
 						selectedDwellingType === 'plex' ||
 						selectedDwellingType === 'hotel' ||
 						selectedDwellingType === 'mobilePark' ||
 						selectedDwellingType === 'university' ||
 						selectedDwellingType === 'college'
+					, 'w-2/5':
+						selectedDwellingType === 'house' ||
+						selectedDwellingType === 'school' ||
+						selectedDwellingType === 'apartment' ||
+						selectedDwellingType === 'condo' ||
+						selectedDwellingType === 'business' ||
+						selectedDwellingType === 'hospital'
 					}">
 					<mat-form-field color="accent">
 						<mat-label>Instructions</mat-label>
@@ -133,14 +146,14 @@
 				<!-- Dwelling type:: Hotel -->
 				@if ( selectedDwellingType === 'hotel' ) {
 				<!-- Guest Name -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2 mr-4">
 					<mat-form-field color="accent">
 						<mat-label>Guest Name (optional)</mat-label>
 						<input matInput formControlName="guestName">
 					</mat-form-field>
 				</div>
 				<!-- Alternative Number -->
-				<div class="w-1/2 mr-2">
+				<div class="w-1/2">
 					<mat-form-field color="accent">
 						<mat-label>Alternative # (optional)</mat-label>
 						<input matInput formControlName="alternativeNumber">

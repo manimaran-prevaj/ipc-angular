@@ -3,8 +3,7 @@
 		<div class="h6 font-bold leading-6 text-dark-brown">
 			Address Details
 		</div>
-		<button class="row justify-between items-center cursor-pointer"
-			(click)="openRecentAddresses(addressesTemplate)">
+		<button class="row justify-between items-center cursor-pointer" (click)="openRecentAddresses(addressesTemplate)">
 			<div class="w-[16px] h-[16px] mr-2">
 				<img alt="access time" class="img w-full h-auto" src="./static-files/images/access_time.png" />
 			</div>
@@ -14,7 +13,7 @@
 
 	<form [formGroup]="addressDetailsForm">
 		<div class="row mt-4">
-			<div class="w-3/5 mr-2">
+			<div class="w-3/5 mr-4">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>{{deliveryType === 'delivery' ? 'Delivery Address' : 'Restaurant Search'}}</mat-label>
 					<input formControlName="autocompleteAddress" matInput #inputfield>
@@ -23,12 +22,12 @@
 				<div #noResults class="no-results cursor-pointer" [ngClass]="{'row': !isAutoCompleteEmpty}">
 					<div class="row no-results-row justify-between items-center">
 						<a tabindex="0" class="manual-address-link smaller text-dark-orange font-bold p-2"
-							*ngIf="!isAutoCompleteEmpty" (click)="onManualLookup()"
-							(keyup.enter)="onManualLookup()">Manual Address Lookup</a>
+							*ngIf="!isAutoCompleteEmpty" (click)="onManualLookup()" (keyup.enter)="onManualLookup()">Manual
+							Address Lookup</a>
 					</div>
 				</div>
 			</div>
-			<div class="w-2/5 ml-2">
+			<div class="w-2/5">
 				<mat-form-field color="accent" dis>
 					<mat-label>Dwelling Type</mat-label>
 					<mat-select formControlName="dwellingType" (selectionChange)="onDwellingTypeChange($event)">

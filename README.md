@@ -21,14 +21,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 -	Package manager NPM 10.1.0
 -	TypeScript 5.2.2
 -	RxJS 7.8.0
--	Google Material Design
--	SCSS
+-	Angular Material Design 17.3.1
+-	Tailwind CSS 3.4.3
 
 ## Getting Started / Installing
 -	Clone github repository from [BitBucket](https://bitbucket.org/pizzapizzateam/ppl-ccc-fe-phx2/src/ccc-uat/).
 -	Install dependencies via npm install.
 -	Start the middleware
 -	Start the development server.
+
+## CCC Documentation
+-	Confluence: https://pizzapizzateam.atlassian.net/wiki/spaces/PP/pages/2415886337/CCC+FE+project
 
 ## Middleware
 -	`npm run middleware` to start the middleware.
@@ -41,6 +44,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Code scaffolding
 -	Run `ng generate component component-name` to generate a new component.
 -	You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Tailwind CSS
+-	Refer official documentaion: https://tailwindcss.com/docs/installation
+-	Use Angular Material Design and Tailwind CSS clases to style components
+-	Only use custom CSS to override Angular Material Design default styling of components or something which requires customization
+
 
 ## Code conversion
 -	Use ONLY tabs in all source files

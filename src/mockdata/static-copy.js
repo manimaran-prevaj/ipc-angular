@@ -59,3 +59,26 @@ export const instructionsOptions = [
 		value: 'backDoor'
 	}
 ];
+
+export const provinceOptions = [
+	{
+		text:'ON',
+		value:'ON'
+	},
+	{
+		text:'NL',
+		value:'NL'
+	},
+	{
+		text:'QC',
+		value:'QC'
+	},
+	{
+		text:'BC',
+		value:'BC'
+	},
+	{
+		text:'AB',
+		value:'AB'
+	}
+]

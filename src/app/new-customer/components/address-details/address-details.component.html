@@ -22,7 +22,7 @@
 				<div #noResults class="no-results cursor-pointer" [ngClass]="{'row': !isAutoCompleteEmpty}">
 					<div class="row no-results-row justify-between items-center">
 						<a tabindex="0" class="manual-address-link smaller text-dark-orange font-bold p-2"
-							*ngIf="!isAutoCompleteEmpty" (click)="onManualLookup()" (keyup.enter)="onManualLookup()">Manual
+							*ngIf="!isAutoCompleteEmpty" (click)="onManualLookup(manualAddress)" (keyup.enter)="onManualLookup(manualAddress)">Manual
 							Address Lookup</a>
 					</div>
 				</div>
@@ -80,4 +80,8 @@
 		</mat-selection-list>
 		}
 	</div>
+</ng-template>
+
+<ng-template #manualAddress>
+	<app-manual-address-details [deliveryType]="deliveryType"></app-manual-address-details>
 </ng-template>

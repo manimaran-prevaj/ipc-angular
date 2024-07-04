@@ -9,6 +9,7 @@ import { deliveryAddresses, pickupAddresses } from './../../../../mockdata/addre
 import { Subscription } from "rxjs";
 import { DwellingTypeOptions } from "../models/customer-entry.model";
 import { dwellingTypeOptions } from "./../../../../mockdata/static-copy.js";
+import { ManualAddressDetailsComponent } from "../manual-address-details/manual-address-details.component";
 declare let google;
 
 @Component({
@@ -128,6 +129,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				title: `Recent ${this.deliveryType} addresses`,
 				cancelText: 'Cancel',
 				confirmText: 'Done',
+				delievryType: this.deliveryType,
 				content
 			},
 			maxHeight: '500px'
@@ -147,8 +149,29 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		this.selectedDwellingType = event?.value;
 	}
 
-	onManualLookup() {
-		console.log("Manual Lookup");
+	onManualLookup(content: TemplateRef<any>): void {
+		const dialogRef = this.dialog.open(CCCModalComponent, {
+			data: {
+				title: "",
+				
+				cancelText: 'Cancel',
+				confirmText: 'Done',
+				content
+			},
+			maxHeight: '90%',
+			width:"80%",
+		});
+		//  this.dialog.open(ManualAddressDetailsComponent, {
+		// 	data: {
+		// 		title: "",
+				
+		// 		cancelText: 'Cancel',
+		// 		confirmText: 'Done',
+		// 		content
+		// 	},
+		// 	maxHeight: '90%',
+		// 	width:"80%",
+		// });
 	}
 
 	ngOnDestroy() {

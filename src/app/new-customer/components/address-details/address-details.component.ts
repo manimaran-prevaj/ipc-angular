@@ -149,8 +149,8 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		this.selectedDwellingType = event?.value;
 	}
 
-	onManualLookup(content: TemplateRef<any>): void {
-		const dialogRef = this.dialog.open(CCCModalComponent, {
+	onManualLookup(content: TemplateRef<ManualAddressDetailsComponent>): void {
+		this.dialog.open(CCCModalComponent, {
 			data: {
 				title: "",
 				
@@ -161,17 +161,6 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 			maxHeight: '90%',
 			width:"80%",
 		});
-		//  this.dialog.open(ManualAddressDetailsComponent, {
-		// 	data: {
-		// 		title: "",
-				
-		// 		cancelText: 'Cancel',
-		// 		confirmText: 'Done',
-		// 		content
-		// 	},
-		// 	maxHeight: '90%',
-		// 	width:"80%",
-		// });
 	}
 
 	ngOnDestroy() {

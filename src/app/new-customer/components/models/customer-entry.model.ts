@@ -50,3 +50,10 @@ export interface ProvinceOptions {
 	text: string;
 	value: string;
 }
+
+export class ManualLocation{
+	rAdd: string;
+	rLoc: string;
+	rIntersection: string;
+	rAddHelp: string;
+}

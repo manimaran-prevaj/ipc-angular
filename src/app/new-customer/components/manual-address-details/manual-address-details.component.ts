@@ -1,8 +1,8 @@
-import { Component, Inject, Input, OnInit, inject, input } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { provinceOptions } from "./../../../../mockdata/static-copy.js";
-import { ProvinceOptions } from "../models/customer-entry.model";
-import { MAT_DIALOG_DATA, MatDialogTitle,MatDialogContent,MatDialog } from '@angular/material/dialog';
+import { ManualLocation, ProvinceOptions } from "../models/customer-entry.model";
+
 @Component({
   selector: 'app-manual-address-details',
   templateUrl: './manual-address-details.component.html',
@@ -11,25 +11,19 @@ import { MAT_DIALOG_DATA, MatDialogTitle,MatDialogContent,MatDialog } from '@ang
 
 
 export class ManualAddressDetailsComponent  implements OnInit{
-  
+   
   public addressDetailsForm: FormGroup;
   public provinceOptions: ProvinceOptions[] = provinceOptions;
-  public locations = [{rAdd:'Store #232 woodbrodge, 7694 Islington Avenue1',rLoc:'Islington Avenuȩ, west of medowvale at Dean park1',
-    rIntersection:'Morningside drive and medowvale road1',rAddHelp:'The hasty market is in the same place at store1'},
-    {rAdd:'Store #232 woodbrodge, 7694 Islington Avenue2',rLoc:'Islington Avenuȩ, west of medowvale at Dean park2',
-      rIntersection:'Morningside drive and medowvale road2',rAddHelp:'The hasty market is in the same place at store2'},
-      {rAdd:'Store #232 woodbrodge, 7694 Islington Avenue3',rLoc:'Islington Avenuȩ, west of medowvale at Dean park3',
-        rIntersection:'Morningside drive and medowvale road3',rAddHelp:'The hasty market is in the same place at store3'}];
+  public locations : ManualLocation[] = []; 
   public showAddressInfo = false;
-  public selectedRestaurant:any = null;
+  public selectedRestaurant: ManualLocation ; 
   public checkedIndex =-1;
 
   @Input() deliveryType = 'delivery';
 
   
   constructor(
-		private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
+		private formBuilder: FormBuilder
 	) {
     this.addressDetailsForm = this.formBuilder.group({
 			streetNumumber: '',
@@ -45,21 +39,27 @@ export class ManualAddressDetailsComponent  implements OnInit{
   }
 
   ngOnInit(): void {
-    
-console.log(this.data);
+    const location: ManualLocation = new ManualLocation();
+    location.rAdd = 'Store #232 woodbrodge, 7694 Islington Avenue1';
+    location.rLoc = 'Islington Avenuȩ, west of medowvale at Dean park1';
+    location. rIntersection = 'Morningside drive and medowvale road1';
+    location.rAddHelp = 'The hasty market is in the same place at store1';
+    this.locations.push(location);
+    this.locations.push(location);
+    this.locations.push(location);
   }
 
   onProvinceChange(event){
-
+console.log(event);
   }
-  onLocationChange(event: any, location: any, index:any){
+  onLocationChange(event, location, index:number){
 if(event.checked){
 this.showAddressInfo = true;
 this.selectedRestaurant = location;
 this.checkedIndex = index;
 } else {
   this.showAddressInfo = false;
-  this.selectedRestaurant = null;
+  this.selectedRestaurant = new ManualLocation();
 this.checkedIndex =-1
 }
   }

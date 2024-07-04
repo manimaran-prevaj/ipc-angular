@@ -1,0 +1,173 @@
+<div class="app-manual-address-details row flex-col">
+    <form [formGroup]="addressDetailsForm">
+        <div class="row justify-between items-center" *ngIf="deliveryType=='delivery'">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="h6 font-bold leading-7 mb-2 text-black">
+                        Address Details
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="w-2/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Street Number</mat-label>
+                            <input formControlName="streetNumumber" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-1/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Street Ext.</mat-label>
+                            <input formControlName="StreetExt" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-3/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Street Name</mat-label>
+                            <input formControlName="streetName" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="w-3/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>City</mat-label>
+                            <input formControlName="city" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-1/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Province</mat-label>
+                            <mat-select formControlName="province" (selectionChange)="onProvinceChange($event)">
+                                 @for (option of provinceOptions; track option) { 
+                                <mat-option [value]="option?.value">{{option?.text}}</mat-option>
+                                 } 
+                            
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-1/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Postal Code</mat-label>
+                            <input formControlName="postalCode" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="w-1/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Apt. Number</mat-label>
+                            <input formControlName="aptNumber" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-1/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Room Number</mat-label>
+                            <input formControlName="roomNumber" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-3/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Security Code</mat-label>
+                            <input formControlName="securityCode" matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-5 mb-2">
+                    <button mat-flat-button color="primary">Restaurant Search</button>
+                </div>
+            </div>
+            <div class="col-md-6 mr-2">
+                <div class="row">
+                    <div class="h6 font-bold leading-7 mb-2 text-black">
+                        Postal Code Search
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="w-4/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Street Number</mat-label>
+                            <input matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-1/5 mt-2">
+                        <button mat-flat-button color="primary">Search</button>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="h6 font-bold leading-7 text-black">
+                        Street Search
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="w-2.5/5 mr-2">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Major Street1</mat-label>
+                            <input matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-2.5/5">
+                        <mat-form-field color="accent" [hideRequiredMarker]="true">
+                            <mat-label>Major Street</mat-label>
+                            <input matInput #inputfield>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-4" >
+                    <button mat-flat-button color="primary">Force Search</button>
+                    <mat-radio-group label="">
+                        <mat-radio-button value="">In no go area</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="deliveryType!='delivery'">
+            <div class="row justify-between items-center mt-4">
+                <div class="h6 font-bold leading-7 mb-2 text-black">
+                    Restaurant Search
+                </div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="w-4/5">
+                    <mat-form-field color="accent" [hideRequiredMarker]="true">
+                        <mat-label>Restaurant address or Store number</mat-label>
+                        <input matInput #inputfield>
+                    </mat-form-field>
+                </div>
+                <div class="w-1/5 ml-4">
+                    <button mat-flat-button color="primary" class="mt-2">Restaurant Search</button>
+                </div>
+            </div>
+            </div>
+        <div class="row justify-between items-center mt-5 mb-2 h6 font-bold leading-7 text-black">Restaurant Locations</div>
+<div *ngFor=" let location of locations;index as i">
+    <!-- <mat-form-field color="accent" [hideRequiredMarker]="true"> -->
+ <div class="row" style="background-color: #f2f2f2;border: 1px solid #CACACA;padding-left: 1%;">
+<div class="w-4/5" style="padding-top: 1%; font-size: 16px; font-weight: 400; text-decoration-color: #49454F; line-height: 24px;">{{location.rAdd}}</div>
+<div class="w-1/5">
+    <mat-checkbox class="email-opt-in" style="margin-left: 70%;"  color="primary" [checked]="i==checkedIndex" (change)="onLocationChange($event,location,i)" > </mat-checkbox>
+</div>
+ </div>
+
+<!-- </mat-form-field> -->
+</div>
+<div class="row mr-2 ml-2 mt-4" *ngIf="showAddressInfo">
+    <div class="w-1.6/5">
+        <div class="row font-bold  text-black mt-2">Restaurant Location Information</div>
+        <div class="row" style="font-size: 16px; font-weight: 400; text-decoration-color: #49454F; line-height: 24px;">
+        {{selectedRestaurant?.rLoc}}</div>
+    </div>
+    <div class="w-1.6/5 mr-2">
+        <div class="row  font-bold text-black mt-2">Restaurant Intersection</div>
+        <div class="row" style="font-size: 16px; font-weight: 400; text-decoration-color: #49454F; line-height: 24px;">{{selectedRestaurant?.rIntersection}}
+            </div>
+        </div>
+    <div class="w-1.6/5">
+        <div class="row  font-bold text-black mt-2">Restaurant Address Help</div>
+        <div class="row" style="font-size: 16px; font-weight: 400; text-decoration-color: #49454F; line-height: 24px;">{{selectedRestaurant?.rAddHelp}}
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>

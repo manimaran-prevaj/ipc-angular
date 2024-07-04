@@ -42,3 +42,11 @@ export interface Instructions {
 	text: string;
 	value: string
 }
+
+/**
+ * Province type options interface
+ */
+export interface ProvinceOptions {
+	text: string;
+	value: string;
+}

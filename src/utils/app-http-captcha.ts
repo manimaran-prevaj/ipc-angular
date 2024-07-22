@@ -4,7 +4,7 @@ import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Observable, mergeMap } from "rxjs";
 
 // Config dictates which methods needs to have captcha
-import captchaProtectedMethods from '../../src-web-mw/config-captcha-paths.js'
+import * as captchaProtectedMethods from '../../src-web-mw/config-captcha-paths'
 
 @Injectable()
 export class AppHttpCaptcha implements HttpInterceptor {

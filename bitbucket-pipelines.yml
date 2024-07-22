@@ -8,7 +8,7 @@ definitions:
         name: Angular CLI and packages installation
         script:
           - npm install -g @angular/cli@17.2.0 # Install Angular CLI
-          - npm install # Install npm packages
+          - npm install --legacy-peer-deps # Install npm packages
         artifacts:
           - node_modules/**
 

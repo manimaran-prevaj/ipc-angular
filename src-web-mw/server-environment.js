@@ -12,11 +12,11 @@ let currentEnv = 'ppl-ccc-uat-fe';
 
 // Sessions IP limiter is not used in current version
 const devSessionIpLimits = {
-	isEnabled: false,
-	host: isRunningLocally ? 'localhost' : '10.0.0.3',
-	port: '6379',
-	maxSessionCount: 30,
-	limitResetTimeSec: 60 * 5 // 5 minutes
+    isEnabled: false,
+    host: isRunningLocally ? 'localhost' : '10.0.0.3',
+    port: '6379',
+    maxSessionCount: 30,
+    limitResetTimeSec: 60*5 // 5 minutes
 }
 
 // Maps project id to enviroment
@@ -42,18 +42,16 @@ const envConfig = {
 console.log(`Using config for product id: ${gaeAppId}`);
 
 if (appsEnv[gaeAppId]) {
-	currentEnv = appsEnv[gaeAppId]
+    currentEnv = appsEnv[gaeAppId]
 } else {
-	console.log(`CRITICAL | Environment is not defined for project id: ${gaeAppId}. Using default configuration: ${currentEnv}`);
-	if (!isRunningLocally) {
-		console.log(`Current proccess env:`);
-		console.log(process.env);
-	}
+    console.log(`CRITICAL | Environment is not defined for project id: ${gaeAppId}. Using default configuration: ${currentEnv}`);
+    if (!isRunningLocally) {
+        console.log(`Current proccess env:`);
+        console.log(process.env);
+    }
 }
 
-const obj = {
-	isRunningLocally
+module.exports = {
+    isRunningLocally,
+    ...envConfig[currentEnv]
 }
-const EnvConfig = Object.assign({}, obj, envConfig[currentEnv]);
-
-export default EnvConfig;

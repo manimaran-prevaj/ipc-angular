@@ -1,34 +1,62 @@
 {
-	"compileOnSave": false,
 	"compilerOptions": {
-		"outDir": "./dist/",
-		"forceConsistentCasingInFileNames": true,
-		"strict": false,
-		"noImplicitOverride": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noImplicitReturns": true,
-		"noImplicitAny": false,
-		"strictNullChecks": true,
-		"noFallthroughCasesInSwitch": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"sourceMap": true,
-		"declaration": false,
-		"experimentalDecorators": true,
-		"moduleResolution": "node",
-		"importHelpers": true,
-		"target": "ES2022",
-		"module": "ES2022",
-		"useDefineForClassFields": false,
-		"lib": [
-			"ES2022",
-			"dom"
-		]
+    "downlevelIteration": true,
+    "target": "es2020",
+    "module": "CommonJS",
+    "declaration": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "useDefineForClassFields": false,
+    "importHelpers": true,
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "outDir": "./dist/",
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./src/pp-types.d.ts"
+    ],
+    "paths": {
+      "@pp-universal/*": ["./src-web-mw/src-shared/client/*"],
+      "@pp/*": [
+        "../src/*"
+      ],
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ]
+    },
+  },
+	"compileOnSave": false,
+	"buildOnSave": false,
+  "types" : [
+    "node",
+    "lodash",
+    "mocha"
+  ],
+  "files": [
+    "src/main.ts",
+	  "src/main.server.ts",
+    "src/polyfills.ts"
+  ],
+  "exclude": [
+    "src/environments/*",
+    "node_modules",
+    "src/app/index.ts"
+  ],
+	"awesomeTypescriptLoaderOptions": {
+		"forkChecker": true,
+		"useWebpackText": true,
+		"useCache": true
 	},
 	"angularCompilerOptions": {
-		"enableI18nLegacyMessageIdFormat": false,
-		"strictInjectionParameters": true,
-		"strictInputAccessModifiers": true,
-		"strictTemplates": true
+		"genDir": ".",
+		"skipMetadataEmit": true,
 	}
 }

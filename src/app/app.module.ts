@@ -8,17 +8,24 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
-	AppCookieClient,
+	ApplicationCookieClient,
 	AppGlobalErrorHandler,
 	AppHttpCaptcha,
 	AppHttpErrors,
 	AppLocalStorageClient,
-	AppSessionsStorage
+	ApplicationSessionsStorage
 } from '../utils';
 
 import { MaterialModule } from './material/material.module';
 import { HeaderModule } from './header/header.module';
 import { SideNavModule } from './sidenav/sidenav.module';
+import { appConfigReducer } from './common/store/reducers/app-config.reducers';
+import { AppConfigService } from './common/services/app-config.serice';
+import { EffectsModule } from '@ngrx/effects';
+import { AppConfigEffects } from './common/store/effects/app-config.effects';
+import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
+// import { environment } from '../environments/environment';
+import { ApplicationHttpClient } from '../utils/app-http-client';
 
 @NgModule({
 	declarations: [
@@ -29,24 +36,41 @@ import { SideNavModule } from './sidenav/sidenav.module';
 		HttpClientModule,
 		BrowserModule,
 		AppRoutingModule,
-		StoreModule.forRoot(),
+		StoreModule.forRoot({}),
+		StoreModule.forFeature('appConfig', appConfigReducer),
+		EffectsModule.forRoot([]),
+		EffectsModule.forFeature([AppConfigEffects]),
 
 		// Imported components of Angular Material
 		MaterialModule,
 		HeaderModule,
-		SideNavModule
+		SideNavModule,
+		RecaptchaV3Module
 	],
 	providers: [
 		provideClientHydration(),
 
+		ApplicationHttpClient,
 		// Client LocalStorage
 		AppLocalStorageClient,
 
 		// Client Cookie
-		AppCookieClient,
+		ApplicationCookieClient,
 
 		// SessionStorage
-		AppSessionsStorage,
+		ApplicationSessionsStorage,
+		AppConfigService,
+		ReCaptchaV3Service,
+		// ReCaptcha v3 private key
+        {
+            provide: RECAPTCHA_V3_SITE_KEY,
+            useValue: '6Ld1MbAUAAAAAPcFJqLdbOHzAptLMzkPIC22RW4L'
+        },
+        // ReCaptcha v2 private key
+        {
+            provide: RECAPTCHA_SETTINGS,
+            useValue: { siteKey: '6LeG1okiAAAAAJiax2DZclQkDp7WInA3uz5Myh7K' } as RecaptchaSettings,
+        },
 
 		// Proxy to catch JS errors
 		{

@@ -33,7 +33,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 	ngOnInit() {
 		this.selectedOption = '';
-		this.mapOrderDateTime(orderDateTime);
+		this.mapOrderDateTime(orderDateTime as []);
 		this.dateTimeForm = this.formBuilder.group({
 			date: ['Today', [Validators.required]],
 			time: ['Now', [Validators.required]]

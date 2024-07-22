@@ -1,5 +1,5 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "./tsconfig.json",
 	"compilerOptions": {
 	  "outDir": "../dist/build-server",
 	  "baseUrl": "./",
@@ -17,6 +17,10 @@
 	"angularCompilerOptions": {
 	  "entryModule": "app/app.module.server#AppServerModule"
 	},
+	"files": [
+		"src/main.server.ts",
+		"server.ts" // Add this line
+	  ],
 	"include": [
 	  "src/**/*.d.ts"
 	]

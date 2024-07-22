@@ -1,6 +1,6 @@
 {
 	"name": "pizza-pizza-ccc",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "This is front end for PizzaPizza CCC",
 	"scripts": {
 		"ng": "ng",

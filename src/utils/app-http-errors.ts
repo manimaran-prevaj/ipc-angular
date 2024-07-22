@@ -10,7 +10,7 @@ export class AppHttpErrors implements HttpInterceptor {
 	/**
 	 * Check if HTTP code
 	 */
-	private handleOnRequest(event) {
+	private handleOnRequest(event: any) {
 		const httpCode = event.status;
 		const isGlobalErrorForCode = this.SHOW_GLOBAL_ERROR_CODES.indexOf(httpCode) !== -1;
 		if (isGlobalErrorForCode) {

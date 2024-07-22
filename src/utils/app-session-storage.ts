@@ -3,7 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 
 
 @Injectable()
-export class AppSessionsStorage {
+export class ApplicationSessionsStorage {
 
 	private isSessionStorageAvail = false;
 	private sessionStorageEmulator: { key?: string } = {};

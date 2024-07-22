@@ -1,14 +1,24 @@
 {
-	"extends": "./tsconfig.app.json",
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"outDir": "./dist/build-server",
-		"types": [
-			"node",
-			"google.maps"
+	  "outDir": "../dist/build-server",
+	  "baseUrl": "./",
+	  "module": "CommonJS",
+	  "types": [],
+	  "paths": {
+		"@pp-universal/*": [
+		  "../src-web-mw/src-shared/server/*"
+		],
+		"@pp/*": [
+		  "../src/*"
 		]
+	  },
 	},
-	"files": [
-		"src/main.server.ts",
-		"server.ts"
+	"angularCompilerOptions": {
+	  "entryModule": "app/app.module.server#AppServerModule"
+	},
+	"include": [
+	  "src/**/*.d.ts"
 	]
-}
+  }
+  

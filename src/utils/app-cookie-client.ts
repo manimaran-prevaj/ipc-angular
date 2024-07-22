@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 
 
 @Injectable()
-export class AppCookieClient {
+export class ApplicationCookieClient {
 	private readonly cookieSource = new Subject<Readonly<Record<string, [string]>>>()
 	public readonly cookies$ = this.cookieSource.asObservable();
 

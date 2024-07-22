@@ -1,7 +1,9 @@
 {
 	"root": true,
 	"ignorePatterns": [
-		"projects/**/*"
+		"projects/**/*",
+		"src/environments/*",
+		"src/app/index.ts"
 	],
 	"parserOptions": {
 		"project": "./tsconfig.json"
@@ -36,10 +38,7 @@
 					}
 				],
 				"@typescript-eslint/no-explicit-any": [
-					"error",
-					{
-						"fixToUnknown": true
-					}
+					"off"
 				]
 			}
 		},

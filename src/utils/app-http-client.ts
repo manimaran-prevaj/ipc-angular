@@ -34,6 +34,10 @@ export class ApplicationHttpClient {
 	private TOKEN_REFRESH_PATH = '/user/api/v1/auth/renew_token';
     private isServer: boolean;
     private lang: string;
+    // Angular local to API request header
+	private localToLang = {
+		'en-US': 'en',
+	};
     private apiHost = '/ajax';
 
 	// Extending the HttpClient through the Angular DI.
@@ -50,6 +54,7 @@ export class ApplicationHttpClient {
 		// access the public property and use the original one.
 		// for ex. this.httpClient.http.get(...)
 		this.isServer = isPlatformServer(platformId);
+		this.lang = this.localToLang[localId];
 
 		// SSR should talk directly to API
 		if (this.isServer) {

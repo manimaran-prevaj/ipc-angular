@@ -20,7 +20,8 @@
     ],
     "outDir": "./dist/",
     "typeRoots": [
-      "./node_modules/@types/",
+      "./node_modules/@types",
+      "./node_modules/@googlemaps/types",
       "./src/pp-types.d.ts"
     ],
     "paths": {
@@ -33,12 +34,14 @@
       ]
     },
   },
+  "include": ["src/**/*.ts"],
 	"compileOnSave": false,
 	"buildOnSave": false,
   "types" : [
     "node",
     "lodash",
-    "mocha"
+    "mocha",
+    "googlemaps"
   ],
   "files": [
     "src/main.ts",
@@ -58,5 +61,7 @@
 	"angularCompilerOptions": {
 		"genDir": ".",
 		"skipMetadataEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 	}
 }

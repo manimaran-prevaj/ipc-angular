@@ -60,7 +60,7 @@ export class ApplicationHttpClient {
 
 		// SSR should talk directly to API
 		if (this.isServer) {
-			this.apiHost = ApiSignature.default.getApiBaseUrl();
+			this.apiHost = ApiSignature.getApiBaseUrl();
 		}
 
         console.log(environment);

@@ -20,7 +20,7 @@ import { MaterialModule } from './material/material.module';
 import { HeaderModule } from './header/header.module';
 import { SideNavModule } from './sidenav/sidenav.module';
 import { appConfigReducer } from './common/store/reducers/app-config.reducers';
-import { AppConfigService } from './common/services/app-config.serice';
+import { AppConfigService } from './common/services/app-config.service';
 import { EffectsModule } from '@ngrx/effects';
 import { AppConfigEffects } from './common/store/effects/app-config.effects';
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';

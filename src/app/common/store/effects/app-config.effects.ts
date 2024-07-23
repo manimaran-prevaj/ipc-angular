@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AppConfigService } from '../../services/app-config.serice';
+import { AppConfigService } from '../../services/app-config.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import * as appConfigActions from '../actions/app-config.actions';
 import { map, mergeMap } from 'rxjs';

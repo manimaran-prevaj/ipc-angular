@@ -1,3 +1,4 @@
+/// <reference types="@googlemaps/types" />
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
 import { CustomerEntryService } from "../../services/customer-entry.service";
 import { MatDialog } from "@angular/material/dialog";

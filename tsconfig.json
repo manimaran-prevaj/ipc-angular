@@ -34,7 +34,6 @@
       ]
     },
   },
-  "include": ["src/**/*.ts"],
 	"compileOnSave": false,
 	"buildOnSave": false,
   "types" : [
@@ -61,7 +60,5 @@
 	"angularCompilerOptions": {
 		"genDir": ".",
 		"skipMetadataEmit": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
 	}
 }

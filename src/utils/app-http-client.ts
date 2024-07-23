@@ -1,3 +1,4 @@
+
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Inject, Injectable, Injector, LOCALE_ID, PLATFORM_ID, StateKey, TransferState, makeStateKey } from "@angular/core";
 import { ApplicationSessionsStorage } from "./app-session-storage";
@@ -10,7 +11,8 @@ import { buildNumber } from '../revision';
  * Server build would have following module
  * defined in tsconfig.json and tsconfig.server.json
  */
-import * as ApiSignature from '@pp-universal/api-signature';
+// import * as ApiSignature from '@pp-universal/api-signature';
+import ApiSignature = require("../../src-web-mw/src-shared/client/api-signature")
 import { Observable, catchError, of, retryWhen, take, tap, throwError, mergeMap } from "rxjs";
 import { environment } from "../environments/environment";
 import { isPlatformServer } from "@angular/common";

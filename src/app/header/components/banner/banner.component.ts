@@ -17,7 +17,7 @@ export class BannerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
-			let resp: any = x;
+			const resp: any = x;
 			if (resp?.appConfig?.bannerMessage) {
 				this.bannerContent = resp.appConfig.bannerMessage;
 			}

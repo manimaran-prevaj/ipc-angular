@@ -28,7 +28,7 @@ const envConfig = {
 	'ppl-ccc-uat-fe': {
 		sessionIpLimits: devSessionIpLimits,
 		session_secret_key: 'asd234234234234asdasd',
-		base_api_host: 'https://ppluat-lb-be.pizzapizza.ca',
+		base_api_host: 'https://ppl-ccc-uat-be.appspot.com',
 		recaptcha_key: '6LdbxLMUAAAAAM4_SFPvctk4n8FFLLCRGzmJfq6w',
 		allowed_api_hosts: [
 		],

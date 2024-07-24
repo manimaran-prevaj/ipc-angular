@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { select, Store } from '@ngrx/store';
-import { selectAppConfig } from "../../../common/store";
+import { Store } from '@ngrx/store';
 import { loadAppConfig } from "../../../common/store/actions/app-config.actions";
 
 @Component({
@@ -16,9 +15,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
-			console.log(x);
-		});
+		
 
 		this.store.dispatch(loadAppConfig());
 	}

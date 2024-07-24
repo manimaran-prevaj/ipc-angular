@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { select, Store } from "@ngrx/store";
+import { selectAppConfig } from "../../../common/store";
 
 @Component({
 	selector: 'app-banner',
@@ -6,6 +8,21 @@ import { Component } from "@angular/core";
 	styleUrls: ['./banner.component.scss'],
 })
 
-export class BannerComponent {
-	bannerContent = `Don’t forget to upsell and earn extra cash by selling the 3 pack of pop to every customer...`;
+export class BannerComponent implements OnInit {
+	bannerContent = '';
+
+	constructor(private store: Store){
+
+	}
+
+	ngOnInit(): void {
+		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
+			let resp: any = x;
+			if (resp?.appConfig?.bannerMessage) {
+				this.bannerContent = resp.appConfig.bannerMessage;
+			}
+		});
+
+	
+	}
 }

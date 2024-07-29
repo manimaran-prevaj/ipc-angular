@@ -3,11 +3,16 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
 import { CustomerEntryService } from "../../services/customer-entry.service";
+import { debounceTime } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
+import { ApiResponse} from "../../models/customer-details";
 
 
 // TODO:: Order date and time to be obtained from BE API
 import { orderDateTime } from '../../../../mockdata/future-datetime.js';
-import { OrderDateTime } from "../models/customer-entry.model";
+import { OrderDateTime } from "../../models/customer-entry.model";
+import { selectCustomerProfile } from "../../../common/store";
 
 
 @Component({
@@ -24,14 +29,31 @@ export class CustomerDetailsComponent implements OnInit {
 	public selectedOption: string;
 	public filteredTimes: string[] = ['Now'];
 	public orderDateTimeData: OrderDateTime[] = [];
+	public currenDate = new Date().toDateString().split(' ').splice(1).join(' ');
+	public customerResponse: ApiResponse;
+	public showEmailOptDate = false;
+	
 
 	constructor(
 		private formBuilder: FormBuilder,
 		public dialog: MatDialog,
-		private customerEntryService: CustomerEntryService
+		private customerEntryService: CustomerEntryService,
+		private store: Store
 	) { }
 
 	ngOnInit() {
+		this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
+			const data: any = x;
+			this.customerResponse = data?.customerDetails?.customerProfile as ApiResponse;
+			if (this.customerResponse) {
+				this.customerDetailsForm.patchValue({firstName:this.customerResponse.customer_data.first_name,
+					lastName : this.customerResponse.customer_data.last_name,
+					email:this.customerResponse.customer_data.email,
+					emailOptIn: this.customerResponse.customer_data.email?true:false
+				})
+			}
+		});
+
 		this.selectedOption = '';
 		this.mapOrderDateTime(orderDateTime as []);
 		this.dateTimeForm = this.formBuilder.group({
@@ -40,6 +62,7 @@ export class CustomerDetailsComponent implements OnInit {
 		});
 		const todayDateTime = `${this.getTodayDate()} - Today - Now`;
 		this.customerDetailsForm = this.formBuilder.group({
+			cellNumber: [false],
 			firstName: ['', [Validators.required]],
 			lastName: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.email]],
@@ -49,6 +72,25 @@ export class CustomerDetailsComponent implements OnInit {
 			modeOfDelivery: ['delivery', [Validators.required]],
 			emailOptIn: [],
 			emailOptOut: [],
+		});
+
+		
+		this.customerDetailsForm.controls['phone'].valueChanges
+		.pipe(debounceTime(300))
+		.subscribe(value => {
+			if (value) {
+				// Remove brackets, hyphens, and other non-numeric characters
+				//eslint-disable-next-line
+				const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
+				if (sanitizedValue.length === 10) {
+					this.store.dispatch(loadCustomerDetails({ phone: sanitizedValue }));
+					this.showEmailOptDate = false;
+					this.customerDetailsForm.patchValue({
+						firstName: '', lastName: '', email: '', emailOptIn: false,
+						emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: todayDateTime
+					});
+				}
+			}
 		});
 	}
 
@@ -130,4 +172,9 @@ export class CustomerDetailsComponent implements OnInit {
 		// TODO :: Remove this logic to NgRx Store
 		this.customerEntryService.setDeliveryType(this.customerDetailsForm.controls['modeOfDelivery'].value);
 	}
+
+	emailFocusOut() {
+		this.showEmailOptDate = this.customerResponse.customer_data.email != this.customerDetailsForm.get('email').value;
+	}
+
 }

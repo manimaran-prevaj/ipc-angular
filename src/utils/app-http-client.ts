@@ -28,6 +28,12 @@ interface IRequestOptions {
 	body?: object;
 }
 
+// additional headers interface
+interface AdditionalHeaderInterface {
+	name: string;
+	value: string
+}
+
 @Injectable()
 export class ApplicationHttpClient {
 
@@ -217,17 +223,45 @@ export class ApplicationHttpClient {
 		return options;
 	}
 
+		/**
+	 * Renew Auth Token
+	 */
+		private _renewAuthToken(): Observable<boolean> {
+			const options = this._getRequestHeader();
+			const refreshToken = this._getRefreshToken();
+			const payload = {
+				'refresh_token': refreshToken
+			};
+			const checkStatus = this.appSession.get('RenewalTokenStatus');
+			if(!checkStatus) {
+				this._openRenewalTokenStatus();
+				const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
+	
+				return this.http.post(refreshUrl, payload, options).pipe(
+					mergeMap(serverResponse => {
+					this._removeRenewalTokenStatus();
+					// Update LocalStorage and retry the get call.
+					// console.log('Token renew success');
+					this._saveRenewedTokens(serverResponse);
+					return of(true);
+					}),
+				)
+			}
+		}
+
+
 	/**
 	 * GET request
 	 */
-	public get<ServerModel>(endPoint: string, params?: string | object): Observable<ServerModel> {
-
+	public get<ServerModel>(endPoint: string, params?: string | any): Observable<ServerModel> {
+		
 		const options = this._getRequestHeader();
 		options.headers = this._noCacheHeaders(options.headers, endPoint);
 
 		let stateKeyPath = endPoint;
 		let fullUrl = this.apiHost + '/' + endPoint;
 		let urlParams = '';
+		// console.log('GET request');
 
 		// Build GET params string
 		if (params && typeof params === 'string') {
@@ -252,6 +286,12 @@ export class ApplicationHttpClient {
 		// 	return of(storedResponse);
 		// }
 
+		// if (responseType === 'text'){
+		// 	options["responseType"] = 'text';
+		// } else {
+		// 	options["responseType"] = 'json';
+		// }
+
 		return this.http.get<ServerModel>(fullUrl, options).pipe(
 			retryWhen(error => error.pipe(
 				mergeMap((httpResponse) => {
@@ -270,23 +310,29 @@ export class ApplicationHttpClient {
 					const payload = {
 						'refresh_token': refreshToken
 					};
-					const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
-					return this.http.post(refreshUrl, payload, options).pipe(
-						mergeMap(serverResponse => {
-							// Update LocalStorage and retry the get call.
-							this._saveRenewedTokens(serverResponse);
-							return this.get<ServerModel>(endPoint, params);
-						}),
-						catchError((newError) => {
-							const lastPartPathNewError = this._getLastPArt(newError.url);
-							const lastPartPath = this._getLastPArt(refreshUrl);
-							if (lastPartPath === lastPartPathNewError) {
-								console.error('CRITICAL | Renewing token failure', newError);
-								this._resetUserSession();
-							}
-							return throwError(newError);
-						})
-					)
+					const checkStatus = this.appSession.get('RenewalTokenStatus');
+					if(!checkStatus) {
+						this._openRenewalTokenStatus();
+						const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
+						return this.http.post(refreshUrl, payload, options).pipe(
+							mergeMap(serverResponse => {
+                                this._removeRenewalTokenStatus();
+								// Update LocalStorage and retry the get call.
+								this._saveRenewedTokens(serverResponse);
+								return this.get<ServerModel>(endPoint, params);
+							}),
+							catchError((newError) => {
+                                this._removeRenewalTokenStatus();
+								const lastPartPathNewError = this._getLastPArt(newError.url);
+								const lastPartPath = this._getLastPArt(refreshUrl);
+								if (lastPartPath === lastPartPathNewError) {
+									console.error('CRITICAL | Renewing token failure', newError);
+									this._resetUserSession();
+								}
+								return throwError(newError);
+							})
+						)
+					}
 				} else {
 					return throwError(error);
 				}
@@ -296,6 +342,193 @@ export class ApplicationHttpClient {
 					this.transferState.set(statekey, data)
 				}
 			})
-		) as Observable<ServerModel>
+		)
 	}
+
+	
+	/**
+	 * POST request
+	 */
+	public post<ServerModel>(endPoint: string, params: any, additionalHeaders?: AdditionalHeaderInterface[]): Observable<ServerModel> {
+
+		const options = this._getRequestHeader();
+		const fullUrl = this.apiHost + '/' + endPoint;
+
+		if (additionalHeaders && additionalHeaders.length > 0) {
+			additionalHeaders.forEach(header => {
+				options.headers = options.headers.set(header.name, header.value)
+			})
+		}
+
+		return this.http.post<ServerModel>(fullUrl, params, options).pipe(
+			retryWhen(error => error.pipe(
+				mergeMap((httpResponse) => {
+					if (!httpResponse.ok) {
+						return throwError(httpResponse);
+					}
+					const isHttpCodeInRetryList = this.NO_RETRY_STATUS_CODES.indexOf(httpResponse.status) > -1;
+					return isHttpCodeInRetryList ? throwError(httpResponse) : of(httpResponse)
+				}
+				),
+				take(this.API_RETRY_COUNT),
+			)),
+			catchError(error => {
+
+				const refreshToken = this._getRefreshToken();
+				// note: once backend changes the login failure response to 200 we should move refreshToken back within the if statement
+				if (error.status === 401 && refreshToken) {
+					const payload = {
+						'refresh_token': refreshToken
+					};
+					const checkStatus = this.appSession.get('RenewalTokenStatus');
+					if(!checkStatus) {
+						this._openRenewalTokenStatus();
+						const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
+						return this.http.post(refreshUrl, payload, options).pipe(
+							mergeMap(serverResponse => {
+								this._removeRenewalTokenStatus();
+								// Update LocalStorage and retry the get call.f
+								this._saveRenewedTokens(serverResponse);
+								return this.post<ServerModel>(endPoint, params);
+							}),
+							catchError((newError) => {
+								this._removeRenewalTokenStatus();
+								const lastPartPathNewError = this._getLastPArt(newError.url);
+								const lastPartPath = this._getLastPArt(refreshUrl);
+								if (lastPartPath === lastPartPathNewError) {
+									console.error('CRITICAL | Renewing token failure', newError, 'fullUrl:', fullUrl, 'refreshUrl', refreshUrl);
+									this._resetUserSession();
+								}
+								return throwError(newError);
+							})
+						)
+					}
+				} else {
+					return throwError(error);
+				}
+			})
+		);
+	}
+		/**
+	 * PUT request
+	 */
+		public put<ServerModel>(endPoint: string, params: any): Observable<ServerModel> {
+			const options = this._getRequestHeader();
+			const fullUrl = this.apiHost + '/' + endPoint;
+	
+			return this.http.put<ServerModel>(fullUrl, params, options).pipe(
+				retryWhen(error => error.pipe(
+					mergeMap((httpResponse) => {
+						if (!httpResponse.ok) {
+							return throwError(httpResponse);
+						}
+						const isHttpCodeInRetryList = this.NO_RETRY_STATUS_CODES.indexOf(httpResponse.status) > -1;
+						return isHttpCodeInRetryList ? throwError(httpResponse) : of(httpResponse)
+					}
+					),
+					take(this.API_RETRY_COUNT),
+				)),
+				catchError(error => {
+	
+					const refreshToken = this._getRefreshToken();
+	
+					if (error.status === 401 && refreshToken) {
+						const payload = {
+							'refresh_token': refreshToken
+						};
+						const checkStatus = this.appSession.get('RenewalTokenStatus');
+						if(!checkStatus) {
+							this._openRenewalTokenStatus();
+							const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
+							return this.http.post(refreshUrl, payload, options).pipe(
+								mergeMap(serverResponse => {
+									this._removeRenewalTokenStatus();
+									// Update LocalStorage and retry the get call.
+									this._saveRenewedTokens(serverResponse);
+									return this.put<ServerModel>(endPoint, params);
+								}),
+								catchError((newError) => {
+									this._removeRenewalTokenStatus();
+									const lastPartPathNewError = this._getLastPArt(newError.url);
+									const lastPartPath = this._getLastPArt(refreshUrl);
+									if (lastPartPath === lastPartPathNewError) {
+										console.error('CRITICAL | Renewing token failure', newError);
+										this._resetUserSession();
+									}
+									return throwError(newError);
+								})
+							)
+						}
+					} else {
+						return throwError(error);
+					}
+				})
+			);
+		}
+	
+		/**
+		 * DELETE request
+		 */
+		public delete<ServerModel>(endPoint: string): Observable<ServerModel> {
+			const options = this._getRequestHeader();
+			const fullUrl = this.apiHost + '/' + endPoint;
+	
+			return this.http.delete<ServerModel>(fullUrl, options).pipe(
+				retryWhen(error => error.pipe(
+					mergeMap((httpResponse) => {
+						if (!httpResponse.ok) {
+							return throwError(httpResponse);
+						}
+						const isHttpCodeInRetryList = this.NO_RETRY_STATUS_CODES.indexOf(httpResponse.status) > -1;
+						return isHttpCodeInRetryList ? throwError(httpResponse) : of(httpResponse)
+					}
+					),
+					take(this.API_RETRY_COUNT),
+				)),
+				catchError(error => {
+	
+					const refreshToken = this._getRefreshToken();
+	
+					if (error.status === 401 && refreshToken) {
+						const payload = {
+							'refresh_token': refreshToken
+						};
+						const checkStatus = this.appSession.get('RenewalTokenStatus');
+						if(!checkStatus) {
+							this._openRenewalTokenStatus();
+							const refreshUrl = this.apiHost + this.TOKEN_REFRESH_PATH;
+							return this.http.post(refreshUrl, payload, options).pipe(
+								mergeMap(serverResponse => {
+									this._removeRenewalTokenStatus();
+									// Update LocalStorage and retry the get call.
+									this._saveRenewedTokens(serverResponse);
+									return this.delete<ServerModel>(endPoint);
+								}),
+								catchError((newError) => {
+									this._removeRenewalTokenStatus();
+									const lastPartPathNewError = this._getLastPArt(newError.url);
+									const lastPartPath = this._getLastPArt(refreshUrl);
+									if (lastPartPath === lastPartPathNewError) {
+										console.error('CRITICAL | Renewing token failure', newError);
+										this._resetUserSession();
+									}
+									return throwError(newError);
+								})
+							)
+						}
+					} else {
+						return throwError(error);
+					}
+				})
+			);
+		}
+
+	private _openRenewalTokenStatus() {
+		this.appSession.set('RenewalTokenStatus', 1);
+	}
+	
+	private _removeRenewalTokenStatus() {
+		this.appSession.deleteKey('RenewalTokenStatus');
+	}
+
 }

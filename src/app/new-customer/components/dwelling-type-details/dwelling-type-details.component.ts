@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
-import { Instructions } from "../models/customer-entry.model";
+import { Instructions } from "../../models/customer-entry.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { instructionsOptions } from "./../../../../mockdata/static-copy.js";
 

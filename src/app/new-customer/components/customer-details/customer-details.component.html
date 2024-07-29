@@ -42,6 +42,13 @@
 		<div class="row mt-4">
 			<!-- First name -->
 			<div class="w-1/2 mr-2">
+				<mat-checkbox formControlName="cellNumber" class="
+						email-opt-in" color="primary">Cell Number</mat-checkbox>
+			</div>
+			</div>
+		<div class="row mt-4">
+			<!-- First name -->
+			<div class="w-1/2 mr-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>First Name</mat-label>
 					<input matInput formControlName="firstName">
@@ -81,7 +88,7 @@
 			<div class="w-1/2 ml-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>Email Address</mat-label>
-					<input matInput formControlName="email">
+					<input matInput formControlName="email" (focusout)="emailFocusOut()">
 				</mat-form-field>
 				<mat-error
 					*ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">
@@ -100,13 +107,21 @@
 				<div class="w-1/2 mr-2">
 					<mat-checkbox formControlName="emailOptIn" (change)="onSelectionChange('emailOptIn')" class="
 						email-opt-in" color="primary">Email
-						Opt-In: </mat-checkbox>
+						Opt-In:
+						<br>
+						<span *ngIf="showEmailOptDate">{{currenDate}}</span>
+					 </mat-checkbox>
 				</div>
 				<div class="w-1/2 ml-2">
 					<mat-checkbox formControlName="emailOptOut" (change)="onSelectionChange('emailOptOut')" class="
 						email-opt-out" color="primary">Email
 						Opt-Out: </mat-checkbox>
 				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="w-1/2 mr-2">
+				<button mat-flat-button color="primary" class="mt-2">Continue to Order</button>
 			</div>
 		</div>
 	</form>

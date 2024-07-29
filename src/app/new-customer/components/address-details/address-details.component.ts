@@ -8,9 +8,12 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 // TODO:: Recent delivery/pickup addresses to be obtained from BE API
 import { deliveryAddresses, pickupAddresses } from './../../../../mockdata/addresses.js';
 import { Subscription } from "rxjs";
-import { DwellingTypeOptions } from "../models/customer-entry.model";
+import { DwellingTypeOptions } from "../../models/customer-entry.model";
 import { dwellingTypeOptions } from "./../../../../mockdata/static-copy.js";
 import { ManualAddressDetailsComponent } from "../manual-address-details/manual-address-details.component";
+import { select, Store } from "@ngrx/store";
+import { selectAppConfig, selectCustomerProfile } from "../../../common/store";
+import { ApiResponse } from "../../models/customer-details";
 declare let google;
 
 @Component({
@@ -37,16 +40,24 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 
 	public nodeObserver: MutationObserver;
 	public formChangeRef: Subscription;
+	public customerDetails: ApiResponse;
+	public storeHoursData:any[] = [];
+	public storeHours:any[] = [];
+	public currentStoreStatus = '';
+	public pickupAvailable = '';
+	public today: number;
 
 	constructor(
 		public dialog: MatDialog,
 		// TODO :: Remove this logic to NgRx Store
 		private customerEntryService: CustomerEntryService,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private store: Store
 	) {
 		this.addressDetailsForm = this.formBuilder.group({
 			autocompleteAddress: [''],
-			dwellingType: ['']
+			dwellingType: [''],
+			storeHours:['']
 		});
 
 		this.nodeObserver = new MutationObserver((mutations) => {
@@ -68,6 +79,33 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	}
 
 	ngOnInit(): void {
+		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
+			const resp: any = x;
+			if (resp?.appConfig?.bannerMessage) {
+				this.dwellingTypeOptions = resp.appConfig.dwellingType;
+			}
+		});
+		
+		this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
+			const data: any = x;
+			this.customerDetails = data?.customerDetails?.customerProfile as ApiResponse;
+			if (this.customerDetails) {
+				this.addressDetailsForm.patchValue({autocompleteAddress:this.customerDetails.default_delivery_store_data.address
+				})
+				
+				this.storeHoursData = this.transformOperatingHours(this.customerDetails.default_delivery_store_data.operating_hours_details_cache);
+				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == new Date().getDay());
+				const currentDate = new  Date();
+				currentDate.setDate(currentDate.getDate()+1);
+				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.end_time).toLocaleString())) {
+					this.currentStoreStatus = "Open Closes " + this.formatTime(currentDayStore.end_time);
+				} else {
+					this.currentStoreStatus = "Closed";
+				}
+				this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == new Date().getDay()-1)});
+				this.pickupAvailable = this.customerDetails.default_delivery_store_data.pickup_available ? 'Available':'N/A';
+			}
+		});
 		// TODO :: Remove this logic to NgRx Store
 		this.deliveryType = 'delivery';
 		this.customerEntryService.deliveryType$.subscribe((deliveryType: string) => {
@@ -82,6 +120,27 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		this.recentPickupAddresses = pickupAddresses;
 		this.isAutoCompleteEmpty = true;
 	}
+
+
+	// Function to format time from 24-hour to 12-hour format
+ formatTime(time: string): string {
+	const [hour, minute] = time.split(':').map(Number);
+	const period = hour < 12 ? 'a.m.' : 'p.m.';
+	const formattedHour = hour % 12 || 12; // Convert 0 to 12 for midnight
+	return `${formattedHour}:${minute.toString().padStart(2, '0')} ${period}`;
+  }
+  
+  // Function to transform operating hours data
+  transformOperatingHours(data: any[]) {
+	return data.map(item => ({
+		label: item.label,
+		hours: `${this.formatTime(item.start_time)} - ${this.formatTime(item.end_time)}`,
+		day:item.day_name
+	}));
+  }
+  
+  // Transformed data
+  storeHoursData1 = this.transformOperatingHours(this.storeHoursData);
 
 	ngAfterViewInit(): void {
 		this.initMap(true);
@@ -162,6 +221,10 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 			maxHeight: '90%',
 			width:"80%",
 		});
+	}
+
+	onStoreHoursChange(){
+		this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == new Date().getDay())})
 	}
 
 	ngOnDestroy() {

@@ -24,4 +24,21 @@
 		}
 
 	}
+
+	.default-address {
+		font-size: 16px;
+		.default-address-details{
+			font-weight: bold;
+		}
+	}
+
+	.store-status {
+		font-size: 16px;
+		color: #148119;
+	}
+
+	.restaurant-status {
+		font-size: 16px;
+		font-weight: bold;
+	}
 }

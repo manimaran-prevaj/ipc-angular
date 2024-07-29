@@ -1,7 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { provinceOptions } from "./../../../../mockdata/static-copy.js";
-import { ManualLocation, ProvinceOptions } from "../models/customer-entry.model";
+import { ManualLocation, ProvinceOptions } from "../../models/customer-entry.model";
 
 @Component({
   selector: 'app-manual-address-details',

@@ -23,6 +23,8 @@ import { appConfigReducer } from './common/store/reducers/app-config.reducers';
 import { AppConfigService } from './common/services/app-config.service';
 import { EffectsModule } from '@ngrx/effects';
 import { AppConfigEffects } from './common/store/effects/app-config.effects';
+import { customerDetailsReducer } from './common/store/reducers/customer-details.reducers';
+import { CustomerDetailsEffects } from './common/store/effects/customer-details.effects';
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
 // import { environment } from '../environments/environment';
 import { ApplicationHttpClient } from '../utils/app-http-client';
@@ -38,8 +40,9 @@ import { ApplicationHttpClient } from '../utils/app-http-client';
 		AppRoutingModule,
 		StoreModule.forRoot({}),
 		StoreModule.forFeature('appConfig', appConfigReducer),
+		StoreModule.forFeature('customerDetails', customerDetailsReducer),
 		EffectsModule.forRoot([]),
-		EffectsModule.forFeature([AppConfigEffects]),
+		EffectsModule.forFeature([AppConfigEffects, CustomerDetailsEffects]),
 
 		// Imported components of Angular Material
 		MaterialModule,

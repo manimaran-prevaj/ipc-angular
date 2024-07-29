@@ -32,7 +32,7 @@
 					<mat-label>Dwelling Type</mat-label>
 					<mat-select formControlName="dwellingType" (selectionChange)="onDwellingTypeChange($event)">
 						@for (option of dwellingTypeOptions; track option) {
-						<mat-option [value]="option?.value">{{option?.text}}</mat-option>
+						<mat-option [value]="option?.name">{{option?.name}}</mat-option>
 						}
 					</mat-select>
 				</mat-form-field>
@@ -45,6 +45,52 @@
 			</div>
 		</div>
 		}
+		<div *ngIf="customerDetails" class="row mt-4">
+			<div class="w-full">
+				<div class="default-address">
+					<span class="default-address-details">{{customerDetails?.default_delivery_store_data?.address}}:</span>
+					<span>{{customerDetails?.default_delivery_store_data?.address_help}}</span>
+					</div>
+			</div>
+		</div>
+		<!-- <div class="row mt-4">
+			<div class="w-full">
+				<mat-form-field color="accent" dis>
+					<mat-label>Store Hours:</mat-label>
+					<mat-select formControlName="storeHours" (selectionChange)="onStoreHoursChange($event)">
+						@for (option of storeHoursData; track option) {
+						<mat-option [value]="option?.hours">{{option?.hours}}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div> -->
+        <div *ngIf="customerDetails">
+		<div class="row mt-4">
+			<div class="w-1/2">
+				<mat-form-field color="accent">
+					<mat-label>Store Hours:</mat-label>
+					<mat-select formControlName="storeHours" (selectionChange)="onStoreHoursChange()">
+						<mat-select-trigger class="store-status">{{currentStoreStatus}}</mat-select-trigger>
+						<mat-option *ngFor="let option of storeHoursData" [value]="option">
+							{{ option.label }}: {{ option.hours }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<div class="row mt-4">
+			<div class="w-1/2 restaurant-status">
+				<mat-label>Restaurant Status Reason:</mat-label>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="w-1/2 smaller text-dark-orange font-bold">
+				<mat-label>Pickup:</mat-label>{{pickupAvailable}}
+			</div>
+		</div>
+		</div>
 	</form>
 </div>
 

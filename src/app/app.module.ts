@@ -25,7 +25,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppConfigEffects } from './common/store/effects/app-config.effects';
 import { customerDetailsReducer } from './common/store/reducers/customer-details.reducers';
 import { CustomerDetailsEffects } from './common/store/effects/customer-details.effects';
-import { storeReducer } from './common/store/reducers/product-search.reducers';
+//import { productSearchReducer } from './common/store/reducers/product-search.reducers';
 import { StoreEffects } from './common/store/effects/product-search.effects';
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
 // import { environment } from '../environments/environment';
@@ -42,8 +42,7 @@ import { ApplicationHttpClient } from '../utils/app-http-client';
 		AppRoutingModule,
 		StoreModule.forRoot({}),
 		StoreModule.forFeature('appConfig', appConfigReducer),
-		StoreModule.forFeature('customerDetails', customerDetailsReducer),
-		//StoreModule.forFeature('productSearch', storeReducer),
+        StoreModule.forFeature('customerDetails', customerDetailsReducer),
 		EffectsModule.forRoot([]),
 		EffectsModule.forFeature([AppConfigEffects, CustomerDetailsEffects, StoreEffects]),
 

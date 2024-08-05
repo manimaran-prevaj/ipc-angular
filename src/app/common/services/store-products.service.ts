@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/internal/Subject';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { StoreID } from '../../new-customer/models/product-search'
 import { ApplicationHttpClient } from '../../../utils/app-http-client';
 import { HttpParams } from '@angular/common/http';

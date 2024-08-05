@@ -11,7 +11,7 @@ export class StoreEffects {
 
   loadStoreData$ = createEffect(() => this.actions$.pipe(
     ofType(StoreActions.loadStoreData),
-    mergeMap(action => this.ProductSearchService.getProductsByStoreId(action.storeId).pipe(
+    mergeMap(action => this.productSearchService.getProductsByStoreId(action.storeId).pipe(
       map(productsData => StoreActions.loadStoreDataSuccess({ storeData: productsData as unknown as Item })),
       catchError(error => of(StoreActions.loadStoreDataFailure({ error })))
     ))
@@ -19,6 +19,6 @@ export class StoreEffects {
 
   constructor(
     private actions$: Actions,
-    private ProductSearchService: ProductSearchService
+    private productSearchService: ProductSearchService
   ) { }
 }

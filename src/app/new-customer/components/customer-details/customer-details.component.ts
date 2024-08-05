@@ -54,9 +54,9 @@ export class CustomerDetailsComponent implements OnInit {
 				})
 			
 				const storeId = this.customerResponse.default_delivery_store_data.store_id // Assuming store_id is the property name
-        	if (storeId) {
-          		this.store.dispatch(loadStoreData({ storeId }));
-        	}
+				if (storeId) {
+					this.store.dispatch(loadStoreData({ storeId }));
+				}
 		}
 			
 		});

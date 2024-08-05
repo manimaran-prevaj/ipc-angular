@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		}
-		<div *ngIf="customerDetails" class="row mt-4">
+		<div *ngIf="customerDetails && deliveryType == 'delivery'" class="row mt-4">
 			<div class="w-full">
 				<div class="default-address">
 					<span class="default-address-details">{{customerDetails?.default_delivery_store_data?.address}}:</span>
@@ -65,7 +65,7 @@
 				</mat-form-field>
 			</div>
 		</div> -->
-        <div *ngIf="customerDetails">
+        <div *ngIf="customerDetails && deliveryType == 'delivery'">
 		<div class="row mt-4">
 			<div class="w-1/2">
 				<mat-form-field color="accent">

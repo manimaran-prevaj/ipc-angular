@@ -94,10 +94,13 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				})
 				
 				this.storeHoursData = this.transformOperatingHours(this.customerDetails.default_delivery_store_data.operating_hours_details_cache);
-				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == new Date().getDay());
+				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == new Date().getDay()-1);
 				const currentDate = new  Date();
 				currentDate.setDate(currentDate.getDate()+1);
-				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.end_time).toLocaleString())) {
+				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.start_time).toLocaleString())) {
+					this.currentStoreStatus = "Closed Opens " + this.formatTime(currentDayStore.start_time);
+				}
+				else if(Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.end_time).toLocaleString())) {
 					this.currentStoreStatus = "Open Closes " + this.formatTime(currentDayStore.end_time);
 				} else {
 					this.currentStoreStatus = "Closed";
@@ -113,6 +116,12 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 			this.selectedDwellingType = '';
 			this.addressDetailsForm.reset();
 			this.addressDetailsForm.controls['dwellingType'][this.deliveryType === 'pickup' ? 'disable' : 'enable']();
+			if (this.deliveryType == 'delivery') {
+				this.addressDetailsForm.patchValue({ 
+					autocompleteAddress: this.customerDetails?.default_delivery_store_data?.address,
+					storeHours:this.storeHoursData.find(x=>x.day == new Date().getDay()-1) 
+				});
+			}
 		});
 
 		// TODO:: Recent delivery/pickup addresses to be obtained from BE API

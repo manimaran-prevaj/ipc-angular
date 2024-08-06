@@ -6,6 +6,7 @@ import { CustomerEntryService } from "../../services/customer-entry.service";
 import { debounceTime } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
+import { loadStoreData } from '../../../common/store/actions/product-search.actions';
 import { ApiResponse} from "../../models/customer-details";
 
 
@@ -51,7 +52,13 @@ export class CustomerDetailsComponent implements OnInit {
 					email:this.customerResponse.customer_data.email,
 					emailOptIn: this.customerResponse.customer_data.email?true:false
 				})
-			}
+			
+				const storeId = this.customerResponse.default_delivery_store_data.store_id // Assuming store_id is the property name
+				if (storeId) {
+					this.store.dispatch(loadStoreData({ storeId }));
+				}
+		}
+			
 		});
 
 		this.selectedOption = '';
@@ -174,7 +181,14 @@ export class CustomerDetailsComponent implements OnInit {
 	}
 
 	emailFocusOut() {
-		this.showEmailOptDate = this.customerResponse.customer_data.email != this.customerDetailsForm.get('email').value;
+		if (!this.customerResponse?.customer_data) {
+			this.showEmailOptDate = this.customerDetailsForm.get('email').value;
+			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate });
+		} else {
+			this.showEmailOptDate = (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value);
+			this.customerDetailsForm.patchValue({ emailOptIn: true });
+		}
+		
 	}
 
 }

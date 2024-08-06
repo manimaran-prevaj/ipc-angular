@@ -39,7 +39,7 @@
 				</mat-button-toggle-group>
 			</div>
 		</div>
-		<div class="row mt-4">
+		<div class="row mt-2">
 			<!-- First name -->
 			<div class="w-1/2 mr-2">
 				<mat-checkbox formControlName="cellNumber" class="
@@ -88,7 +88,7 @@
 			<div class="w-1/2 ml-2">
 				<mat-form-field color="accent" [hideRequiredMarker]="true">
 					<mat-label>Email Address</mat-label>
-					<input matInput formControlName="email" (focusout)="emailFocusOut()">
+					<input matInput formControlName="email" (input)="emailFocusOut()">
 				</mat-form-field>
 				<mat-error
 					*ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">

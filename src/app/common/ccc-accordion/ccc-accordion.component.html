@@ -1,13 +1,45 @@
 <mat-expansion-panel [id]="id" [disabled]="disabled" class="!rounded !mb-4 !bg-white" [expanded]="expanded"
 	(opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle="true">
-	<mat-expansion-panel-header class="!px-4 !py-[18px]">
+	<mat-expansion-panel-header class="!px-4 !py-[18px]" [collapsedHeight]="showDynamicDesc?'6em':'4em'">
 		<mat-panel-title class="!flex !flex-col !justify-between !items-center">
 			<div class="topRow w-full row">
-				<h5 class="flex-auto fw-bold capitalize text-xl leading-7 text-black">{{title}}</h5>
-				<div class="flex-auto">
-					<ng-content select="[titleDesc]"></ng-content>
+				<div class="w-4/5 w-full" *ngIf="!showDynamicDesc">
+					<div class="row">
+						<h5 class="w-1/3 flex-auto fw-bold capitalize text-xl leading-7 text-black w-1/3">{{title}}</h5>
+						<div class="w-2/3 flex-auto">
+							<ng-content select="[titleDesc]"></ng-content>
+						</div>
+					</div>
+					
 				</div>
-				<div class="toggle-icon cursor-pointer w-[24px] h-[24px] bg-dark-orange rounded-[5px]">
+
+				<div class="w-4/5 w-full" *ngIf="showDynamicDesc">
+					<div class="row">
+						
+							<h5 class="w-full flex-auto fw-bold capitalize text-xl leading-7 text-black">{{title}}</h5>
+						
+					</div>
+				</div>
+				
+				<!-- <div class="w-4/5" *ngIf="showDynamicDesc">
+					<div class="row">
+						
+							<h5 class="w-full flex-auto fw-bold capitalize text-xl leading-7 text-black">{{title}}</h5>
+						
+					</div>
+				
+					<div class="row">
+						<div class="w-full flex-auto">
+							<ng-content select="[dynTitleDesc]"></ng-content>
+						</div>
+					</div>
+				</div> -->
+				
+				<!-- <div class="flex-auto">
+					<ng-container [ngTemplateOutlet]="accordionDesc"></ng-container>
+				</div> -->
+				
+				<div class="w-1/5 toggle-icon cursor-pointer w-[24px] h-[24px] bg-dark-orange rounded-[5px]" >
 					<div *ngIf="panelOpenState">
 						<img alt="panel_open" class="w-full h-auto" src="./static-files/images/up_caret.png" />
 					</div>
@@ -16,6 +48,17 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row w-full" *ngIf="showDynamicDesc">
+			
+				
+					
+						<div class="w-full flex-auto">
+							<ng-content select="[dynTitleDesc]"></ng-content>
+						</div>
+					
+				</div>
+			
 			<div class="bottomRow w-full row">
 				<ng-content select="[collapsedDesc]"></ng-content>
 			</div>

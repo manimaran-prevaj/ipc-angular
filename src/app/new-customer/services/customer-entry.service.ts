@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Customer } from '../models/customer-details'
 import { ApplicationHttpClient } from '../../../utils/app-http-client';
 
@@ -24,6 +24,10 @@ export class CustomerEntryService {
         const url = `/user/api/v1/customer_profile`;
 		const payload = { "phone_num": customer};
         return this.httpClient.post<Customer>(url, payload);
+	}
+
+	public getOrderStepData(step: any): Observable<any> {
+		return of(step);
 	}
 }
 

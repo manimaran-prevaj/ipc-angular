@@ -1,15 +1,90 @@
 <app-ccc-accordion class="app-customer-entry" [title]="'customer entry'" [id]="'customerEntryExpansionPanel'"
-	[disabled]="false" [expanded]="true">
-	<div titleDesc class="row justify-start items-center me-20">
-		<div class="row text-base leading-6 font-normal w-1/2">
+	[disabled]="false" [expanded]="isExpanded" [showDynamicDesc]="isContinueOrder">
+	<div titleDesc class="row justify-start items-center me-20" *ngIf="!isContinueOrder">
+		
+		<!-- <ng-container  *ngIf="!isContinueOrder"> -->
+			<div class="flex-auto w-1/2">
+				<span class="fw-semi-bold">Call ID: </span><span>--</span>
+			</div>
+			<div class="flex-auto w-1/2">
+				<span class="fw-semi-bold">Today's orders: </span><span>--</span>
+			</div>
+		<!-- </ng-container> -->
+		<!-- <ng-container *ngIf="isContinueOrder "> -->
+			<!-- <div class="flex-auto w-1/3">
+				<label class="fw-semi-bold">Phone:</label>
+				<span>{{phone}}</span>
+			</div>
+			<div class="flex-auto w-1/3">
+				<label class="fw-semi-bold">Order Date:</label>
+				<span>{{date}} - Today - Now</span>
+			</div>
+			<div class="flex-auto w-1/3">
+				<label class="fw-semi-bold">Delivery Address:</label>
+				<span>{{customerResponse?.default_delivery_store_data?.address}}</span>
+			</div>
+			<div class="flex-auto text-dark-orange fw-semi-bold w-1/3">
+				<label>Pickup:</label>
+				<span>{{customerResponse?.default_delivery_store_data.pickup_available ? 'Available':'N/A'}}</span>
+			</div> -->
+		<!-- </ng-container> -->
+	</div>
+	<div dynTitleDesc class="row justify-start items-center me-20 mt-1" *ngIf="isContinueOrder">
+		<div class="flex-auto w-2/6">
+			<label for="phone" class="fw-semi-bold">Phone:</label>
+			<span>{{phone}}</span>
+		</div>
+		<div class="flex-auto w-2/6">
+			<label for="orderdate" class="fw-semi-bold">Order Date:</label>
+			<span>{{date}} - Today - Now</span>
+		</div>
+		<div class="flex-auto w-2/6">
+			<label for="deliveryAddress" class="fw-semi-bold">Delivery Address:</label>
+			<span>{{customerResponse?.default_delivery_store_data?.address}}</span>
+		</div>
+		<div class="flex-auto text-dark-orange fw-semi-bold w-1/6">
+			<label for="pickup">Pickup:</label>
+			<span>{{customerResponse?.default_delivery_store_data.pickup_available ? 'Available':'N/A'}}</span>
+		</div>
+	</div>
+	<div body >
+		<div class="row w-full">
+		<app-customer-details #CustomerDetailsComponent class="w-1/2 mr-2"></app-customer-details>
+		<app-address-details class="w-1/2 ml-2"></app-address-details>
+		</div>
+		<div class="row w-full">
+			<div class="w-1/2 mr-2">
+				<button mat-flat-button color="primary" class="mt-2" (click)="continueOrder()">Continue to Order</button>
+			</div>
+		</div>
+	</div>
+	
+</app-ccc-accordion>
+<ng-template #accorionDesc>
+	<div class="row" *ngIf="!isContinueOrder">
+		<div class="flex-auto w-1/2">
 			<span class="fw-semi-bold">Call ID: </span><span>--</span>
 		</div>
-		<div class="row text-base leading-6 font-normal w-1/2">
+		<div class="flex-auto w-1/2">
 			<span class="fw-semi-bold">Today's orders: </span><span>--</span>
 		</div>
 	</div>
-	<div body class="row w-full">
-		<app-customer-details class="w-1/2 mr-2"></app-customer-details>
-		<app-address-details class="w-1/2 ml-2"></app-address-details>
+	<div class="row" *ngIf="isContinueOrder && phone">
+		<div class="flex-auto w-1/3">
+			<label for="phone" class="fw-semi-bold">Phone:</label>
+			<span>{{phone}}</span>
+		</div>
+		<div class="flex-auto w-1/3">
+			<label  for="orderdate" class="fw-semi-bold">Order Date:</label>
+			<span>{{date}} - Today - Now</span>
+		</div>
+		<div class="flex-auto w-1/3">
+			<label for="deliveryaddress" class="fw-semi-bold">Delivery Address:</label>
+			<span>{{customerResponse?.default_delivery_store_data?.address}}</span>
+		</div>
+		<div class="flex-auto text-dark-orange fw-semi-bold w-1/3">
+			<label for="pickup" >Pickup:</label>
+			<span>{{customerResponse?.default_delivery_store_data.pickup_available ? 'Available':'N/A'}}</span>
+		</div>
 	</div>
-</app-ccc-accordion>
+</ng-template>

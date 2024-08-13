@@ -15,6 +15,7 @@ export interface customerProfileData {
   customerProfileData: ApiResponse
 }
 
+
 export const customerDetailsReducer = createReducer(
   initialState,
   on(CustomerDetailsActions.loadCustomerDetailsSuccess, (state, { customerProfile }) => ({
@@ -28,6 +29,8 @@ export const customerDetailsReducer = createReducer(
     error
   }))
 );
+
+
 
 
 

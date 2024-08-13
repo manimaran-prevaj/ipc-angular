@@ -9,6 +9,7 @@ import { MatRadioModule} from '@angular/material/radio'
 
 import { NewCustomerComponent } from './containers/new-customer/new-customer.component';
 import { CustomerEntryComponent } from './containers/customer-entry/customer-entry.component';
+import { OrderEntryComponent } from './containers/order-entry/order-entry.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddressDetailsComponent } from './components/address-details/address-details.component';
@@ -22,7 +23,8 @@ export const COMPONENTS = [
 	CustomerEntryComponent,
 	AddressDetailsComponent,
 	DwellingTypeDetailsComponent,
-	ManualAddressDetailsComponent
+	ManualAddressDetailsComponent,
+	OrderEntryComponent
 ];
 
 @NgModule({

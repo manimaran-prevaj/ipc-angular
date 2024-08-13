@@ -17,7 +17,6 @@ export class CustomerDetailsEffects {
     ))
   ));
 
-
   constructor(
     private actions$: Actions,
     private customerEntryService: CustomerEntryService

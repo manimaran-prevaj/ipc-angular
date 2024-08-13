@@ -9,6 +9,7 @@ export interface AppConfigState {
     appConfigState: AppConfig
 }
 
+
 export const appConfigReducer = createReducer(
     initialState
     ,on(loadAppConfig, state=>({...state}))

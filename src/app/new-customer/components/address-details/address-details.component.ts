@@ -94,7 +94,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				})
 				
 				this.storeHoursData = this.transformOperatingHours(this.customerDetails.default_delivery_store_data.operating_hours_details_cache);
-				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == new Date().getDay()-1);
+				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == (new Date().getDay()==0?6:new Date().getDay()-1));
 				const currentDate = new  Date();
 				currentDate.setDate(currentDate.getDate()+1);
 				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.start_time).toLocaleString())) {
@@ -105,7 +105,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				} else {
 					this.currentStoreStatus = "Closed";
 				}
-				this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == new Date().getDay()-1)});
+				this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == (new Date().getDay()==0?6:new Date().getDay()-1))});
 				this.pickupAvailable = this.customerDetails.default_delivery_store_data.pickup_available ? 'Available':'N/A';
 			}
 		});

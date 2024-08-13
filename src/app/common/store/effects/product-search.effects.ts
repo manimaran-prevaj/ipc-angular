@@ -7,7 +7,7 @@ import * as StoreActions from '../actions/product-search.actions';
 import { Item } from '../../../new-customer/models/product-search';
 
 @Injectable()
-export class StoreEffects {
+export class ProductSearchEffects {
 
   loadStoreData$ = createEffect(() => this.actions$.pipe(
     ofType(StoreActions.loadStoreData),

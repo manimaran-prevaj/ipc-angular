@@ -1,23 +1,62 @@
 <div class="app-new-customer w-full col">
-	<div class="row p-4 bg-slate-100 main-content">
-		<div class="col">
-			<mat-accordion>
-				<app-customer-entry></app-customer-entry>
-				<!-- TODO:: Change while developing order entry section -->
-				<app-ccc-accordion [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false"
-					[expanded]="false">
-					<div body>
-						<h2>Order Entry Content</h2>
-					</div>
-				</app-ccc-accordion>
-				<!-- TODO:: Change while developing payment information section -->
-				<app-ccc-accordion [title]="'payment information'" [id]="'orderEntryExpansionPanel'" [disabled]="false"
-					[expanded]="false">
-					<div body>
-						<h2>Payment Information Content</h2>
-					</div>
-				</app-ccc-accordion>
-			</mat-accordion>
-		</div>
-	</div>
+    <div class="row p-4 bg-slate-100 main-content">
+        <div class="col">
+            <mat-accordion>
+                <app-customer-entry></app-customer-entry>
+
+         <!-- Order Entry Section -->
+		 <app-ccc-accordion class="app-order-entry" [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false" [expanded]="isOrderentryExpanded">
+			<div titleDesc class="row justify-end" style="padding-left: 25%;" *ngIf="isOrderentryExpanded">
+				<div class=" text-base leading-4 font-normal pizza-count w-1/3 me-20" style="align-content: center;">
+					<span class="fw-semi-bold">Pizza Count: </span>
+					<span class="pizza-count">0</span>
+				</div>
+				<div class=" text-base leading-4 font-normal w-1/3">
+					<button mat-button>
+						<mat-icon class="item">calendar_month</mat-icon>
+						<span class="item button-text fw-semi-bold">Order History</span>
+					</button>
+				</div>
+				<div class=" text-base leading-4 font-normal w-1/3">
+					<button mat-button>
+						<mat-icon class="item">refresh</mat-icon>
+						<span class="item button-text fw-semi-bold">Refresh Order</span>
+					</button>
+				</div>
+			</div>
+                    <div body class="">
+                        <!-- Inserted Menu Search Section -->
+                        <div class="row w-full mb-4 mt-4">
+							<div class="w-1/3">
+                            <mat-form-field appearance="outline" color="accent" class="w-full rounded-input">
+                                <mat-icon matPrefix>search</mat-icon>
+                                <input matInput placeholder="Menu Search">
+                            </mat-form-field>
+							</div>
+                        </div>
+                        <!-- End of Inserted Menu Search Section -->
+
+                        <div class="row category-list w-full">
+                            <!-- <button *ngFor="let categoryName of categoryNames$ | async" mat-stroked-button class="category-button">
+								{{ categoryName }}
+							  </button> -->
+							  <div w-full>
+							  <button *ngFor="let category of categories" mat-stroked-button class="mt-1 category-button mr-1">
+                                {{ category.name }}
+                            </button>
+							</div>
+                        </div>
+                    </div>
+                </app-ccc-accordion>
+
+                <!-- Payment Information Section -->
+                <app-ccc-accordion [title]="'payment information'" [id]="'paymentInformationExpansionPanel'" [disabled]="false" [expanded]="false">
+                    <div body>
+                        <h2>Payment Information Content</h2>
+                    </div>
+                </app-ccc-accordion>
+
+            </mat-accordion>
+        </div>
+    </div>
 </div>

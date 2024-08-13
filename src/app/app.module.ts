@@ -25,8 +25,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppConfigEffects } from './common/store/effects/app-config.effects';
 import { customerDetailsReducer } from './common/store/reducers/customer-details.reducers';
 import { CustomerDetailsEffects } from './common/store/effects/customer-details.effects';
-//import { productSearchReducer } from './common/store/reducers/product-search.reducers';
-import { StoreEffects } from './common/store/effects/product-search.effects';
+import{ CategoryEffects } from './common/store/effects/category.effects';
+import { OrderStepEffects } from './common/store/effects/order-step.effects';
+import { OrderStepReducer } from './common/store/reducers/order-step.reducers';
+// import { reducers } from './common/store/reducers/reducers';
+// import { productSearchReducer } from './common/store/reducers/product-search.reducers';
+// import { categoryReducer } from './common/store/reducers/category.reducers';
+import { ProductSearchEffects } from './common/store/effects/product-search.effects';
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
 // import { environment } from '../environments/environment';
 import { ApplicationHttpClient } from '../utils/app-http-client';
@@ -43,8 +48,12 @@ import { ApplicationHttpClient } from '../utils/app-http-client';
 		StoreModule.forRoot({}),
 		StoreModule.forFeature('appConfig', appConfigReducer),
         StoreModule.forFeature('customerDetails', customerDetailsReducer),
+		StoreModule.forFeature('OrderStepData',OrderStepReducer),
+		// StoreModule.forRoot(reducers),
+		//StoreModule.forFeature('categoryReducer', categoryReducer),
+		//StoreModule.forFeature('productSearchReducer', productSearchReducer),
 		EffectsModule.forRoot([]),
-		EffectsModule.forFeature([AppConfigEffects, CustomerDetailsEffects, StoreEffects]),
+		EffectsModule.forRoot([AppConfigEffects, CustomerDetailsEffects, ProductSearchEffects, OrderStepEffects, CategoryEffects,ProductSearchEffects]),
 
 		// Imported components of Angular Material
 		MaterialModule,

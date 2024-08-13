@@ -2,17 +2,17 @@ import { createReducer, on } from '@ngrx/store';
 import * as StoreActions from '../actions/product-search.actions';
 import { Item } from '../../../new-customer/models/product-search';
 
-export interface StoreState {
+export interface ProductState {
   storeData: Item | null;
   error: any;
 }
 
-export const initialState: StoreState = {
+export const initialState: ProductState = {
   storeData: null,
   error: null,
 };
 
-export const storeReducer = createReducer(
+export const productSearchReducer = createReducer(
   initialState,
   on(StoreActions.loadStoreData, state => ({
     ...state,

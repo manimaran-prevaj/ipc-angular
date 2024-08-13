@@ -1,5 +1,60 @@
 .app-new-customer {
 	.main-content {
-		min-height: calc(100vh - 91px);
+	  min-height: calc(100vh - 91px);
+  
+	  .app-order-entry {
+		.titleDesc {
+		  align-items: center;
+		  justify-content: flex-end; // Align items to the right
+		}
+  
+		.item {
+		  color: #D4400F;
+		}
+  
+		.rounded-input {
+		  mat-form-field {
+			border-radius: 20px;
+		  }
+		}
+		.pizza-count {
+			align-items: center;
+		}
+  
+		.category-list {
+		  display: flex;
+		  flex-wrap: wrap;
+		  gap: 10px; // Space between buttons
+		  margin-top: 20px;
+  
+		  .category-button {
+			border-radius: 20px; // Rounded corners for buttons
+			border: 1px solid #148119 !important; // Green border
+			color: #49454F; // Green text color
+			padding: 5px 15px; // Padding inside the buttons
+			font-weight: bold; // Bold text
+			background-color: white; // White background
+			text-transform: capitalize; // Capitalize text
+			
+			&:hover {
+			  background-color: white; // Light green background on hover
+			}
+		  }
+		}
+	  }
+	}
+  }
+  
+  mat-form-field.rounded-input {
+	.mat-form-field-wrapper {
+	  border-radius: 25px;
+	}
+  
+	.mat-form-field-outline {
+	  border-radius: 25px;
+	}
+  
+	input.mat-input-element {
+	  border-radius: 25px;
 	}
 }

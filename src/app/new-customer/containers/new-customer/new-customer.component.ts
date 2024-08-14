@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { selectCatogory, selectCustomerProfile, selectStepData } from "../../../common/store";
-import { mockCategories } from '../../../../mockdata/category';
 import { Observable } from "rxjs";
 import { MatAccordion } from "@angular/material/expansion";
 
@@ -15,8 +14,6 @@ import { MatAccordion } from "@angular/material/expansion";
 export class NewCustomerComponent implements OnInit {
 
 	categoryNames$: Observable<string[]>;
-
-	categories = mockCategories;
 
 	public isOrderentryExpanded = false;
 	@ViewChild('MatAccordion') accordion: MatAccordion

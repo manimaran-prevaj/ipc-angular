@@ -1,7 +1,7 @@
 <div class="app-new-customer w-full col">
     <div class="row p-4 bg-slate-100 main-content">
         <div class="col">
-            <mat-accordion>
+            <mat-accordion #MatAccordion>
                 <app-customer-entry></app-customer-entry>
 
          <!-- Order Entry Section -->
@@ -37,13 +37,10 @@
                         <!-- End of Inserted Menu Search Section -->
 
                         <div class="row category-list w-full">
-                            <!-- <button *ngFor="let categoryName of categoryNames$ | async" mat-stroked-button class="category-button">
+                            <button *ngFor="let categoryName of categoryNames$" mat-stroked-button class="category-button">
 								{{ categoryName }}
-							  </button> -->
+							  </button>
 							  <div w-full>
-							  <button *ngFor="let category of categories" mat-stroked-button class="mt-1 category-button mr-1">
-                                {{ category.name }}
-                            </button>
 							</div>
                         </div>
                     </div>

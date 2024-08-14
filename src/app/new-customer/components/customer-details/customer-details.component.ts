@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
 import { CustomerEntryService } from "../../services/customer-entry.service";
-import { debounceTime } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
 import { ApiResponse} from "../../models/customer-details";
@@ -51,12 +50,6 @@ export class CustomerDetailsComponent implements OnInit {
 					email:this.customerResponse.customer_data.email,
 					emailOptIn: this.customerResponse.customer_data.email?true:false
 				})
-			
-				// const storeId = this.customerResponse.default_delivery_store_data.store_id // Assuming store_id is the property name
-				// if (storeId) {
-				// 	this.store.dispatch(loadStoreData({ storeId }));
-				// 	this.store.dispatch(loadCategoryList({ storeId }));
-				// }
 		}
 			
 		});
@@ -82,11 +75,29 @@ export class CustomerDetailsComponent implements OnInit {
 		});
 
 		
-		this.customerDetailsForm.controls['phone'].valueChanges
-		.pipe(debounceTime(300))
-		.subscribe(value => {
-			if (value) {
-				// Remove brackets, hyphens, and other non-numeric characters
+		// this.customerDetailsForm.controls['phone'].valueChanges
+		// .pipe(debounceTime(300))
+		// .subscribe(value => {
+		// 	if (value) {
+		// 		// Remove brackets, hyphens, and other non-numeric characters
+		// 		//eslint-disable-next-line
+		// 		const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
+		// 		if (sanitizedValue.length === 10) {
+		// 			this.store.dispatch(loadCustomerDetails({ phone: sanitizedValue }));
+		// 			this.showEmailOptDate = false;
+		// 			this.customerDetailsForm.patchValue({
+		// 				firstName: '', lastName: '', email: '', emailOptIn: false,
+		// 				emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: todayDateTime
+		// 			});
+		// 		}
+		// 	}
+		// });
+	}
+
+		// Handle keydown event on phone input field
+		onPhoneKeyDown(event: KeyboardEvent) {
+			if (event.key === 'Tab' || event.key === 'Enter') {
+				const value = this.customerDetailsForm.controls['phone'].value;
 				//eslint-disable-next-line
 				const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
 				if (sanitizedValue.length === 10) {
@@ -94,12 +105,11 @@ export class CustomerDetailsComponent implements OnInit {
 					this.showEmailOptDate = false;
 					this.customerDetailsForm.patchValue({
 						firstName: '', lastName: '', email: '', emailOptIn: false,
-						emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: todayDateTime
+						emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: this.getTodayDate()
 					});
 				}
 			}
-		});
-	}
+		}
 
 	onSelectionChange(option: string) {
 		const controls = this.customerDetailsForm.controls;
@@ -176,7 +186,6 @@ export class CustomerDetailsComponent implements OnInit {
 	/* eslint-enable */
 
 	onDeliveryTypeChange() {
-		// TODO :: Remove this logic to NgRx Store
 		this.customerEntryService.setDeliveryType(this.customerDetailsForm.controls['modeOfDelivery'].value);
 	}
 

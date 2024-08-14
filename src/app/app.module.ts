@@ -28,9 +28,8 @@ import { CustomerDetailsEffects } from './common/store/effects/customer-details.
 import{ CategoryEffects } from './common/store/effects/category.effects';
 import { OrderStepEffects } from './common/store/effects/order-step.effects';
 import { OrderStepReducer } from './common/store/reducers/order-step.reducers';
-// import { reducers } from './common/store/reducers/reducers';
-// import { productSearchReducer } from './common/store/reducers/product-search.reducers';
-// import { categoryReducer } from './common/store/reducers/category.reducers';
+import { productSearchReducer } from './common/store/reducers/product-search.reducers';
+ import { categoryReducer } from './common/store/reducers/category.reducers';
 import { ProductSearchEffects } from './common/store/effects/product-search.effects';
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
 // import { environment } from '../environments/environment';
@@ -49,11 +48,10 @@ import { ApplicationHttpClient } from '../utils/app-http-client';
 		StoreModule.forFeature('appConfig', appConfigReducer),
         StoreModule.forFeature('customerDetails', customerDetailsReducer),
 		StoreModule.forFeature('OrderStepData',OrderStepReducer),
-		// StoreModule.forRoot(reducers),
-		//StoreModule.forFeature('categoryReducer', categoryReducer),
-		//StoreModule.forFeature('productSearchReducer', productSearchReducer),
+		StoreModule.forFeature('categoryReducer', categoryReducer),
+		StoreModule.forFeature('productSearchData', productSearchReducer),
 		EffectsModule.forRoot([]),
-		EffectsModule.forRoot([AppConfigEffects, CustomerDetailsEffects, ProductSearchEffects, OrderStepEffects, CategoryEffects,ProductSearchEffects]),
+		EffectsModule.forRoot([AppConfigEffects, CustomerDetailsEffects, ProductSearchEffects, CategoryEffects, OrderStepEffects]),
 
 		// Imported components of Angular Material
 		MaterialModule,

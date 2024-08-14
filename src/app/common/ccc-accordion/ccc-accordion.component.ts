@@ -6,6 +6,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 	styleUrl: './ccc-accordion.component.scss'
 })
 export class CCCAccordionComponent  implements OnInit{
+	
 	@Input() title: string;
 	@Input() id: string;
 	@Input() disabled: boolean;
@@ -19,6 +20,17 @@ export class CCCAccordionComponent  implements OnInit{
 		console.log(this.accordionDesc)
 
 		console.log(this.title)	
+		
+	}
+
+	public panelClosed(){
+		this.panelOpenState = false;
+		this.showDynamicDesc = true;
+	}
+
+	public panelOpened(){
+		this.panelOpenState = true;
+		this.showDynamicDesc = false;
 	}
 	
 }

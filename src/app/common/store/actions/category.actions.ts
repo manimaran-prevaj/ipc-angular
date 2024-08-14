@@ -16,6 +16,3 @@ export const loadCategoryListFailure = createAction(
   props<{ error: any }>()
 );
 
-// export function loadOrderStep(loadOrderStep: any): import("rxjs").OperatorFunction<import("@ngrx/store").Action, any> {
-//     throw new Error('Function not implemented.');
-// }

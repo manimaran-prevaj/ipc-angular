@@ -10,7 +10,7 @@
 					<mat-form-field color="accent" [hideRequiredMarker]="true">
 						<mat-label>Phone</mat-label>
 						<input type="tel" matInput appPhoneMask formControlName="phone" maxlength="14"
-							(keypress)="onlyNumber($event)">
+							(keypress)="onlyNumber($event)" (keydown)="onPhoneKeyDown($event)">
 					</mat-form-field>
 					<mat-error
 						*ngIf="customerDetailsForm.controls['phone'].touched && customerDetailsForm.controls['phone'].errors">

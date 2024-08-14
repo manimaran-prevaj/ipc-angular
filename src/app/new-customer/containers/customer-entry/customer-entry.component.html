@@ -1,6 +1,6 @@
 <app-ccc-accordion class="app-customer-entry" [title]="'customer entry'" [id]="'customerEntryExpansionPanel'"
 	[disabled]="false" [expanded]="isExpanded" [showDynamicDesc]="isContinueOrder">
-	<div titleDesc class="row justify-start items-center me-20" *ngIf="!isContinueOrder">
+	<div titleDesc class="row justify-start items-center me-20" >
 		
 		<!-- <ng-container  *ngIf="!isContinueOrder"> -->
 			<div class="flex-auto w-1/2">
@@ -29,7 +29,7 @@
 			</div> -->
 		<!-- </ng-container> -->
 	</div>
-	<div dynTitleDesc class="row justify-start items-center me-20 mt-1" *ngIf="isContinueOrder">
+	<div dynTitleDesc class="row justify-start items-center me-20 mt-1" >
 		<div class="flex-auto w-2/6">
 			<label for="phone" class="fw-semi-bold">Phone:</label>
 			<span>{{phone}}</span>

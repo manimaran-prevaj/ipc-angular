@@ -48,7 +48,7 @@
 		<div *ngIf="customerDetails && deliveryType === 'delivery'" class="row mt-4">
 			<div class="w-full">
 				<div class="default-address">
-					<span class="default-address-details">{{customerDetails?.default_delivery_store_data?.address}}:</span>
+					<span class="default-address-details">Store #{{customerDetails?.default_delivery_store_data?.address}},{{customerDetails?.default_delivery_store_data?.city}}:</span>
 					<span>{{customerDetails?.default_delivery_store_data?.address_help}}</span>
 					</div>
 			</div>

@@ -14,7 +14,7 @@ export class ProductSearchService {
 
 
 	public getProductsByStoreId(storeId: number): Observable<StoreID> {
-        const url = `/catalog/api/v1/product/search`;
+        const url = `catalog/api/v1/product/search`;
 		const params = new HttpParams().set('store_id', storeId.toString());
         return this.httpClient.get(url, { params });
 	}

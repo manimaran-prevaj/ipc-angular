@@ -14,11 +14,11 @@ export const initialState: ProductState = {
 
 export const productSearchReducer = createReducer(
   initialState,
-  on(StoreActions.loadStoreData, state => ({
-    ...state,
-    storeData: null,
-    error: null,
-  })),
+  // on(StoreActions.loadStoreData, state => ({
+  //   ...state,
+  //   storeData: null,
+  //   error: null,
+  // })),
   on(StoreActions.loadStoreDataSuccess, (state, { storeData }) => ({
     ...state,
     storeData,

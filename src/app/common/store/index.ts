@@ -3,11 +3,13 @@ import { AppConfig } from '../models/app-config';
 import { ApiResponse } from '../../new-customer/models/customer-details'
 import { Category } from '../../new-customer/models/category-search';
 import * as fromStoreSearch from './reducers/product-search.reducers';
+import { Item } from '../../new-customer/models/product-search';
 import * as fromCategorySearch from './reducers/category.reducers';
 
 export const selectAppConfig = (state: AppConfig) => state;
 export const selectCustomerProfile = (state: ApiResponse) => state;
 export const selectStepData = (state: any) => state;
+export const selectProductData = (state: Item) => state;
 
 export interface CommonState {
 	productSearch: fromStoreSearch.ProductState
@@ -29,38 +31,19 @@ export const getcustomerProfile = createSelector (
   (state: ApiResponse) => state.customer_data
 );
 
-export const getDefaultDeliveryStoreDetails = createSelector (
-  selectCustomerProfile,
-  (state: ApiResponse) => state.default_delivery_store_data
-);
-
-export const getDefaultPickupStoreDetails = createSelector (
-  selectCustomerProfile,
-  (state: ApiResponse) => state.default_pickup_store_data
-);
 
 export const getOrderStepData = createSelector(
 selectStepData,
 (state: any) => state
 )
 
+export const getProductData = createSelector(
+  selectProductData,
+  (state: any) => state
+  )
 
-// Select the full list of categories
-// export const selectCategories = createSelector(
-//   selectCategorySearchState,
-//   (state: fromCategorySearch.StoreState) => {
-//     console.log('Categories state:', state.categories); // Log the full categories state
-//     return state.categories; 
-//   }
-// );
-
-// Select only the category names
-// export const selectCategoryNames = createSelector(
-//   selectCategories,
-//   (categories: Category[]) => categories.map(category => category.name)
-// );
 export const getCategorydata = createSelector(
   selectCatogory,
-  (state:Category[])=>state
+  (categories:Category[])=>categories
 )
 

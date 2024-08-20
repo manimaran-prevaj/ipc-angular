@@ -25,7 +25,7 @@ export const customerDetailsReducer = createReducer(
   })),
   on(CustomerDetailsActions.loadCustomerDetailsFailure, (state, { error }) => ({
     ...state,
-    customer: null,
+    customerProfile: null,
     error
   }))
 );

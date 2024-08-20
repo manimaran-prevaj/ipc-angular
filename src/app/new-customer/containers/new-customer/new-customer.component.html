@@ -1,59 +1,67 @@
 <div class="app-new-customer w-full col">
     <div class="row p-4 bg-slate-100 main-content">
-        <div class="col">
-            <mat-accordion #MatAccordion>
-                <app-customer-entry></app-customer-entry>
-
-         <!-- Order Entry Section -->
-		 <app-ccc-accordion class="app-order-entry" [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false" [expanded]="isOrderentryExpanded">
-			<div titleDesc class="row justify-end" style="padding-left: 25%;" *ngIf="isOrderentryExpanded">
-				<div class=" text-base leading-4 font-normal pizza-count w-1/3 me-20" style="align-content: center;">
-					<span class="fw-semi-bold">Pizza Count: </span>
-					<span class="pizza-count">0</span>
-				</div>
-				<div class=" text-base leading-4 font-normal w-1/3">
-					<button mat-button>
-						<mat-icon class="item">calendar_month</mat-icon>
-						<span class="item button-text fw-semi-bold">Order History</span>
-					</button>
-				</div>
-				<div class=" text-base leading-4 font-normal w-1/3">
-					<button mat-button>
-						<mat-icon class="item">refresh</mat-icon>
-						<span class="item button-text fw-semi-bold">Refresh Order</span>
-					</button>
-				</div>
-			</div>
-                    <div body class="">
-                        <!-- Inserted Menu Search Section -->
-                        <div class="row w-full mb-4 mt-4">
-							<div class="w-1/3">
-                            <mat-form-field appearance="outline" color="accent" class="w-full rounded-input">
-                                <mat-icon matPrefix>search</mat-icon>
-                                <input matInput placeholder="Menu Search">
-                            </mat-form-field>
-							</div>
-                        </div>
-                        <!-- End of Inserted Menu Search Section -->
-
-                        <div class="row category-list w-full">
-                            <button *ngFor="let categoryName of categoryNames$" mat-stroked-button class="category-button">
-								{{ categoryName }}
-							  </button>
-							  <div w-full>
-							</div>
-                        </div>
-                    </div>
-                </app-ccc-accordion>
-
-                <!-- Payment Information Section -->
-                <app-ccc-accordion [title]="'payment information'" [id]="'paymentInformationExpansionPanel'" [disabled]="false" [expanded]="false">
-                    <div body>
-                        <h2>Payment Information Content</h2>
-                    </div>
-                </app-ccc-accordion>
-
-            </mat-accordion>
-        </div>
+      <div class="col">
+        <mat-accordion #MatAccordion>
+          <app-customer-entry></app-customer-entry>
+  
+          <!-- Order Entry Section -->
+          <app-ccc-accordion class="app-order-entry" [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false" [expanded]="isOrderentryExpanded">
+            <div titleDesc class="row justify-end" style="padding-left: 25%;" *ngIf="isOrderentryExpanded">
+              <div class="text-base leading-4 font-normal pizza-count w-1/3 me-20" style="align-content: center;">
+                <span class="fw-semi-bold">Pizza Count: </span>
+                <span class="pizza-count">0</span>
+              </div>
+              <div class="text-base leading-4 font-normal w-1/3">
+                <button mat-button>
+                  <mat-icon class="item">calendar_month</mat-icon>
+                  <span class="item button-text fw-semi-bold">Order History</span>
+                </button>
+              </div>
+              <div class="text-base leading-4 font-normal w-1/3">
+                <button mat-button>
+                  <mat-icon class="item">refresh</mat-icon>
+                  <span class="item button-text fw-semi-bold">Refresh Order</span>
+                </button>
+              </div>
+            </div>
+            <div body>
+            <!-- Inserted Menu Search Section -->
+            <div class="row w-full mb-4 mt-4">
+                <div class="w-1/2">
+                  <mat-form-field appearance="outline" color="accent" class="w-full rounded-input">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput placeholder="Menu Search" (input)="onSearch($event)">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="search-results" *ngIf="filteredItems.length" #searchResults style="width: 50%;margin-top: -2%;">
+                <ul>
+                  <li *ngFor="let item of filteredItems">
+                    <span>{{ item.item_name_en }}</span>
+                    <button mat-button>{{ item.is_customization ? 'Customize' : 'Add to Order' }}</button>
+                  </li>
+                </ul>
+              </div>
+              <!-- End of Inserted Menu Search Section -->
+  
+              <div class="row category-list w-full">
+                <button *ngFor="let categoryName of categoryNames$" mat-stroked-button class="category-button">
+                  {{ categoryName }}
+                </button>
+                <div w-full>
+                </div>
+              </div>
+            </div>
+          </app-ccc-accordion>
+  
+          <!-- Payment Information Section -->
+          <app-ccc-accordion [title]="'payment information'" [id]="'paymentInformationExpansionPanel'" [disabled]="false" [expanded]="false">
+            <div body>
+              <h2>Payment Information Content</h2>
+            </div>
+          </app-ccc-accordion>
+  
+        </mat-accordion>
+      </div>
     </div>
-</div>
+  </div>

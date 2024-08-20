@@ -39,7 +39,7 @@
 			</div>
 		</div>
 		@if (selectedDwellingType && deliveryType === 'delivery') {
-		<div class="row mt-4">
+		<div class="row mt-6">
 			<div class="w-full">
 				<app-dwelling-type-details [selectedDwellingType]="selectedDwellingType"></app-dwelling-type-details>
 			</div>
@@ -53,39 +53,35 @@
 					</div>
 			</div>
 		</div>
-		<!-- <div class="row mt-4">
-			<div class="w-full">
-				<mat-form-field color="accent" dis>
-					<mat-label>Store Hours:</mat-label>
-					<mat-select formControlName="storeHours" (selectionChange)="onStoreHoursChange($event)">
-						@for (option of storeHoursData; track option) {
-						<mat-option [value]="option?.hours">{{option?.hours}}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
-			</div>
-		</div> -->
-        <div *ngIf="customerDetails && deliveryType === 'delivery'">
-		<div class="row mt-4">
-			<div class="w-1/2">
-				<mat-form-field color="accent">
-					<mat-label>Store Hours:</mat-label>
-					<mat-select formControlName="storeHours" (selectionChange)="onStoreHoursChange()">
-						<mat-select-trigger class="store-status">{{currentStoreStatus}}</mat-select-trigger>
-						<mat-option *ngFor="let option of storeHoursData" [value]="option">
-							{{ option.label }}: {{ option.hours }}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-			</div>
-		</div>
 
-		<div class="row mt-4">
+        <div *ngIf="customerDetails && deliveryType === 'delivery'">
+			<div class="row mt-4">
+				<div class="w-1/2 store-hours-container">
+					<div tabindex="0" role="button" (click)="toggleStoreHoursPopup()" (keyup.enter)="toggleStoreHoursPopup()"
+						 aria-label="Toggle Store Hours">
+						<span class="store-hours-header">Store Hours:</span>
+						<span class="store-hours-status">{{ currentStoreStatus }}</span>
+						<mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+					</div>
+					<div class="store-hours-popup" *ngIf="showStoreHoursPopup" (click)="onPopupClick($event)" tabindex="0"
+						 role="button" (keyup.enter)="onPopupClick($event)" aria-label="Close Store Hours">
+						<div class="storehourscontent">
+							<div *ngFor="let option of storeHoursData" [class.current-day]="option.isToday">
+								<span class="day-name">{{ option.label }}</span>
+								<span class="hours">{{ option.hours }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		<div class="row mt-6">
 			<div class="w-1/2 restaurant-status">
 				<mat-label>Restaurant Status Reason:</mat-label>
 			</div>
 		</div>
-		<div class="row mt-4">
+		<div class="row mt-6">
 			<div class="w-1/2 smaller text-dark-orange font-bold">
 				<mat-label>Pickup:</mat-label>{{pickupAvailable}}
 			</div>

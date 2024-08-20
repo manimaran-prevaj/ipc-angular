@@ -99,8 +99,8 @@
 		</div>
 		<div class="row mt-4">
 			<!-- Additional information btn -->
-			<div class="w-1/2 mr-2">
-				<button mat-stroked-button color="primary">Add Additional Information</button>
+			<div class="w-1/2 mr-2 mb-12">
+				<button mat-stroked-button class="font-bold" style="font-weight: bold;" color="primary">Add Additional Information</button>
 			</div>
 			<!-- Email opt in/out -->
 			<div class=" row w-1/2 ml-2">
@@ -115,7 +115,10 @@
 				<div class="w-1/2 ml-2">
 					<mat-checkbox formControlName="emailOptOut" (change)="onSelectionChange('emailOptOut')" class="
 						email-opt-out" color="primary">Email
-						Opt-Out: </mat-checkbox>
+						Opt-Out:
+						<br>
+						<span *ngIf="!showEmailOptDate && customerRequested">{{currenDate}}</span>
+						</mat-checkbox>
 				</div>
 			</div>
 		</div>

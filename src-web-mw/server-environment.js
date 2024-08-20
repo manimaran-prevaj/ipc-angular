@@ -29,7 +29,7 @@ const envConfig = {
 		sessionIpLimits: devSessionIpLimits,
 		session_secret_key: 'asd234234234234asdasd',
 		base_api_host: 'https://ppl-ccc-uat-be.appspot.com',
-		recaptcha_key: '6LdbxLMUAAAAAM4_SFPvctk4n8FFLLCRGzmJfq6w',
+		recaptcha_key: '6LfUORgqAAAAAD8d2z0LWzSvS7yXoXv4oeqvReT_',
 		allowed_api_hosts: [
 		],
 		auth: {

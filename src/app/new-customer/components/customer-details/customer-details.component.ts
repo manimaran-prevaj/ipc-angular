@@ -31,6 +31,7 @@ export class CustomerDetailsComponent implements OnInit {
 	public currenDate = new Date().toDateString().split(' ').splice(1).join(' ');
 	public customerResponse: ApiResponse;
 	public showEmailOptDate = false;
+	public customerRequested = false;
 	
 
 	constructor(
@@ -45,12 +46,20 @@ export class CustomerDetailsComponent implements OnInit {
 			const data: any = x;
 			this.customerResponse = data?.customerDetails?.customerProfile as ApiResponse;
 			if (this.customerResponse) {
-				this.customerDetailsForm.patchValue({firstName:this.customerResponse.customer_data.first_name,
-					lastName : this.customerResponse.customer_data.last_name,
-					email:this.customerResponse.customer_data.email,
-					emailOptIn: this.customerResponse.customer_data.email?true:false
-				})
-		}
+				this.customerDetailsForm.patchValue({
+					firstName: this.customerResponse.customer_data.first_name,
+					lastName: this.customerResponse.customer_data.last_name,
+					email: this.customerResponse.customer_data.email,
+					emailOptIn: false,
+					emailOptOut: this.customerResponse.customer_data.email ? true : false
+				});
+				this.customerDetailsForm.get('email').addValidators(Validators.required);
+			} else{
+				this.customerDetailsForm.get('email').clearValidators();
+				this.customerRequested = this.customerDetailsForm.get('phone').value ? true : false;
+				this.customerDetailsForm.patchValue({ emailOptOut: this.customerRequested, email: ''});
+			}
+			
 			
 		});
 
@@ -70,8 +79,8 @@ export class CustomerDetailsComponent implements OnInit {
 			phoneExt: [''],
 			datePicker: [todayDateTime, [Validators.required]],
 			modeOfDelivery: ['delivery', [Validators.required]],
-			emailOptIn: [],
-			emailOptOut: [],
+			emailOptIn: [false],
+			emailOptOut: [this.customerRequested],
 		});
 
 		
@@ -191,11 +200,11 @@ export class CustomerDetailsComponent implements OnInit {
 
 	emailFocusOut() {
 		if (!this.customerResponse?.customer_data) {
-			this.showEmailOptDate = this.customerDetailsForm.get('email').value;
-			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate });
+			this.showEmailOptDate = this.customerDetailsForm.get('email').value ? true: false;
+			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
 		} else {
-			this.showEmailOptDate = (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value);
-			this.customerDetailsForm.patchValue({ emailOptIn: true });
+			this.showEmailOptDate = (this.customerDetailsForm.get('email').value && (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value));
+			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
 		}
 		
 	}

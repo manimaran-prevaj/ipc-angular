@@ -12,7 +12,7 @@ export class ProductSearchEffects {
   loadStoreData$ = createEffect(() => this.actions$.pipe(
     ofType(StoreActions.loadStoreData),
     mergeMap(action => this.productSearchService.getProductsByStoreId(action.storeId).pipe(
-      map(productsData => StoreActions.loadStoreDataSuccess({ storeData: productsData as unknown as Item })),
+      map(item => StoreActions.loadStoreDataSuccess({ item: item as unknown as Item })),
       catchError(error => of(StoreActions.loadStoreDataFailure({ error })))
     ))
   ));

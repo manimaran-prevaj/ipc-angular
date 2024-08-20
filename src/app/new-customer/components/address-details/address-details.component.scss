@@ -41,4 +41,104 @@
 		font-size: 16px;
 		font-weight: bold;
 	}
+
+.store-hours-container {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	position: relative; /* Make the container relative to position the popup absolutely */
+
+	.store-hours-header {
+		font-size: 16px;
+		font-weight: bold;
+		margin-right: 5px;
+	}
+
+	.store-hours-status {
+		font-size: 16px;
+		font-weight: normal;
+		// display: flex;
+		align-items: center;
+		color: green;
+
+		.open {
+			color: green;
+		}
+
+		.closed {
+			color: green;
+		}
+
+		.dropdown-icon {
+			margin-left: 5px;
+			font-size: 16px;
+		}
+	}
+
+	.store-hours-popup {
+		position: absolute;
+		top: 100%; /* Position the popup right below the label */
+		left: 0;
+		background: white;
+		border: 1px solid #ccc;
+		padding: 10px;
+		border-radius: 5px;
+		z-index: 1000;
+		width: fit-content; /* Ensure the width fits the content */
+		margin-top: 5px; /* Add some space between the label and the popup */
+	}
+
+	.storehourscontent {
+		display: flex;
+		flex-direction: column;
+		padding: 5px 0;
+		gap: 8px; /* Adjust the gap to control spacing between items */
+	}
+	
+	.day-name {
+		font-weight: bold;
+		font-family: Roboto;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 24px;
+		text-align: left;
+		width: 120px; /* Fixed width for consistent spacing */
+		flex-shrink: 0;
+	}
+	
+	.hours {
+		font-weight: normal;
+		font-family: Roboto;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 24px;
+		text-align: right;
+		flex-grow: 1;
+	}
+	
+	/* Ensuring the current day is bold */
+	.current-day .day-name {
+		font-weight: bold;
+	}
+
+	.current-day .hours {
+		font-weight: bold;
+	}
+	
+	.store-hours-popup {
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		background-color: white;
+		position: absolute;
+		z-index: 1000;
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		min-width: 200px; /* Adjust based on your content */
+	}
+	
+	.storehourscontent > div {
+		display: flex;
+		justify-content: space-between;
+	}
+}
 }

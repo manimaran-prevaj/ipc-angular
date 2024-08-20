@@ -1,5 +1,5 @@
 /// <reference types="@googlemaps/types" />
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
 import { CustomerEntryService } from "../../services/customer-entry.service";
 import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
@@ -28,6 +28,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	/* eslint-disable */
 	@ViewChild('inputfield') inputfield: ElementRef<any>;
 	@ViewChild('noResults') noResultsElement: ElementRef<any>;
+	@ViewChild('storeHoursContainer', { static: false }) storeHoursContainer: ElementRef;
 	/* eslint-enable */
 	public addressDetailsForm: FormGroup
 	public deliveryType: string;
@@ -46,6 +47,8 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	public currentStoreStatus = '';
 	public pickupAvailable = '';
 	public today: number;
+	public showStoreHoursPopup = false;
+	
 
 	constructor(
 		public dialog: MatDialog,
@@ -130,23 +133,48 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		this.isAutoCompleteEmpty = true;
 	}
 
+	toggleStoreHoursPopup(): void {
+		this.showStoreHoursPopup = !this.showStoreHoursPopup;
+	}
+	
+	onPopupClick(event: MouseEvent): void {
+		event.stopPropagation(); // Prevent closing the popup when clicking inside it
+	}
+	
+	onContainerClick(event: MouseEvent): void {
+		event.stopPropagation(); // Stop event propagation within the container
+	}
+	
+	@HostListener('document:click', ['$event'])
+	onDocumentClick(event: MouseEvent): void {
+		if (this.showStoreHoursPopup && !this.storeHoursContainer.nativeElement.contains(event.target)) {
+			this.showStoreHoursPopup = false;
+		}
+	}
 
-	// Function to format time from 24-hour to 12-hour format
- formatTime(time: string): string {
-	const [hour, minute] = time.split(':').map(Number);
-	const period = hour < 12 ? 'a.m.' : 'p.m.';
-	const formattedHour = hour % 12 || 12; // Convert 0 to 12 for midnight
-	return `${formattedHour}:${minute.toString().padStart(2, '0')} ${period}`;
+
+transformOperatingHours(data: any[]): any[] {
+    const todayIndex = new Date().getDay();
+    const orderedData = data.slice(todayIndex).concat(data.slice(0, todayIndex)); // Reorder starting with today
+
+    return orderedData.map((item, index) => ({
+      label: this.getDayName(item.day_name),
+      hours: `${this.formatTime(item.start_time)} - ${this.formatTime(item.end_time)}`,
+      isToday: (index === 0) // The first item is today
+    }));
+}
+
+  getDayName(day: number): string {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[day];
   }
-  
-  // Function to transform operating hours data
-  transformOperatingHours(data: any[]) {
-	return data.map(item => ({
-		label: item.label,
-		hours: `${this.formatTime(item.start_time)} - ${this.formatTime(item.end_time)}`,
-		day:item.day_name
-	}));
-  }
+
+  formatTime(time: string): string {
+    const [hour] = time.split(':').map(Number);
+    const period = hour < 12 ? 'a.m.' : 'p.m.';
+    const formattedHour = hour % 12 || 12; // Convert 0 to 12 for midnight
+    return `${formattedHour} ${period}`;
+}
   
   // Transformed data
   storeHoursData1 = this.transformOperatingHours(this.storeHoursData);

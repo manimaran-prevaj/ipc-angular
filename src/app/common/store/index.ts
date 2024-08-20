@@ -19,6 +19,7 @@ export interface CommonState {
 // Select the categorySearch state
  export const selectCategorySearchState = (state: CommonState) => state.categorySearch;
 export const selectCatogory = (state: Category[])=>state;
+export const searchProducts = (state: Item) => state;
 
 export const selectFeatureCount = createSelector(
   selectAppConfig,
@@ -38,8 +39,8 @@ selectStepData,
 )
 
 export const getProductData = createSelector(
-  selectProductData,
-  (state: any) => state
+  searchProducts,
+  (item:Item) => item
   )
 
 export const getCategorydata = createSelector(

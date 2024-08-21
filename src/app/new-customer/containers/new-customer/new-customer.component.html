@@ -3,7 +3,7 @@
       <div class="col">
         <mat-accordion #MatAccordion>
           <app-customer-entry></app-customer-entry>
-  
+
           <!-- Order Entry Section -->
           <app-ccc-accordion class="app-order-entry" [title]="'order entry'" [id]="'orderEntryExpansionPanel'" [disabled]="false" [expanded]="isOrderentryExpanded">
             <div titleDesc class="row justify-end" style="padding-left: 25%;" *ngIf="isOrderentryExpanded">
@@ -25,25 +25,27 @@
               </div>
             </div>
             <div body>
-            <!-- Inserted Menu Search Section -->
-            <div class="row w-full mb-4 mt-4">
-                <div class="w-1/2">
+             <!-- Menu Search Section -->
+             <div class="search-modal">
+                <div class="search-header">
                   <mat-form-field appearance="outline" color="accent" class="w-full rounded-input">
                     <mat-icon matPrefix>search</mat-icon>
-                    <input matInput placeholder="Menu Search" (input)="onSearch($event)">
+                    <input matInput placeholder="Menu Search" [(ngModel)]="searchQuery" (input)="onSearch($event)" (keyup)="checkEmpty($event)">
+                    <mat-icon matSuffix class="clear-icon" (click)="clearSearch()">close</mat-icon>
                   </mat-form-field>
                 </div>
+                <div class="divider"></div>
+                <div class="search-results" *ngIf="filteredItems.length">
+                  <ul>
+                    <li *ngFor="let item of filteredItems">
+                      <span>{{ item.item_name_en }}</span>
+                      <button mat-button>{{ item.is_customization ? 'Customize' : 'Add to Order' }}</button>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div class="search-results" *ngIf="filteredItems.length" #searchResults style="width: 50%;margin-top: -2%;">
-                <ul>
-                  <li *ngFor="let item of filteredItems">
-                    <span>{{ item.item_name_en }}</span>
-                    <button mat-button>{{ item.is_customization ? 'Customize' : 'Add to Order' }}</button>
-                  </li>
-                </ul>
-              </div>
-              <!-- End of Inserted Menu Search Section -->
-  
+              <!-- End of Menu Search Section -->
+               
               <div class="row category-list w-full">
                 <button *ngFor="let categoryName of categoryNames$" mat-stroked-button class="category-button">
                   {{ categoryName }}
@@ -53,14 +55,14 @@
               </div>
             </div>
           </app-ccc-accordion>
-  
+
           <!-- Payment Information Section -->
           <app-ccc-accordion [title]="'payment information'" [id]="'paymentInformationExpansionPanel'" [disabled]="false" [expanded]="false">
             <div body>
               <h2>Payment Information Content</h2>
             </div>
           </app-ccc-accordion>
-  
+
         </mat-accordion>
       </div>
     </div>

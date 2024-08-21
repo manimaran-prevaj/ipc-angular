@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { searchProducts, selectCatogory, selectCustomerProfile, selectStepData } from "../../../common/store";
 import { Observable } from "rxjs";
@@ -22,6 +22,8 @@ export class NewCustomerComponent implements OnInit {
 	productData: any[] = []; // Holds the product data
     filteredItems: any[] = []; // Holds the filtered search results
 	eRef: any;
+	searchQuery: string;
+	showSearchModal: boolean;
 	constructor(
 		private store: Store,
 		public changeDetection: ChangeDetectorRef
@@ -72,22 +74,22 @@ ngOnInit(): void {
 
 onSearch(event: Event): void {
     const query = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredItems = this.productData.filter(item => 
-        item.item_name_en.toLowerCase().includes(query)
+    this.filteredItems = this.productData.filter(item =>
+      item.item_name_en?.toLowerCase().includes(query)
     );
-}
-
-@HostListener('document:click', ['$event'])
-handleClickOutside(event: Event): void {
-  const target = event.target as HTMLElement;
-  const clickedInside = this.searchResults?.nativeElement.contains(target);
-  if (!clickedInside) {
-	this.closeSearchResults();
+    this.showSearchModal = this.filteredItems.length > 0;
   }
-}
 
-closeSearchResults(): void {
-  this.filteredItems = []; // Clear the search results
-}
+  checkEmpty(event: KeyboardEvent): void {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.clearSearch();
+    }
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.filteredItems = [];
+    this.showSearchModal = false;
+  }
 
 }

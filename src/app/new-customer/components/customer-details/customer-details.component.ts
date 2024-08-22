@@ -6,6 +6,7 @@ import { CustomerEntryService } from "../../services/customer-entry.service";
 import { select, Store } from '@ngrx/store';
 import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
 import { ApiResponse} from "../../models/customer-details";
+import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
 
 
 // TODO:: Order date and time to be obtained from BE API
@@ -32,6 +33,7 @@ export class CustomerDetailsComponent implements OnInit {
 	public customerResponse: ApiResponse;
 	public showEmailOptDate = false;
 	public customerRequested = false;
+	private deliveryModeService: DeliveryModeService
 	
 
 	constructor(
@@ -83,24 +85,10 @@ export class CustomerDetailsComponent implements OnInit {
 			emailOptOut: [this.customerRequested],
 		});
 
-		
-		// this.customerDetailsForm.controls['phone'].valueChanges
-		// .pipe(debounceTime(300))
-		// .subscribe(value => {
-		// 	if (value) {
-		// 		// Remove brackets, hyphens, and other non-numeric characters
-		// 		//eslint-disable-next-line
-		// 		const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
-		// 		if (sanitizedValue.length === 10) {
-		// 			this.store.dispatch(loadCustomerDetails({ phone: sanitizedValue }));
-		// 			this.showEmailOptDate = false;
-		// 			this.customerDetailsForm.patchValue({
-		// 				firstName: '', lastName: '', email: '', emailOptIn: false,
-		// 				emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: todayDateTime
-		// 			});
-		// 		}
-		// 	}
-		// });
+		this.customerDetailsForm.controls['modeOfDelivery'].valueChanges.subscribe(value => {
+            this.deliveryModeService.setDeliveryMode(value);
+        });
+
 	}
 
 		// Handle keydown event on phone input field
@@ -197,6 +185,10 @@ export class CustomerDetailsComponent implements OnInit {
 	onDeliveryTypeChange() {
 		this.customerEntryService.setDeliveryType(this.customerDetailsForm.controls['modeOfDelivery'].value);
 	}
+
+	get modeOfDeliveryValue(): string {
+        return this.customerDetailsForm.controls['modeOfDelivery'].value;
+    }
 
 	emailFocusOut() {
 		if (!this.customerResponse?.customer_data) {

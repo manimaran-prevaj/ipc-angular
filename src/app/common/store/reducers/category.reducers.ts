@@ -1,15 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
 import * as CategoryActions from '../actions/category.actions';
 import { Category } from '../../../new-customer/models/category-search';
+import { ProductListResponse } from '../../../new-customer/models/product-list';
 
 export interface StoreState {
   categories: Category[] | null;
-  error: any;
+  products: ProductListResponse[] | null;
+  categoryError: any;
+  productError: any;
 }
 
 export const initialState: StoreState = {
   categories: null,
-  error: null
+  products: null,
+  categoryError: null,
+  productError: null
 };
 
 export const categoryReducer = createReducer(
@@ -28,6 +33,23 @@ export const categoryReducer = createReducer(
       ...state,
       categories: null,
       error,
+    })),
+
+      // Product-related actions
+    on(CategoryActions.loadProductsByCategory, state => ({
+      ...state,
+      products: null,
+      productError: null,
+    })),
+    on(CategoryActions.loadProductsByCategorySuccess, (state, { products }) => ({
+      ...state,
+      products,
+      productError: null,
+    })),
+    on(CategoryActions.loadProductsByCategoryFailure, (state, { error }) => ({
+      ...state,
+      products: null,
+      productError: error,
     }))
   );
   

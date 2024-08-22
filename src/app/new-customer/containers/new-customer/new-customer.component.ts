@@ -3,6 +3,8 @@ import { Store, select } from "@ngrx/store";
 import { searchProducts, selectCatogory, selectCustomerProfile, selectStepData } from "../../../common/store";
 import { Observable } from "rxjs";
 import { MatAccordion } from "@angular/material/expansion";
+import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
+import { loadProductsByCategory } from "../../../common/store/actions/category.actions";
 
 @Component({
 	selector: 'app-new-customer',
@@ -24,9 +26,13 @@ export class NewCustomerComponent implements OnInit {
 	eRef: any;
 	searchQuery: string;
 	showSearchModal: boolean;
+	deliveryMode: string;
+	storeId: number;
+
 	constructor(
 		private store: Store,
-		public changeDetection: ChangeDetectorRef
+		public changeDetection: ChangeDetectorRef,
+		private deliveryModeService: DeliveryModeService
 	) { }
 	
 ngOnInit(): void {
@@ -45,8 +51,8 @@ ngOnInit(): void {
 	this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
 		const data: any = x;
 		if (data) {
-			const storeId = data?.customerDetails?.customerProfile?.default_delivery_store_data?.store_id // Assuming store_id is the property name
-			if (storeId) {
+			this.storeId = data?.customerDetails?.customerProfile?.default_delivery_store_data?.store_id // Assuming store_id is the property name
+			if (this.storeId) {
 				// this.store.dispatch(loadOrderStep({ step:{stepName: 'customer entry'} }));
 				// this.store.dispatch(loadStoreData({ storeId }));
 				// this.store.dispatch(loadCategoryList({ storeId }));
@@ -55,10 +61,13 @@ ngOnInit(): void {
 		
 	});
 
-	this.store.pipe(select(selectCatogory)).subscribe(x=>{
+	this.store.pipe(select(selectCatogory)).subscribe(x => {
 		const data: any = x;
 		if (data) {
-			this.categoryNames$ = data?.categoryReducer?.categories?.map(x=>x.name);
+			this.categoryNames$ = data?.categoryReducer?.categories?.map(category => ({
+				id: category.id,
+				name: category.name,
+			}));
 		}
 	});
 
@@ -70,6 +79,12 @@ ngOnInit(): void {
 			this.productData = []; 
 		}
 	});
+
+	// Subscribe to the delivery mode observable
+	this.deliveryModeService.deliveryMode$.subscribe(mode => {
+		this.deliveryMode = mode;
+	});
+	
 }
 
 onSearch(event: Event): void {
@@ -90,6 +105,10 @@ onSearch(event: Event): void {
     this.searchQuery = '';
     this.filteredItems = [];
     this.showSearchModal = false;
+  }
+
+  onCategoryClick(categoryId: string): void {
+    this.store.dispatch(loadProductsByCategory({ storeId: this.storeId, categoryId, deliveryMode: this.deliveryMode }));
   }
 
 }

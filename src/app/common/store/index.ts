@@ -5,6 +5,7 @@ import { Category } from '../../new-customer/models/category-search';
 import * as fromStoreSearch from './reducers/product-search.reducers';
 import { Item } from '../../new-customer/models/product-search';
 import * as fromCategorySearch from './reducers/category.reducers';
+import { ProductListResponse } from '../../new-customer/models/product-list';
 
 export const selectAppConfig = (state: AppConfig) => state;
 export const selectCustomerProfile = (state: ApiResponse) => state;
@@ -19,6 +20,7 @@ export interface CommonState {
 // Select the categorySearch state
  export const selectCategorySearchState = (state: CommonState) => state.categorySearch;
 export const selectCatogory = (state: Category[])=>state;
+export const productList = (state: ProductListResponse[])=> state;
 export const searchProducts = (state: Item) => state;
 
 export const selectFeatureCount = createSelector(
@@ -46,5 +48,10 @@ export const getProductData = createSelector(
 export const getCategorydata = createSelector(
   selectCatogory,
   (categories:Category[])=>categories
+)
+
+export const getProductList = createSelector(
+  productList,
+  (productList:ProductListResponse[])=>productList
 )
 

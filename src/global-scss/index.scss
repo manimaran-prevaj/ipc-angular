@@ -87,7 +87,7 @@ $pizza-pizza-ccc-theme: mat.define-light-theme((color: (primary: $pizza-pizza-cc
 				accent: $pizza-pizza-ccc-accent,
 				warn: $pizza-pizza-ccc-warn,
 			),
-			typography: mat.define-typography-config($font-family: "'proxima-nova', sans-serif"),
+			typography: mat.define-typography-config($font-family: "'roboto', sans-serif"),
 			density: 0));
 
 @include mat.all-component-themes($pizza-pizza-ccc-theme);

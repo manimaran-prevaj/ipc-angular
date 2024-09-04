@@ -17,6 +17,7 @@ import {
 } from '../utils';
 
 import { MaterialModule } from './material/material.module';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HeaderModule } from './header/header.module';
 import { SideNavModule } from './sidenav/sidenav.module';
 import { appConfigReducer } from './common/store/reducers/app-config.reducers';
@@ -34,16 +35,19 @@ import { ProductSearchEffects } from './common/store/effects/product-search.effe
 import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
 // import { environment } from '../environments/environment';
 import { ApplicationHttpClient } from '../utils/app-http-client';
+import { ProductCategoryComponent } from './new-customer/containers/product-category/product-category.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+  ProductCategoryComponent
 	],
 	imports: [
 		CommonModule,
 		HttpClientModule,
 		BrowserModule,
 		AppRoutingModule,
+		MatDialogModule,
 		StoreModule.forRoot({}),
 		StoreModule.forFeature('appConfig', appConfigReducer),
         StoreModule.forFeature('customerDetails', customerDetailsReducer),

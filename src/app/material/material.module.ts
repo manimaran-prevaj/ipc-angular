@@ -13,6 +13,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import {MatChipsModule } from '@angular/material/chips'
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import { MatListModule } from '@angular/material/list';
 		MatButtonToggleModule,
 		MatDialogModule,
 		MatSelectModule,
-		MatListModule
+		MatListModule,
+		MatChipsModule
 	],
 	exports: [
 		MatCardModule,
@@ -43,7 +45,8 @@ import { MatListModule } from '@angular/material/list';
 		MatButtonToggleModule,
 		MatDialogModule,
 		MatSelectModule,
-		MatListModule
+		MatListModule,
+		MatChipsModule
 	],
 	providers: [
 		{

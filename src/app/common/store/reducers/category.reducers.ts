@@ -26,7 +26,7 @@ export const categoryReducer = createReducer(
     })),
     on(CategoryActions.loadCategoryListSuccess, (state, { categories }) => ({
       ...state,
-      categories,
+      categories: categories,
       error: null,
     })),
     on(CategoryActions.loadCategoryListFailure, (state, { error }) => ({
@@ -43,7 +43,7 @@ export const categoryReducer = createReducer(
     })),
     on(CategoryActions.loadProductsByCategorySuccess, (state, { products }) => ({
       ...state,
-      products,
+      products: products,
       productError: null,
     })),
     on(CategoryActions.loadProductsByCategoryFailure, (state, { error }) => ({

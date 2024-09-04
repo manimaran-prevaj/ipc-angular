@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TempComponent } from './temp/temp-component';
+import { ProductCategoryComponent } from './new-customer/containers/product-category/product-category.component'; 
 
 const routes: Routes = [
 	{
@@ -30,6 +31,8 @@ const routes: Routes = [
 		redirectTo: '',
 		pathMatch: 'full'
 	},
+
+	{ path: 'category/:id', component: ProductCategoryComponent },
 
 ];
 

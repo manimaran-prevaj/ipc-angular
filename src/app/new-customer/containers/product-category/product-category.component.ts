@@ -39,7 +39,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   getPriceForSize(product: any): string {
-    if (product.price_text && typeof product.price_text.price_value === 'number') {
+    if (product.price_text && product.price_text.price_value) {
       return `$${product.price_text.price_value.toFixed(2)}`;
     }
     return '';

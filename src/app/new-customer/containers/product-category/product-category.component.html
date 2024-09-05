@@ -36,14 +36,15 @@
         <ng-container *ngFor="let product of filteredProducts.slice((ind*4),((ind*4)+4))">
           <div class="w-1/4">
             <div class="row">
-              <div class="w-1/6" style="margin-right: -6%;">
+              <div class="w-1/8" style="margin-top: 5px; margin-right: 4px;">
                 <mat-icon class="price-info">info</mat-icon>
               </div>
               <div class="w-5/6 fw-semi-bold product-title">{{ product.name }}</div>
             </div>
 
-            <!-- Conditionally display buttons based on product.kind -->
-            <div *ngIf="product.kind === 'single'; else comboTemplate">
+            <!-- Conditionally display buttons based on product properties -->
+            <div *ngIf="product.kind === 'single' && product.allow_customization">
+              <!-- Buttons for single kind product -->
               <div class="row">
                 <div class="w-1/2" style="margin-right: -5%;">
                   <button mat-stroked-button class="price-btn">S ${{ product.price_text.price_value.toFixed(2) }}</button>
@@ -62,12 +63,21 @@
               </div>
             </div>
 
-            <!-- Template for combo with customization -->
-            <ng-template #comboTemplate>
-              <div *ngIf="product.kind === 'combo' && product.allow_customization">
-                <button mat-stroked-button class="cust-btn">Configure - ${{ product.price_text.price_value.toFixed(2) }}</button>
-              </div>
-            </ng-template>
+            <!-- Quick Add Button for Single Kind -->
+            <div *ngIf="product.kind === 'single' && !product.allow_customization && product.allow_quick_add">
+              <button mat-stroked-button class="fw-semi-bold cust-btn">Quick Add - ${{ product.price_text.price_value.toFixed(2) }}</button>
+            </div>
+
+            <!-- Combo with Customization Button -->
+            <div *ngIf="product.kind === 'combo' && product.allow_customization">
+              <button mat-stroked-button class="fw-semi-bold cust-btn">Configure - ${{ product.price_text.price_value.toFixed(2) }}</button>
+            </div>
+
+            <!-- Combo or Single with Quantity Selection and Add to Cart Button -->
+            <div *ngIf="(product.kind === 'combo' || product.kind === 'single') && product.allow_qty_selection && product.allow_add_to_cart">
+              <button mat-stroked-button class="fw-semi-bold cust-btn">Add to Cart - ${{ product.price_text.price_value.toFixed(2) }}</button>
+            </div>
+
           </div>
         </ng-container>
       </div>

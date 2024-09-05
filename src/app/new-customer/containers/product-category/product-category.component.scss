@@ -9,7 +9,52 @@ $input-icon-color: #5a5a5a;
 $icon-size: 16px;
 $icon-color: #d4400f;
 $icon-margin-right: 5px;
+:host ::ng-deep .category-dialog-container {
 
+  .mat-stroked-button .mat-button-wrapper {
+    font-size: 1rem !important; /* Adjust font size as needed */
+    //font-weight: 500 !important; /* Adjust font weight as needed */
+    line-height: 1.5rem !important; /* Adjust line height as needed */
+    letter-spacing: 0.1rem !important; /* Adjust letter spacing as needed */
+  }
+
+  .price-btn {
+    font-size: 1rem !important; /* Adjust font size */
+    font-weight: 500 !important; /* Apply bold or semi-bold weight */
+    line-height: 1.5rem !important;
+    letter-spacing: 0.1rem !important;
+    color: #49454F !important; /* Override color */
+    border: 1px solid #CACACA !important;
+    border-radius: 5px;
+    margin-bottom: 4%;
+    width: 80%;
+  }
+
+  .cust-btn {
+    font-size: 1rem !important; /* Adjust font size */
+    font-weight: 600 !important; /* Apply bold or semi-bold weight */
+    line-height: 1.5rem !important;
+    letter-spacing: 0.1rem !important;
+    color: #D4400F !important; /* Override color */
+    border: 1px solid #CACACA !important;
+    border-radius: 5px;
+    margin-bottom: 4%;
+    width: 80%;
+  }
+
+  .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 18px;
+  }
+  .mat-form-field-outline-thick {
+    color: #cacaca !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-focused {
+      .mat-form-field-outline-thick {
+        color: #cacaca !important;
+      }
+  }
+}
 .category-dialog-container {
   width: $header-width;
   background-color: white;
@@ -74,58 +119,59 @@ $icon-margin-right: 5px;
 
   .search-field {
     width: 100%;
-
+    border-radius: 15px; /* Adds rounded corners to the outer container */
+    background-color: #f8f9f9; /* Background color of the search field */
+    padding: 0;
+    overflow: hidden; /* Ensures the rounded corners apply to the child elements */
+  
+    .mat-form-field-flex {      
+      background-color: inherit; /* Inherit the background color */
+    }
+  
+    .mat-form-field-outline {
+      border-radius: 15px; /* Rounded corners for the outline */
+      border-color: transparent !important; /* Removes the default border color */
+    }
+  
     .mat-form-field-prefix {
       display: flex;
       align-items: center;
       margin-right: 8px;
     }
-
+  
     .search-icon {
       font-size: 20px;
       color: $input-icon-color;
     }
-
+  
     .mat-input-element {
       padding-left: 40px;
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      caret-color: $input-icon-color;
     }
   }
 
-  .product-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px;
-  
-    .product-item {
-      display: flex;
-      flex-direction: column;
-  
-      .product-name {
-        font-weight: bold;
-        margin-bottom: 8px;
-        display: flex; /* Align icon and text horizontally */
-        align-items: center; /* Center vertically */
-  
-        .info-icon {
-          font-size: $icon-size;
-          color: $icon-color;
-          margin-right: $icon-margin-right;
-          vertical-align: middle;
-        }
-      }
-  
-      .price-options {
-        display: flex;
-        gap: 5px;
-  
-        .price-button {
-          min-width: 50px;
-          font-size: 12px;
-          padding: 5px;
-        }
-      }
+  .products-container {
+    border-bottom: 1px solid #cacaca;
+    padding-bottom: 5%;
+
+    .price-info{
+      background-color: #D4400F;
+      color: #FFFF;
+      border-radius: 15px;
+      transform: scale(.8);
     }
+
+    .product-title{
+      font-family: Roboto;
+      font-size: 14px;
+      line-height: 24px;
+      text-align: left;
+      color: #49454F;
+    }
+    
   }
 
   .add-to-order-button {
@@ -141,57 +187,4 @@ $icon-margin-right: 5px;
     font-weight: bold;
     color: #000000;
   }
-}
-
-.price-btn{
-  border: 1px solid #CACACA !important;
-  border-radius: 5px;
-  margin-bottom: 4%;
-  width: 80%;
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0.15000000596046448px;
-  text-align: left;
-  color: #49454F;
-
-}
-
-.cust-btn{
-  border: 1px solid #CACACA !important;
-  border-radius: 5px;
-  margin-bottom: 4%;
-  width: 80%;
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0.15000000596046448px;
-  text-align: left;
-  color: #D4400F;
-
-}
-
-.price-info{
-  background-color: #D4400F;
-  color: #FFFF;
-  border-radius: 15px;
-  margin-top: 10%;
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
-}
-
-.product-title{
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  text-align: left;
-  color: #49454F;
-}
-.products-container{
-  border-bottom: 1px solid #cacaca;
-  padding-bottom: 5%;
 }

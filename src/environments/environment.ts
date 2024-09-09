@@ -24,7 +24,7 @@ export const environment: IEnvConfig = {
 	isEnvPickerEnabled: true,
 	env: 'local',
 	apiHost: '/ajax',
-	googleServiceKey: 'AIzaSyAfi4I9Wr8jK5C317HxXGXUhalllPFxLfg',
+	googleServiceKey: 'AIzaSyC0zOIHU71Kv09KZolCIBhntJlt_NLk4Vw',
 	visaCheckoutKey: 'YDB291TDZY5ZFKORVWGH13dxZerSNQBVXW2UYVG9Q3CDW9jMI',
 	visaCheckoutSDKUrl: 'https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js',
 	visaCheckoutBtnPath: 'https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png',

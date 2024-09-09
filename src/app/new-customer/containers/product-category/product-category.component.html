@@ -31,7 +31,7 @@
   </div>
 
   <div class="products-container">
-    <div *ngFor="let i of filteredProducts.slice(0,productsRows-1); index as ind">
+    <div *ngFor="let i of filteredProducts.slice(0,productsRows); index as ind">
       <div class="row" style="margin-left: 2%; margin-top: 2%;">
         <ng-container *ngFor="let product of filteredProducts.slice((ind*4),((ind*4)+4))">
           <div class="w-1/4">

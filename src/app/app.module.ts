@@ -7,6 +7,8 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { GoogleMapsModule } from '../utils/google-maps/google-maps.module';
+import { GoogleMapsService } from '../utils/google-maps/google-maps.service';
 import {
 	ApplicationCookieClient,
 	AppGlobalErrorHandler,
@@ -61,9 +63,16 @@ import { ProductCategoryComponent } from './new-customer/containers/product-cate
 		MaterialModule,
 		HeaderModule,
 		SideNavModule,
-		RecaptchaV3Module
+		RecaptchaV3Module,
+		// Google SDK
+		GoogleMapsModule.forRoot({
+            libraries: ['places']
+		}),
+
 	],
+	
 	providers: [
+		GoogleMapsService,
 		provideClientHydration(),
 
 		ApplicationHttpClient,

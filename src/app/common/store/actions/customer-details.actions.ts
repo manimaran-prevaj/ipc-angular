@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Customer, ApiResponse } from "../../../new-customer/models/customer-details";
+import { OrderDateTime } from "../../../new-customer/models/customer-entry.model";
 
 export const loadCustomerDetails = createAction(
   '[Customer Details] Load Customer Details',
@@ -13,6 +14,22 @@ export const loadCustomerDetailsSuccess = createAction(
 
 export const loadCustomerDetailsFailure = createAction(
   '[Customer Details] Load Customer Details Failure',
+  props<{ error: any }>()
+);
+
+// Define the action to initiate the future order times
+export const loadFutureOrders = createAction(
+  '[Customer] Load Future Orders',
+  props<{ payload: { type: string; cart_has_alcohol: boolean; store_id: number } }>()
+);
+
+export const loadFutureOrdersSuccess = createAction(
+  '[Customer] Load Future Orders Success',
+  props<{ response: OrderDateTime[] }>()
+);
+
+export const loadFutureOrdersFailure = createAction(
+  '[Customer] Load Future Orders Failure',
   props<{ error: any }>()
 );
 

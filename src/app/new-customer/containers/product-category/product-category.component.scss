@@ -63,6 +63,12 @@ $icon-margin-right: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 
+  /* Add this rule to ensure scrollbars appear only if the content overflows */
+  max-height: calc(100vh - $header-height);
+  max-width: 100%;
+  overflow-y: auto; /* Vertical scroll only when content exceeds the height */
+  overflow-x: auto; /* Horizontal scroll only when content exceeds the width */
+
   .header {
     display: flex;
     justify-content: space-between;

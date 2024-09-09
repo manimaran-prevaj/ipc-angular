@@ -6,6 +6,8 @@ import { CustomerDetailsComponent } from "../../components/customer-details/cust
 import { loadOrderStep } from "../../../common/store/actions/order-step.actions";
 import { loadStoreData } from "../../../common/store/actions/product-search.actions";
 import { loadCategoryList } from "../../../common/store/actions/category.actions";
+import { DeliveryModeService } from "../../../common/services/delivey-mode.service";
+import { loadFutureOrders } from "../../../common/store/actions/customer-details.actions";
 
 @Component({
 	selector: 'app-customer-entry',
@@ -24,18 +26,41 @@ export class CustomerEntryComponent implements OnInit {
 	// @viewChild(CustomerDetailsComponent) 
 	// public customerDetailsComponent: CustomerDetailsComponent;
 	@ViewChild('CustomerDetailsComponent') customerDetailsComponent: CustomerDetailsComponent;
+	deliveryMode: string;
 
 	constructor(
 		private store: Store,
-		public changeDetection: ChangeDetectorRef
+		public changeDetection: ChangeDetectorRef,
+		private deliveryModeService: DeliveryModeService,
 	) { }
 
 ngOnInit(): void {
+
+	let hasDispatchedFutureOrders = false;	
+	// Subscribe to the delivery mode observable
+	this.deliveryModeService.deliveryMode$.subscribe(mode => {
+		this.deliveryMode = mode;
+	});
+		
 	this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
 		const data: any = x;
 		this.customerResponse = data?.customerDetails?.customerProfile as ApiResponse;
 		this.phone = this.customerDetailsComponent?.customerDetailsForm?.get("phone")?.value;
-		this.storeId = data?.customerDetails?.customerProfile?.default_delivery_store_data?.store_id // Assuming store_id is the property name
+		this.storeId = data?.customerDetails?.customerProfile?.default_delivery_store_data?.store_id;
+
+			// Dispatch action to load future orders after getting customer profile
+			if (this.storeId && !hasDispatchedFutureOrders) {
+				this.store.dispatch(
+					loadFutureOrders({
+						payload: {
+							type: this.deliveryMode,
+							cart_has_alcohol: false,
+							store_id: this.storeId
+						}
+					})
+				);
+				hasDispatchedFutureOrders = true;
+			}
 	});
 	this.store.pipe(select(selectStepData)).subscribe(x=>{
 		// const data: any = x;

@@ -1,3 +1,4 @@
+// Add this reference to use the Google Maps types
 /// <reference types="@googlemaps/types" />
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
 import { CustomerEntryService } from "../../services/customer-entry.service";
@@ -14,6 +15,8 @@ import { ManualAddressDetailsComponent } from "../manual-address-details/manual-
 import { select, Store } from "@ngrx/store";
 import { selectAppConfig, selectCustomerProfile } from "../../../common/store";
 import { ApiResponse } from "../../models/customer-details";
+import { environment } from "../../../../environments/environment";
+//import { environment } from '../../../../environments/environment';
 declare let google;
 
 @Component({
@@ -62,24 +65,32 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 			dwellingType: [''],
 			storeHours:['']
 		});
+		/* eslint-disable */
+		this.nodeObserver = new MutationObserver(() => {
+		});
 
-		this.nodeObserver = new MutationObserver((mutations) => {
-			const autocompleteAddressControl = this.addressDetailsForm.get('autocompleteAddress');
-			const currentInputValue = autocompleteAddressControl ? autocompleteAddressControl.value : null;
-
-			mutations.forEach((mutation) => {
-				let isEmpty = false;
-				let isDisplayed = true;
-				if (mutation.type === 'childList') {
-					isEmpty = mutation.addedNodes.length < 1;
-				} else {
-					isDisplayed = mutation.target['style'].display !== 'none'
-				}
-				// TODO:: Remove these consoles for Manual lookup modal development
-				console.log(isEmpty, isDisplayed, currentInputValue);
-			})
-		})
 	}
+
+	private loadGoogleMapsScript(): Promise<void> {
+		return new Promise((resolve, reject) => {
+			if (typeof google !== 'undefined') {
+				// Google Maps is already loaded
+				resolve();
+				return;
+			}
+			// Create the script element
+			const script = document.createElement('script');
+			script.src = 'https://maps.googleapis.com/maps/api/js?key='+environment["googleServiceKey"]+'&libraries=places';
+			script.async = true;
+			script.defer = true;
+			script.onload = () => resolve();
+			script.onerror = (error) => reject(error);
+	
+			// Append the script to the document head
+			document.head.appendChild(script);
+		});
+	}
+
 
 	ngOnInit(): void {
 		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
@@ -179,25 +190,35 @@ transformOperatingHours(data: any[]): any[] {
   // Transformed data
   storeHoursData1 = this.transformOperatingHours(this.storeHoursData);
 
-	ngAfterViewInit(): void {
-		this.initMap(true);
-		this.onFormChanges();
-	}
+  ngAfterViewInit(): void {
+    // Call loadGoogleMapsScript to ensure Google Maps is loaded
+    this.loadGoogleMapsScript().then(() => {
+        this.initMap(true); // Initialize the map after the script loads
+    }).catch(error => {
+        console.error('Error loading Google Maps script', error);
+    });
 
-	initMap(isInitialLoad: boolean) {
-		if (isInitialLoad) {
-			const options = {
-				componentRestrictions: { country: 'ca' }
-			};
-			this.autocomplete = new google.maps.places.Autocomplete(this.inputfield.nativeElement, options);
-			this.autocomplete.addListener('place_changed', () => {
-				const place = this.autocomplete?.getPlace();
-				this.handleAutoComplete();
-				console.log(place);
-				this.isAutoCompleteEmpty = true;
-			})
-		}
-	}
+    this.onFormChanges();
+}
+
+initMap(isInitialLoad: boolean) {
+    if (isInitialLoad) {
+        if (typeof google !== 'undefined') {
+            const options = {
+                componentRestrictions: { country: 'ca' }
+            };
+            this.autocomplete = new google.maps.places.Autocomplete(this.inputfield.nativeElement, options);
+            this.autocomplete.addListener('place_changed', () => {
+                const place = this.autocomplete?.getPlace();
+                this.handleAutoComplete();
+                console.log(place);
+                this.isAutoCompleteEmpty = true;
+            });
+        } else {
+            console.error('****GOOGLE map variable not loaded, so autocomplete will not work');
+        }
+    }
+}
 
 	onFormChanges() {
 		const autocompleteAddressControl = this.addressDetailsForm.get('autocompleteAddress');

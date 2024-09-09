@@ -8,11 +8,8 @@ import { loadCustomerDetails } from "../../../common/store/actions/customer-deta
 import { ApiResponse} from "../../models/customer-details";
 import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
 
-
-// TODO:: Order date and time to be obtained from BE API
-import { orderDateTime } from '../../../../mockdata/future-datetime.js';
 import { OrderDateTime } from "../../models/customer-entry.model";
-import { selectCustomerProfile } from "../../../common/store";
+import { selectCustomerProfile, selectOrderDateTime } from "../../../common/store";
 
 
 @Component({
@@ -27,7 +24,7 @@ export class CustomerDetailsComponent implements OnInit {
 	public selectedDate: string;
 	public selectedTime: string;
 	public selectedOption: string;
-	public filteredTimes: string[] = ['Now'];
+	public filteredTimes: string[] = [];
 	public orderDateTimeData: OrderDateTime[] = [];
 	public currenDate = new Date().toDateString().split(' ').splice(1).join(' ');
 	public customerResponse: ApiResponse;
@@ -44,6 +41,27 @@ export class CustomerDetailsComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		this.customerDetailsForm = this.formBuilder.group({
+			cellNumber: [false],
+			firstName: ['', [Validators.required]],
+			lastName: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.email]], // Ensure email control is initialized
+			phone: ['', [Validators.required, Validators.maxLength(14), Validators.minLength(14)]],
+			phoneExt: [''],
+			datePicker: ['', [Validators.required]],
+			modeOfDelivery: ['delivery', [Validators.required]],
+			emailOptIn: [false],
+			emailOptOut: [false],
+		});
+
+  // Subscribe to phone field value changes
+  // Listen for changes in the phone field
+  this.customerDetailsForm.get('phone').valueChanges.subscribe(value => {
+    if (!value || value.trim() === '') { // Check if the phone field is empty or only contains whitespace
+      this.resetCustomerDetailsForm();
+    }
+  });
+
 		this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
 			const data: any = x;
 			this.customerResponse = data?.customerDetails?.customerProfile as ApiResponse;
@@ -64,14 +82,21 @@ export class CustomerDetailsComponent implements OnInit {
 			
 			
 		});
-
+    // Subscribe to future times
+    this.store.pipe(select(selectOrderDateTime)).subscribe((times: OrderDateTime[]) => {		
+		this.orderDateTimeData = []; // Clear previous data
+		this.orderDateTimeData = times;
+		this.mapOrderDateTime(this.orderDateTimeData);
+		this.onDateChange(); 
+    });
 		this.selectedOption = '';
-		this.mapOrderDateTime(orderDateTime as []);
+		// this.mapOrderDateTime(orderDateTime as []);
 		this.dateTimeForm = this.formBuilder.group({
 			date: ['Today', [Validators.required]],
-			time: ['Now', [Validators.required]]
+			time: [this.selectedTime || 'Now', [Validators.required]] // Ensure the default time is set
 		});
-		const todayDateTime = `${this.getTodayDate()} - Today - Now`;
+    const todayDateTime = `${this.getTodayDate()} - Today - ${this.selectedTime || 'Now'}`;
+    this.customerDetailsForm.patchValue({ datePicker: todayDateTime });
 		this.customerDetailsForm = this.formBuilder.group({
 			cellNumber: [false],
 			firstName: ['', [Validators.required]],
@@ -117,22 +142,63 @@ export class CustomerDetailsComponent implements OnInit {
 		}
 	}
 
-	mapOrderDateTime(data: []) {
-		this.orderDateTimeData.push({
-			date: "Today",
-			times: ["Now"]
-		});
-
-		data.map((item: OrderDateTime) => {
-			const [year, month, day] = item.date.split('-');
-			const formattedDate = `${day}/${month}/${year}`;
-			const option: OrderDateTime = {
-				date: formattedDate,
-				times: item.times
+	mapOrderDateTime(data: OrderDateTime[]) {
+		if (!data || !Array.isArray(data)) {
+			// If data is null, undefined, or not an array, return early or handle it accordingly
+			console.warn('Order date-time data is not available or is invalid');
+			return;
+		}
+	
+		const today = new Date().toISOString().split('T')[0]; // Get today's date in "YYYY-MM-DD" format
+		const todayData = data.find((item: OrderDateTime) => item.date === today);
+	
+		this.orderDateTimeData = []; // Clear previous data
+	
+		// If today's data is found, add it with "Today" label
+		if (todayData) {
+			this.orderDateTimeData.push({
+				date: "Today",
+				times: todayData.times
+			});
+			this.selectedDate = "Today";
+			this.filteredTimes = todayData.times;
+			this.selectedTime = this.filteredTimes[0]; // Set the first available time for today
+		} else {
+			// If today's date is not present, take the first available date
+			const firstDate = data[0];
+			if (firstDate) {
+				this.orderDateTimeData.push({
+					date: firstDate.date,
+					times: firstDate.times
+				});
+				this.selectedDate = firstDate.date;
+				this.filteredTimes = firstDate.times;
+				this.selectedTime = this.filteredTimes[0]; // Set the first available time for the first date
 			}
-
-			this.orderDateTimeData.push(option);
+		}
+	
+		// Map remaining dates, skipping the one already added
+		data.forEach((item: OrderDateTime) => {
+			if (item.date !== today) {
+				const [year, month, day] = item.date.split('-');
+				const formattedDate = `${day}/${month}/${year}`;
+				this.orderDateTimeData.push({
+					date: item.date === today ? "Today" : formattedDate,
+					times: item.times
+				});
+			}
 		});
+	}
+	onDateChange() {
+		const selectedDate = this.dateTimeForm.controls['date'].value;
+		const selectedData = this.orderDateTimeData.find(item => item.date === selectedDate);  
+		if (selectedData) {
+			this.filteredTimes = selectedData.times;
+			this.selectedTime = this.filteredTimes[0]; // Set first available time
+			this.dateTimeForm.controls['time'].setValue(this.selectedTime); // Update form control
+		} else {
+			this.filteredTimes = []; // Clear if no times found
+		}
 	}
 
 	getTodayDate(): string {
@@ -151,13 +217,6 @@ export class CustomerDetailsComponent implements OnInit {
 		return true;
 	}
 
-	onDateChange() {
-		const selectedData = this.orderDateTimeData.find(item => item.date === this.selectedDate);
-		if (selectedData) {
-			this.filteredTimes = selectedData.times;
-			this.selectedTime = this.filteredTimes[0];
-		}
-	}
 	/** Diabling eslint as TemplateRef<any> is of type generic  */
 	/* eslint-disable */
 	openDateTimeModal(content: TemplateRef<any>): void {
@@ -169,17 +228,23 @@ export class CustomerDetailsComponent implements OnInit {
 				content
 			}
 		});
-
+	
 		dialogRef.afterClosed().subscribe(confirm => {
 			if (confirm) {
-				if (this.dateTimeForm.controls['date'].value === 'Today' && this.dateTimeForm.controls['time'].value === 'Now') {
-					this.customerDetailsForm.controls['datePicker'].setValue(`${this.getTodayDate()} - ${this.selectedDate} - ${this.selectedTime}`);
+				// Check if both date and time are selected
+				const selectedDate = this.dateTimeForm.controls['date'].value;
+				const selectedTime = this.dateTimeForm.controls['time'].value;
+				if (selectedDate && selectedTime) {
+					// Set the display value correctly with the selected date and time
+					this.customerDetailsForm.controls['datePicker'].setValue(`${selectedDate} - ${selectedTime}`);
 				} else {
-					this.customerDetailsForm.controls['datePicker'].setValue(`${this.selectedDate} - ${this.selectedTime}`);
+					// If the user cancels or does not select both date and time, reset or keep the existing value
+					this.customerDetailsForm.controls['datePicker'].setValue('');
 				}
 			}
 		});
 	}
+
 	/* eslint-enable */
 
 	onDeliveryTypeChange() {
@@ -200,5 +265,21 @@ export class CustomerDetailsComponent implements OnInit {
 		}
 		
 	}
+
+// Function to reset all fields in the form
+resetCustomerDetailsForm() {
+	this.customerDetailsForm.setValue({
+		cellNumber: false,
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
+		phoneExt: '',
+		datePicker: '',
+		modeOfDelivery: 'delivery',
+		emailOptIn: false,
+		emailOptOut: false
+	}, { emitEvent: false }); // Do not trigger value changes while resetting
+}
 
 }

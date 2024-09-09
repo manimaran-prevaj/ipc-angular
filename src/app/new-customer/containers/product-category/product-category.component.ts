@@ -21,7 +21,8 @@ export class ProductCategoryComponent implements OnInit {
     this.categoryName = this.data?.products?.category?.name || 'Category Name';
     if (Array.isArray(this.data.products?.products)) {
       this.filteredProducts = this.data.products.products;
-      this.productsRows = Math.ceil(this.filteredProducts.length/4);
+      this.productsRows = this.filteredProducts.length;
+      console.log("this.productsRows",this.productsRows);
     } else {
       console.error('Expected products to be an array:', this.data.products);
     }

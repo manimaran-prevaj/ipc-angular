@@ -128,29 +128,25 @@
 
 <!-- Date and time picker modal template -->
 <ng-template #dateTimeTemplate>
-	<div class="row">
-		<form [formGroup]="dateTimeForm" class="row w-full">
-			<div class="w-1/2 mr-2">
-				<mat-form-field>
-					<mat-label>Select Date</mat-label>
-					<mat-select color="accent" formControlName="date" [(value)]="selectedDate"
-						(selectionChange)="onDateChange()">
-						@for (item of orderDateTimeData; track item) {
-						<mat-option [value]="item.date">{{item.date}}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
-			</div>
-			<div class="w-1/2 ml-2">
-				<mat-form-field>
-					<mat-label>Select Time</mat-label>
-					<mat-select color="accent" formControlName="time" [(value)]="selectedTime">
-						@for (time of filteredTimes; track time) {
-						<mat-option [value]="time">{{time}}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
-			</div>
-		</form>
-	</div>
+    <div class="row">
+        <form [formGroup]="dateTimeForm" class="row w-full">
+            <div class="w-1/2 mr-2">
+                <mat-form-field>
+                    <mat-label>Select Date</mat-label>
+                    <mat-select color="accent" formControlName="date" [(value)]="selectedDate"
+                        (selectionChange)="onDateChange()">
+                        <mat-option *ngFor="let item of orderDateTimeData" [value]="item.date">{{item.date}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="w-1/2 ml-2">
+                <mat-form-field>
+                    <mat-label>Select Time</mat-label>
+                    <mat-select color="accent" formControlName="time" [(value)]="selectedTime">
+                        <mat-option *ngFor="let time of filteredTimes" [value]="time">{{time}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
 </ng-template>

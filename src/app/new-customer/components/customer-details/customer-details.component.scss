@@ -30,14 +30,14 @@ mat-button-toggle {
 
 			&.mat-button-toggle-checked {
 				.mat-button-toggle-button {
-					color: $white;
+					color: $white !important;
 
 					mat-pseudo-checkbox {
 						&::after {
 							left: 5px;
 							width: 12px;
 							height: 5px;
-							color: $white;
+							color: $white !important;
 						}
 					}
 				}

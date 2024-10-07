@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StoreID } from '../../new-customer/models/product-search'
+import { Item } from '../../new-customer/models/product-search'
 import { ApplicationHttpClient } from '../../../utils/app-http-client';
 import { HttpParams } from '@angular/common/http';
 
@@ -13,7 +13,7 @@ export class ProductSearchService {
 	constructor(private httpClient: ApplicationHttpClient) {}
 
 
-	public getProductsByStoreId(storeId: number): Observable<StoreID> {
+	public getProductsByStoreId(storeId: number): Observable<Item[]> {
         const url = `catalog/api/v1/product/search`;
 		const params = new HttpParams().set('store_id', storeId.toString());
         return this.httpClient.get(url, { params });

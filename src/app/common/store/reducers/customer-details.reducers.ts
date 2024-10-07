@@ -16,42 +16,42 @@ export const initialState: State = {
   futureTimesError: null,
   customerDataerror: null
 };
-export interface customerProfileData {
-  customerProfileData: ApiResponse
-}
-
 
 export const customerDetailsReducer = createReducer(
   initialState,
-  on(CustomerDetailsActions.loadCustomerDetailsSuccess, (state, { customerProfile }) => ({
+
+  // Handle successful customer details loading
+  on(CustomerDetailsActions.loadCustomerDetailsSuccess, (state, { customerProfile }): State => ({
     ...state,
     customerProfile,
-    errcustomerDataerroror: null
+    customerDataerror: null
   })),
-  on(CustomerDetailsActions.loadCustomerDetailsFailure, (state, { error }) => ({
+
+  // Handle failed customer details loading
+  on(CustomerDetailsActions.loadCustomerDetailsFailure, (state, { error }): State => ({
     ...state,
-    customerProfile: null,
-    error
+    customerProfile: {} as ApiResponse,
+    customerDataerror: error
   })),
-  // future time-related actions
-  on(CustomerDetailsActions.loadFutureOrders, state => ({
+
+  // Handle future orders loading
+  on(CustomerDetailsActions.loadFutureOrders, (state): State => ({
     ...state,
     response: null,
     futureTimesError: null,
   })),
-  on(CustomerDetailsActions.loadFutureOrdersSuccess, (state, { response }) => ({
+
+  // Handle successful future orders loading
+  on(CustomerDetailsActions.loadFutureOrdersSuccess, (state, { response }): State => ({
     ...state,
     response,
     futureTimesError: null,
   })),
-  on(CustomerDetailsActions.loadFutureOrdersFailure, (state, { error }) => ({
+
+  // Handle failed future orders loading
+  on(CustomerDetailsActions.loadFutureOrdersFailure, (state, { error }): State => ({
     ...state,
     response: null,
     futureTimesError: error,
   }))
 );
-
-
-
-
-

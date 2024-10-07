@@ -47,7 +47,7 @@
               <!-- End of Menu Search Section -->
                
               <div class="row category-list w-full">
-                <button *ngFor="let category of categoryNames$" mat-stroked-button class="category-button"
+                <button *ngFor="let category of categoryList$ | async" mat-stroked-button class="category-button"
                 (click)="onCategoryClick(category.id)">
                   {{ category.name }}
                 </button>

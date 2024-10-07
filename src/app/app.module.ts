@@ -54,7 +54,7 @@ import { ProductCategoryComponent } from './new-customer/containers/product-cate
 		StoreModule.forFeature('appConfig', appConfigReducer),
         StoreModule.forFeature('customerDetails', customerDetailsReducer),
 		StoreModule.forFeature('OrderStepData',OrderStepReducer),
-		StoreModule.forFeature('categoryReducer', categoryReducer),
+		StoreModule.forFeature('categoryDetails', categoryReducer),
 		StoreModule.forFeature('productSearchData', productSearchReducer),
 		EffectsModule.forRoot([]),
 		EffectsModule.forRoot([AppConfigEffects, CustomerDetailsEffects, ProductSearchEffects, CategoryEffects, OrderStepEffects]),

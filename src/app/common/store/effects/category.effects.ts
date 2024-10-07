@@ -11,32 +11,38 @@ import { ProductListResponse } from '../../../new-customer/models/product-list';
 @Injectable()
 export class CategoryEffects {
 
-    loadCategories$ = createEffect(() => this.actions$.pipe(
+  loadCategories$ = createEffect(() => {
+    return this.actions$.pipe(
       ofType(CategoryActions.loadCategoryList),
       mergeMap(action => this.categoryService.getCategoryByStoreId(action.storeId)
         .pipe(
-          map(categories =>  CategoryActions.loadCategoryListSuccess({ categories: categories as Category[] })
-          ),
+          map(categories => {
+            return CategoryActions.loadCategoryListSuccess({ categories: categories as Category[] });
+          }),
           catchError(error => {
             console.error('Error loading categories:', error);
             return of(CategoryActions.loadCategoryListFailure({ error }));
           })
-        ))
-      )
-    );
-
-    loadProductsByCategory$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(CategoryActions.loadProductsByCategory),
-        mergeMap(({ storeId, categoryId, deliveryMode }) =>
-          this.productListService.getProductList(storeId, categoryId, deliveryMode).pipe(
-            map(products => CategoryActions.loadProductsByCategorySuccess({ products: products as ProductListResponse[] })),
-            catchError(error => of(CategoryActions.loadProductsByCategoryFailure({ error })))
-          )
         )
       )
     );
+  });
 
+  loadProductsByCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CategoryActions.loadProductsByCategory),
+      mergeMap(({ storeId, categoryId, deliveryMode }) =>
+        this.productListService.getProductList(storeId, categoryId, deliveryMode).pipe(
+          map(products => {
+            return CategoryActions.loadProductsByCategorySuccess({ products: products as ProductListResponse[] });
+          }),
+          catchError(error => {
+            return of(CategoryActions.loadProductsByCategoryFailure({ error }));
+          })
+        )
+      )
+    );
+  });
   constructor(
     private actions$: Actions,
     private categoryService: CategorySearchService,

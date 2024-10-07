@@ -8,13 +8,13 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 
 // TODO:: Recent delivery/pickup addresses to be obtained from BE API
 import { deliveryAddresses, pickupAddresses } from './../../../../mockdata/addresses.js';
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { DwellingTypeOptions } from "../../models/customer-entry.model";
 import { dwellingTypeOptions } from "./../../../../mockdata/static-copy.js";
 import { ManualAddressDetailsComponent } from "../manual-address-details/manual-address-details.component";
 import { select, Store } from "@ngrx/store";
 import { selectAppConfig, selectCustomerProfile } from "../../../common/store";
-import { ApiResponse } from "../../models/customer-details";
+import { ApiResponse, DefaultDeliveryStoreData } from "../../models/customer-details";
 import { environment } from "../../../../environments/environment";
 //import { environment } from '../../../../environments/environment';
 declare let google;
@@ -51,6 +51,9 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 	public pickupAvailable = '';
 	public today: number;
 	public showStoreHoursPopup = false;
+	public customerData$: Observable<ApiResponse>;
+	public deliveryStoreData: DefaultDeliveryStoreData | null = null;
+	public appConfig$: Observable<any>;
 	
 
 	constructor(
@@ -68,6 +71,9 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 		/* eslint-disable */
 		this.nodeObserver = new MutationObserver(() => {
 		});
+
+		this.customerData$ = this.store.select(selectCustomerProfile);
+		this.appConfig$ = this.store.select(selectAppConfig);
 
 	}
 
@@ -93,22 +99,22 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 
 
 	ngOnInit(): void {
-		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
+		this.store.pipe(select(selectAppConfig)).subscribe(x => {
 			const resp: any = x;
-			if (resp?.appConfig?.bannerMessage) {
-				this.dwellingTypeOptions = resp.appConfig.dwellingType;
+			if (resp) {
+			  this.dwellingTypeOptions = resp.appConfig.dwellingType;
 			}
-		});
+		  });
 		
-		this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
-			const data: any = x;
-			this.customerDetails = data?.customerDetails?.customerProfile as ApiResponse;
-			if (this.customerDetails) {
-				this.addressDetailsForm.patchValue({autocompleteAddress:this.customerDetails.default_delivery_store_data.address
+		this.customerData$.subscribe((customerProfile : ApiResponse) => {
+			this.deliveryStoreData = customerProfile?.default_delivery_store_data
+			//this.customerDetails = customerProfile?.default_delivery_store_data
+			if (this.deliveryStoreData) {
+				this.addressDetailsForm.patchValue({autocompleteAddress:this.deliveryStoreData.address
 				})
 				
-				this.storeHoursData = this.transformOperatingHours(this.customerDetails.default_delivery_store_data.operating_hours_details_cache);
-				const currentDayStore: any = this.customerDetails.default_delivery_store_data.operating_hours_details_cache.find(x => x.day_name == (new Date().getDay()==0?6:new Date().getDay()-1));
+				this.storeHoursData = this.transformOperatingHours(this.deliveryStoreData.operating_hours_details_cache);
+				const currentDayStore: any = this.deliveryStoreData.operating_hours_details_cache.find(x => x.day_name == (new Date().getDay()==0?6:new Date().getDay()-1));
 				const currentDate = new  Date();
 				currentDate.setDate(currentDate.getDate()+1);
 				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.start_time).toLocaleString())) {
@@ -120,7 +126,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 					this.currentStoreStatus = "Closed";
 				}
 				this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == (new Date().getDay()==0?6:new Date().getDay()-1))});
-				this.pickupAvailable = this.customerDetails.default_delivery_store_data.pickup_available ? 'Available':'N/A';
+				this.pickupAvailable = this.deliveryStoreData.pickup_available ? 'Available':'N/A';
 			}
 		});
 		// TODO :: Remove this logic to NgRx Store
@@ -132,7 +138,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 			this.addressDetailsForm.controls['dwellingType'][this.deliveryType === 'pickup' ? 'disable' : 'enable']();
 			if (this.deliveryType == 'delivery') {
 				this.addressDetailsForm.patchValue({ 
-					autocompleteAddress: this.customerDetails?.default_delivery_store_data?.address,
+					autocompleteAddress: this.deliveryStoreData?.address,
 					storeHours:this.storeHoursData.find(x=>x.day == new Date().getDay()-1) 
 				});
 			}
@@ -211,7 +217,6 @@ initMap(isInitialLoad: boolean) {
             this.autocomplete.addListener('place_changed', () => {
                 const place = this.autocomplete?.getPlace();
                 this.handleAutoComplete();
-                console.log(place);
                 this.isAutoCompleteEmpty = true;
             });
         } else {

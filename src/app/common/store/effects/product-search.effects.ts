@@ -9,13 +9,21 @@ import { Item } from '../../../new-customer/models/product-search';
 @Injectable()
 export class ProductSearchEffects {
 
-  loadStoreData$ = createEffect(() => this.actions$.pipe(
-    ofType(StoreActions.loadStoreData),
-    mergeMap(action => this.productSearchService.getProductsByStoreId(action.storeId).pipe(
-      map(item => StoreActions.loadStoreDataSuccess({ item: item as unknown as Item })),
-      catchError(error => of(StoreActions.loadStoreDataFailure({ error })))
-    ))
-  ));
+  loadStoreData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StoreActions.loadStoreData),
+      mergeMap(action => {
+        return this.productSearchService.getProductsByStoreId(action.storeId).pipe(
+          map(item => {
+            return StoreActions.loadStoreDataSuccess({ item: item as Item[] });
+          }),
+          catchError(error => {
+            return of(StoreActions.loadStoreDataFailure({ error }));
+          })
+        );
+      })
+    );
+  });
 
   constructor(
     private actions$: Actions,

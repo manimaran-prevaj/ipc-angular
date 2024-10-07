@@ -86,7 +86,7 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
-							"baseHref": "/build/",
+							"baseHref": "/",
 							"optimization": true,
 							"outputHashing": "none",
 							"sourceMap": false,
@@ -119,7 +119,7 @@
 									"with": "src/environments/environment.uat.ts"
 								}
 							],
-							"baseHref": "/build/",
+							"baseHref": "/",
 							"optimization": true,
 							"outputHashing": "none",
 							"sourceMap": false,

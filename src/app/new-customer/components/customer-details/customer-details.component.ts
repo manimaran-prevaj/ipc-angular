@@ -5,11 +5,12 @@ import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component
 import { CustomerEntryService } from "../../services/customer-entry.service";
 import { select, Store } from '@ngrx/store';
 import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
-import { ApiResponse} from "../../models/customer-details";
+import { ApiResponse } from "../../models/customer-details";
 import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
 
 import { OrderDateTime } from "../../models/customer-entry.model";
-import { selectCustomerProfile, selectOrderDateTime } from "../../../common/store";
+import { selectCustomerProfile, selectOrderDateTime } from '../../../common/store';
+import { Observable } from "rxjs";
 
 
 @Component({
@@ -31,14 +32,21 @@ export class CustomerDetailsComponent implements OnInit {
 	public showEmailOptDate = false;
 	public customerRequested = false;
 	private deliveryModeService: DeliveryModeService
-	
+	public customerData$: Observable<ApiResponse>;
+	public orderDateTime$: Observable<OrderDateTime[]>;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		public dialog: MatDialog,
 		private customerEntryService: CustomerEntryService,
 		private store: Store
-	) { }
+	) {
+		// Initialize customerData$ observable by selecting customer profile
+		this.customerData$ = this.store.select(selectCustomerProfile);
+
+		// Initialize orderDateTime$ observable
+		this.orderDateTime$ = this.store.select(selectOrderDateTime);
+	}
 
 	ngOnInit() {
 		this.customerDetailsForm = this.formBuilder.group({
@@ -54,49 +62,65 @@ export class CustomerDetailsComponent implements OnInit {
 			emailOptOut: [false],
 		});
 
-  // Subscribe to phone field value changes
-  // Listen for changes in the phone field
-  this.customerDetailsForm.get('phone').valueChanges.subscribe(value => {
-    if (!value || value.trim() === '') { // Check if the phone field is empty or only contains whitespace
-      this.resetCustomerDetailsForm();
-    }
-  });
-
-		this.store.pipe(select(selectCustomerProfile)).subscribe(x=>{
-			const data: any = x;
-			this.customerResponse = data?.customerDetails?.customerProfile as ApiResponse;
-			if (this.customerResponse) {
-				this.customerDetailsForm.patchValue({
-					firstName: this.customerResponse.customer_data.first_name,
-					lastName: this.customerResponse.customer_data.last_name,
-					email: this.customerResponse.customer_data.email,
-					emailOptIn: false,
-					emailOptOut: this.customerResponse.customer_data.email ? true : false
-				});
-				this.customerDetailsForm.get('email').addValidators(Validators.required);
-			} else{
-				this.customerDetailsForm.get('email').clearValidators();
-				this.customerRequested = this.customerDetailsForm.get('phone').value ? true : false;
-				this.customerDetailsForm.patchValue({ emailOptOut: this.customerRequested, email: ''});
-			}
-			
-			
+		// Initialize the dateTimeForm
+		this.dateTimeForm = this.formBuilder.group({
+			date: ['Today', [Validators.required]], // Ensure the 'date' control is initialized
+			time: ['Now', [Validators.required]]    // Ensure the 'time' control is initialized
 		});
-    // Subscribe to future times
+
+		// Subscribe to phone field value changes
+		// Listen for changes in the phone field
+		this.customerDetailsForm.get('phone').valueChanges.subscribe(value => {
+			if (!value || value.trim() === '') { // Check if the phone field is empty or only contains whitespace
+				this.resetCustomerDetailsForm();
+			}
+		});
+
+		this.store.pipe(select(selectCustomerProfile)).subscribe((customerProfile: ApiResponse) => {
+			if (customerProfile?.customer_data) {
+					this.customerDetailsForm.patchValue({
+						firstName: customerProfile.customer_data.first_name || '',
+						lastName: customerProfile.customer_data.last_name || '',
+						email: customerProfile.customer_data.email || '',
+						emailOptIn: false,
+						emailOptOut: true,
+					});
+
+					// Email field should be required for existing customers
+					this.customerDetailsForm.get('email').setValidators([Validators.required, Validators.email]);
+
+				} else {
+					// New customer logic
+					this.customerDetailsForm.patchValue({
+						firstName: '',
+						lastName: '',
+						email: '',  // Leave email empty
+						emailOptOut: true,  // Opt-Out checked by default for new customers
+						emailOptIn: false  // Default behavior for new customers
+					});
+		
+				// Email should not be required for new customers, remove validators
+				this.customerDetailsForm.get('email').clearValidators();
+			}
+
+			// Ensure that validation updates are applied immediately
+			this.customerDetailsForm.get('email').updateValueAndValidity();
+		});
+		// Subscribe to future times
     this.store.pipe(select(selectOrderDateTime)).subscribe((times: OrderDateTime[]) => {		
-		this.orderDateTimeData = []; // Clear previous data
-		this.orderDateTimeData = times;
-		this.mapOrderDateTime(this.orderDateTimeData);
-		this.onDateChange(); 
-    });
+			this.orderDateTimeData = []; // Clear previous data
+			this.orderDateTimeData = times;
+			this.mapOrderDateTime(this.orderDateTimeData);
+			this.onDateChange();
+		});
 		this.selectedOption = '';
 		// this.mapOrderDateTime(orderDateTime as []);
 		this.dateTimeForm = this.formBuilder.group({
 			date: ['Today', [Validators.required]],
 			time: [this.selectedTime || 'Now', [Validators.required]] // Ensure the default time is set
 		});
-    const todayDateTime = `${this.getTodayDate()} - Today - ${this.selectedTime || 'Now'}`;
-    this.customerDetailsForm.patchValue({ datePicker: todayDateTime });
+		const todayDateTime = `${this.getTodayDate()} - Today - ${this.selectedTime || 'Now'}`;
+		this.customerDetailsForm.patchValue({ datePicker: todayDateTime });
 		this.customerDetailsForm = this.formBuilder.group({
 			cellNumber: [false],
 			firstName: ['', [Validators.required]],
@@ -111,8 +135,8 @@ export class CustomerDetailsComponent implements OnInit {
 		});
 
 		this.customerDetailsForm.controls['modeOfDelivery'].valueChanges.subscribe(value => {
-            this.deliveryModeService.setDeliveryMode(value);
-        });
+			this.deliveryModeService.setDeliveryMode(value);
+		});
 
 	}
 
@@ -191,13 +215,21 @@ export class CustomerDetailsComponent implements OnInit {
 	}
 	onDateChange() {
 		const selectedDate = this.dateTimeForm.controls['date'].value;
-		const selectedData = this.orderDateTimeData.find(item => item.date === selectedDate);  
-		if (selectedData) {
-			this.filteredTimes = selectedData.times;
-			this.selectedTime = this.filteredTimes[0]; // Set first available time
-			this.dateTimeForm.controls['time'].setValue(this.selectedTime); // Update form control
+	
+		// Ensure orderDateTimeData is an array before calling find()
+		if (Array.isArray(this.orderDateTimeData)) {
+			const selectedData = this.orderDateTimeData.find(item => item.date === selectedDate);
+			
+			if (selectedData) {
+				this.filteredTimes = selectedData.times;
+				this.selectedTime = this.filteredTimes[0]; // Set the first available time
+				this.dateTimeForm.controls['time'].setValue(this.selectedTime); // Update form control
+			} else {
+				this.filteredTimes = []; // Clear if no times found
+			}
 		} else {
-			this.filteredTimes = []; // Clear if no times found
+			console.error('orderDateTimeData is not an array or is undefined');
+			this.filteredTimes = []; // Clear if orderDateTimeData is not available
 		}
 	}
 

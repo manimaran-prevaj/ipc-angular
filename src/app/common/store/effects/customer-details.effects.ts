@@ -10,26 +10,37 @@ import { ApiResponse } from '../../../../app/new-customer/models/customer-detail
 
 @Injectable()
 export class CustomerDetailsEffects {
-  loadCustomerDetails$ = createEffect(() => this.actions$.pipe(
-    ofType(loadCustomerDetails),
-    mergeMap(action => this.customerEntryService.getCustomerDetailsByPhone(action.phone).pipe(
-      map(customerProfileData => customerActions.loadCustomerDetailsSuccess({customerProfile: customerProfileData as unknown as ApiResponse })),
-      catchError(error => of(customerActions.loadCustomerDetailsFailure({ error })))
-    ))
-  ));
-
-    // Effect to handle future orders API call
-    loadFutureOrders$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(customerActions.loadFutureOrders),
-        mergeMap(action =>
-          this.futureOrdersService.loadFutureOrders(action.payload).pipe(
-            map(futureOrderTime => customerActions.loadFutureOrdersSuccess({response: futureOrderTime  })),
-            catchError(error => of(customerActions.loadFutureOrdersFailure({ error })))
-          )
-        )
-      )
+  loadCustomerDetails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadCustomerDetails),
+      mergeMap(action => {
+        return this.customerEntryService.getCustomerDetailsByPhone(action.phone).pipe(
+          map(customerProfileData => {
+            return customerActions.loadCustomerDetailsSuccess({ customerProfile: customerProfileData as unknown as ApiResponse });
+          }),
+          catchError(error => {
+            return of(customerActions.loadCustomerDetailsFailure({ error }));
+          })
+        );
+      })
     );
+  });
+
+  loadFutureOrders$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(customerActions.loadFutureOrders),
+      mergeMap(action => {
+        return this.futureOrdersService.loadFutureOrders(action.payload).pipe(
+          map(futureOrderTime => {
+            return customerActions.loadFutureOrdersSuccess({ response: futureOrderTime });
+          }),
+          catchError(error => {
+            return of(customerActions.loadFutureOrdersFailure({ error }));
+          })
+        );
+      })
+    );
+  });
 
   constructor(
     private actions$: Actions,

@@ -18,38 +18,44 @@ export const initialState: StoreState = {
 };
 
 export const categoryReducer = createReducer(
-    initialState,
-    on(CategoryActions.loadCategoryList, state => ({
-      ...state,
-      categories: null,
-      error: null,
-    })),
-    on(CategoryActions.loadCategoryListSuccess, (state, { categories }) => ({
+  initialState,
+  
+  on(CategoryActions.loadCategoryList, (state): StoreState => ({
+    ...state,
+    categories: null,
+    categoryError: null,
+  })),
+  
+  on(CategoryActions.loadCategoryListSuccess, (state, { categories }): StoreState => {
+    return {
       ...state,
       categories: categories,
-      error: null,
-    })),
-    on(CategoryActions.loadCategoryListFailure, (state, { error }) => ({
-      ...state,
-      categories: null,
-      error,
-    })),
-
-      // Product-related actions
-    on(CategoryActions.loadProductsByCategory, state => ({
-      ...state,
-      products: null,
-      productError: null,
-    })),
-    on(CategoryActions.loadProductsByCategorySuccess, (state, { products }) => ({
-      ...state,
-      products: products,
-      productError: null,
-    })),
-    on(CategoryActions.loadProductsByCategoryFailure, (state, { error }) => ({
-      ...state,
-      products: null,
-      productError: error,
-    }))
-  );
+      categoryError: null,
+    };
+  }),
   
+  on(CategoryActions.loadCategoryListFailure, (state, { error }): StoreState => ({
+    ...state,
+    categories: null,
+    categoryError: error,
+  })),
+
+  // Product-related actions
+  on(CategoryActions.loadProductsByCategory, (state): StoreState => ({
+    ...state,
+    products: null,
+    productError: null,
+  })),
+  
+  on(CategoryActions.loadProductsByCategorySuccess, (state, { products }): StoreState => ({
+    ...state,
+    products: products,
+    productError: null,
+  })),
+  
+  on(CategoryActions.loadProductsByCategoryFailure, (state, { error }): StoreState => ({
+    ...state,
+    products: null,
+    productError: error,
+  }))
+);

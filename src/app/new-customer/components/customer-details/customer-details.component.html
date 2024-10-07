@@ -40,36 +40,39 @@
 			</div>
 		</div>
 		<div class="row mt-2">
-			<!-- First name -->
+			<!-- Cell Number -->
 			<div class="w-1/2 mr-2">
 				<mat-checkbox formControlName="cellNumber" class="
 						email-opt-in" color="primary">Cell Number</mat-checkbox>
 			</div>
 			</div>
-		<div class="row mt-4">
-			<!-- First name -->
-			<div class="w-1/2 mr-2">
-				<mat-form-field color="accent" [hideRequiredMarker]="true">
-					<mat-label>First Name</mat-label>
-					<input matInput formControlName="firstName">
-				</mat-form-field>
-				<mat-error
-					*ngIf="customerDetailsForm.controls['firstName'].touched && customerDetailsForm.controls['firstName'].errors">
-					<span *ngIf="customerDetailsForm.controls['firstName'].errors['required']">You must enter a value</span>
-				</mat-error>
+			<div class="row mt-4">
+				<!-- First name -->
+				<div class="w-1/2 mr-2">
+					<mat-form-field color="accent" [hideRequiredMarker]="true">
+						<mat-label>First Name</mat-label>
+						<!-- <input matInput formControlName="firstName" [value]="(customerData$ | async)?.customer_data?.first_name"> -->
+						<input matInput formControlName="firstName">
+					</mat-form-field>
+					<mat-error
+						*ngIf="customerDetailsForm.controls['firstName'].touched && customerDetailsForm.controls['firstName'].errors">
+						<span *ngIf="customerDetailsForm.controls['firstName'].errors['required']">You must enter a value</span>
+					</mat-error>
+				</div>
+
+				<!-- Last name -->
+				<div class="w-1/2 ml-2">
+					<mat-form-field color="accent" [hideRequiredMarker]="true">
+						<mat-label>Last Name</mat-label>
+						<!-- <input matInput formControlName="lastName" [value]="(customerData$ | async)?.customer_data?.last_name"> -->
+						<input matInput formControlName="lastName">
+					</mat-form-field>
+					<mat-error
+						*ngIf="customerDetailsForm.controls['lastName'].touched && customerDetailsForm.controls['lastName'].errors">
+						<span *ngIf="customerDetailsForm.controls['lastName'].errors['required']">You must enter a value</span>
+					</mat-error>
+				</div>
 			</div>
-			<!-- Last name -->
-			<div class="w-1/2 ml-2">
-				<mat-form-field color="accent" [hideRequiredMarker]="true">
-					<mat-label>Last Name</mat-label>
-					<input matInput formControlName="lastName">
-				</mat-form-field>
-				<mat-error
-					*ngIf="customerDetailsForm.controls['lastName'].touched && customerDetailsForm.controls['lastName'].errors">
-					<span *ngIf="customerDetailsForm.controls['lastName'].errors['required']">You must enter a value</span>
-				</mat-error>
-			</div>
-		</div>
 		<div class="row mt-4">
 			<!-- Date and time selector -->
 			<div class="w-1/2 mr-2">
@@ -86,17 +89,18 @@
 			</div>
 			<!-- Email address -->
 			<div class="w-1/2 ml-2">
-				<mat-form-field color="accent" [hideRequiredMarker]="true">
-					<mat-label>Email Address</mat-label>
-					<input matInput formControlName="email" (input)="emailFocusOut()">
-				</mat-form-field>
-				<mat-error
-					*ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">
-					<span *ngIf="customerDetailsForm.controls['email'].errors['required']">You must enter a value</span>
-					<span *ngIf="customerDetailsForm.controls['email'].errors['email']">Not a valid email</span>
-				</mat-error>
-			</div>
-		</div>
+                <mat-form-field color="accent" [hideRequiredMarker]="true">
+                    <mat-label>Email Address</mat-label>
+                    <!-- <input matInput formControlName="email" [value]="(customerData$ | async)?.customer_data?.email" (input)="emailFocusOut()"> -->
+					<input matInput formControlName="email">
+                </mat-form-field>
+                <mat-error
+                    *ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">
+                    <span *ngIf="customerDetailsForm.controls['email'].errors['required']">You must enter a value</span>
+                    <span *ngIf="customerDetailsForm.controls['email'].errors['email']">Not a valid email</span>
+                </mat-error>
+            </div>
+        </div>
 		<div class="row mt-4">
 			<!-- Additional information btn -->
 			<div class="w-1/2 mr-2 mb-12">

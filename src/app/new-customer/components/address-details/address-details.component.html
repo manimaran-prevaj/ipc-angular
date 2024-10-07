@@ -45,16 +45,16 @@
 			</div>
 		</div>
 		}
-		<div *ngIf="customerDetails && deliveryType === 'delivery'" class="row mt-4">
+		<div *ngIf="deliveryStoreData && deliveryType === 'delivery'" class="row mt-4">
 			<div class="w-full">
 				<div class="default-address">
-					<span class="default-address-details">Store #{{customerDetails?.default_delivery_store_data?.address}},{{customerDetails?.default_delivery_store_data?.city}}:  </span>
-					<span class="default-address-details-text">{{customerDetails?.default_delivery_store_data?.address_help}}</span>
+					<span class="default-address-details">Store #{{(customerData$ | async)?.default_delivery_store_data?.address}},{{(customerData$ | async)?.default_delivery_store_data?.city}}:  </span>
+					<span class="default-address-details-text">{{(customerData$ | async)?.default_delivery_store_data?.address_help}}</span>
 					</div>
 			</div>
 		</div>
 
-        <div *ngIf="customerDetails && deliveryType === 'delivery'">
+        <div *ngIf="deliveryStoreData && deliveryType === 'delivery'">
 			<div class="row mt-4">
 				<div class="w-1/2 store-hours-container">
 					<div tabindex="0" role="button" (click)="toggleStoreHoursPopup()" (keyup.enter)="toggleStoreHoursPopup()"

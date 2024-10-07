@@ -26,7 +26,7 @@ export class CustomerEntryService {
         return this.httpClient.post<Customer>(url, payload);
 	}
 
-	public getOrderStepData(step: any): Observable<any> {
+	public selectOrderStepData(step: any): Observable<any> {
 		return of(step);
 	}
 }

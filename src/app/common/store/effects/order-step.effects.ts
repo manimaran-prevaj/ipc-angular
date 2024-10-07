@@ -9,16 +9,22 @@ import { AppConfigService } from '../../services/app-config.service';
 
 @Injectable()
 export class OrderStepEffects {
-
-
-  loadOrderstep$ = createEffect(() => this.actions$.pipe(
-    ofType(loadOrderStep),
-    mergeMap(action => this.customerEntryService.getOrderStepData(action.step).pipe(
-      map(stepData => orderStepActions.loadOrderStepSuccess({step: stepData })),
-      catchError(error => of(orderStepActions.loadOrderStepfailure({ error })))
-    ))
-  ));
-
+  
+  loadOrderstep$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadOrderStep),
+      mergeMap(action => {
+        return this.customerEntryService.selectOrderStepData(action.step).pipe(
+          map(stepData => {
+            return orderStepActions.loadOrderStepSuccess({ step: stepData });
+          }),
+          catchError(error => {
+            return of(orderStepActions.loadOrderStepfailure({ error }));
+          })
+        );
+      })
+    );
+  });
 
   constructor(
     private actions$: Actions,

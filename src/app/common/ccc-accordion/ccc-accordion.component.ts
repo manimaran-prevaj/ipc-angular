@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
 	selector: 'app-ccc-accordion',
 	templateUrl: './ccc-accordion.component.html',
 	styleUrl: './ccc-accordion.component.scss'
 })
-export class CCCAccordionComponent  implements OnInit{
+export class CCCAccordionComponent {
 	
 	@Input() title: string;
 	@Input() id: string;
@@ -15,13 +15,6 @@ export class CCCAccordionComponent  implements OnInit{
 	@Input() showDynamicDesc = false;
 
 	public panelOpenState: boolean;
-
-	ngOnInit(): void {
-		console.log(this.accordionDesc)
-
-		console.log(this.title)	
-		
-	}
 
 	public panelClosed(){
 		this.panelOpenState = false;

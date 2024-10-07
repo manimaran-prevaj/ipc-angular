@@ -8,7 +8,7 @@ export const loadStoreData = createAction(
 
 export const loadStoreDataSuccess = createAction(
   '[Product Search] Load Store Data Success',
-  props<{ item: Item }>()
+  props<{ item: Item[] }>()
 );
 
 export const loadStoreDataFailure = createAction(

@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
-import { selectAppConfig } from "../../../common/store";
+import { Component } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { selectBannerMessage } from "../../../common/store";
+import { Observable } from "rxjs";
 
 @Component({
 	selector: 'app-banner',
@@ -8,21 +9,11 @@ import { selectAppConfig } from "../../../common/store";
 	styleUrls: ['./banner.component.scss'],
 })
 
-export class BannerComponent implements OnInit {
+export class BannerComponent {
 	bannerContent = '';
+	bannerMessage$: Observable<string>;
 
 	constructor(private store: Store){
-
-	}
-
-	ngOnInit(): void {
-		this.store.pipe(select(selectAppConfig)).subscribe(x=>{
-			const resp: any = x;
-			if (resp?.appConfig?.bannerMessage) {
-				this.bannerContent = resp.appConfig.bannerMessage;
-			}
-		});
-
-	
+		this.bannerMessage$ = this.store.select(selectBannerMessage);
 	}
 }

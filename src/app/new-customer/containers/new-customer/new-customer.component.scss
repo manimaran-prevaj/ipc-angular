@@ -65,9 +65,18 @@ $primary-font-color: #1d1b20;
 			background-color: #e0e0e0;
 			//margin: 8px 0;
 		  }
-  
+		  
 		  .search-results {
 			max-width: 100%;  // Ensure the results container matches the width of the modal
+			position: relative;
+			.search-results-container {
+				position: absolute;
+				background: #FFF;				
+				z-index: 9;
+				height: 31vh;
+				overflow-y: scroll;
+				left: -1px;
+			}
 			ul {
 			  list-style-type: none;
 			  padding: 0;

@@ -36,12 +36,14 @@
                 </div>
                 <div class="divider"></div>
                 <div class="search-results" *ngIf="filteredItems.length">
+                  <div class="search-results-container">
                   <ul>
                     <li *ngFor="let item of filteredItems">
                       <span>{{ item.item_name_en }}</span>
                       <button mat-button>{{ item.is_customization ? 'Customize' : 'Add to Order' }}</button>
                     </li>
                   </ul>
+                </div>
                 </div>
               </div>
               <!-- End of Menu Search Section -->

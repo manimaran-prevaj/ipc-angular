@@ -34,10 +34,10 @@ import { OrderStepReducer } from './common/store/reducers/order-step.reducers';
 import { productSearchReducer } from './common/store/reducers/product-search.reducers';
  import { categoryReducer } from './common/store/reducers/category.reducers';
 import { ProductSearchEffects } from './common/store/effects/product-search.effects';
-import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service,RecaptchaSettings,RecaptchaV3Module } from 'ng-recaptcha';
-// import { environment } from '../environments/environment';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service, RecaptchaV3Module } from 'ng-recaptcha';
 import { ApplicationHttpClient } from '../utils/app-http-client';
 import { ProductCategoryComponent } from './new-customer/containers/product-category/product-category.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
 	declarations: [
@@ -89,14 +89,8 @@ import { ProductCategoryComponent } from './new-customer/containers/product-cate
 		// ReCaptcha v3 private key
         {
             provide: RECAPTCHA_V3_SITE_KEY,
-            useValue: '6Ld1MbAUAAAAAPcFJqLdbOHzAptLMzkPIC22RW4L'
+            useValue: environment.recaptchaClientKey
         },
-        // ReCaptcha v2 private key
-        {
-            provide: RECAPTCHA_SETTINGS,
-            useValue: { siteKey: '6LeG1okiAAAAAJiax2DZclQkDp7WInA3uz5Myh7K' } as RecaptchaSettings,
-        },
-
 		// Proxy to catch JS errors
 		{
 			provide: ErrorHandler,

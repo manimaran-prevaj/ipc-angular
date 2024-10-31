@@ -92,7 +92,7 @@
                 <mat-form-field color="accent" [hideRequiredMarker]="true">
                     <mat-label>Email Address</mat-label>
                     <!-- <input matInput formControlName="email" [value]="(customerData$ | async)?.customer_data?.email" (input)="emailFocusOut()"> -->
-					<input matInput formControlName="email">
+					<input matInput formControlName="email" (input)="emailFocusOut()">
                 </mat-form-field>
                 <mat-error
                     *ngIf="customerDetailsForm.controls['email'].touched && customerDetailsForm.controls['email'].errors">

@@ -142,7 +142,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 		// Handle keydown event on phone input field
 		onPhoneKeyDown(event: KeyboardEvent) {
-			if (event.key === 'Tab' || event.key === 'Enter') {
+			if (event.key === 'Enter') {
 				const value = this.customerDetailsForm.controls['phone'].value;
 				//eslint-disable-next-line
 				const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
@@ -154,6 +154,9 @@ export class CustomerDetailsComponent implements OnInit {
 						emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: this.getTodayDate()
 					});
 				}
+				else if(!this.customerDetailsForm.get('phone').value){
+					this.resetCustomerDetailsForm();
+				}
 			}
 		}
 
@@ -164,6 +167,7 @@ export class CustomerDetailsComponent implements OnInit {
 		} else if (option === 'emailOptOut') {
 			controls['emailOptIn'].setValue(false);
 		}
+		this.setEmailValidator();
 	}
 
 	mapOrderDateTime(data: OrderDateTime[]) {
@@ -287,27 +291,43 @@ export class CustomerDetailsComponent implements OnInit {
         return this.customerDetailsForm.controls['modeOfDelivery'].value;
     }
 
-	emailFocusOut() {
-		if (!this.customerResponse?.customer_data) {
-			this.showEmailOptDate = this.customerDetailsForm.get('email').value ? true: false;
-			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
-		} else {
-			this.showEmailOptDate = (this.customerDetailsForm.get('email').value && (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value));
-			this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
-		}
+	// emailFocusOut() {
+	// 	if (!this.customerResponse?.customer_data) {
+	// 		this.showEmailOptDate = this.customerDetailsForm.get('email').value ? true: false;
+	// 		this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
+	// 	} else {
+	// 		this.showEmailOptDate = (this.customerDetailsForm.get('email').value && (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value));
+	// 		this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
+	// 	}
 		
+	// }
+
+	emailFocusOut() {
+		this.setEmailValidator(); 
+	}
+
+	private setEmailValidator() {
+		if (!this.customerResponse?.customer_data) {
+			if (this.customerDetailsForm.get('emailOptOut').value) {
+				this.customerDetailsForm.get('email').setValidators(null);
+				this.customerDetailsForm.get('email').updateValueAndValidity();
+			} else {
+				this.customerDetailsForm.get('email').setValidators([Validators.required, Validators.email]);
+				this.customerDetailsForm.get('email').updateValueAndValidity();
+			}
+		}
 	}
 
 // Function to reset all fields in the form
 resetCustomerDetailsForm() {
-	this.customerDetailsForm.setValue({
+	this.customerDetailsForm.patchValue({
 		cellNumber: false,
 		firstName: '',
 		lastName: '',
 		email: '',
 		phone: '',
 		phoneExt: '',
-		datePicker: '',
+		// datePicker: '',
 		modeOfDelivery: 'delivery',
 		emailOptIn: false,
 		emailOptOut: false

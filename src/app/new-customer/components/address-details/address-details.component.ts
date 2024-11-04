@@ -116,14 +116,14 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				this.storeHoursData = this.transformOperatingHours(this.deliveryStoreData.operating_hours_details_cache);
 				const currentDayStore: any = this.deliveryStoreData.operating_hours_details_cache.find(x => x.day_name == (new Date().getDay()==0?6:new Date().getDay()-1));
 				const currentDate = new  Date();
-				currentDate.setDate(currentDate.getDate()+1);
-				if (Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.start_time).toLocaleString())) {
-					this.currentStoreStatus = "Closed Opens " + this.formatTime(currentDayStore.start_time);
-				}
-				else if(Date.parse(new Date().toLocaleString()) < Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.end_time).toLocaleString())) {
+				//currentDate.setDate(currentDate.getDate()+1);
+				const currentTimeDate = Date.parse(new Date().toLocaleString());
+				const storeStartTimeDate = Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.start_time + " AM").toLocaleString());
+				const storeEndTimeDate = Date.parse(new Date(new Date(currentDate).toLocaleDateString() + ' ' + currentDayStore.end_time + " PM").toLocaleString());
+				if(currentTimeDate >= storeStartTimeDate && currentTimeDate <= storeEndTimeDate) {
 					this.currentStoreStatus = "Open Closes " + this.formatTime(currentDayStore.end_time);
 				} else {
-					this.currentStoreStatus = "Closed";
+					this.currentStoreStatus = "Closed Opens " + this.formatTime(currentDayStore.start_time);
 				}
 				this.addressDetailsForm.patchValue({storeHours:this.storeHoursData.find(x=>x.day == (new Date().getDay()==0?6:new Date().getDay()-1))});
 				this.pickupAvailable = this.deliveryStoreData.pickup_available ? 'Available':'N/A';

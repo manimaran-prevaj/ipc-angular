@@ -114,7 +114,7 @@ export class AddressDetailsComponent implements OnInit, AfterViewInit, OnDestroy
 				})
 				
 				this.storeHoursData = this.transformOperatingHours(this.deliveryStoreData.operating_hours_details_cache);
-				const currentDayStore: any = this.deliveryStoreData.operating_hours_details_cache.find(x => x.day_name == (new Date().getDay()==0?6:new Date().getDay()-1));
+				const currentDayStore: any = this.deliveryStoreData.operating_hours_details_cache.find(x => x.day_name == new Date().getDay());
 				const currentDate = new  Date();
 				//currentDate.setDate(currentDate.getDate()+1);
 				const currentTimeDate = Date.parse(new Date().toLocaleString());

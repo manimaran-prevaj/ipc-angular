@@ -39,8 +39,7 @@ export class CustomerEntryComponent implements OnInit {
 	}
 
 ngOnInit(): void {
-
-	let hasDispatchedFutureOrders = false;	
+	
 	// Subscribe to the delivery mode observable
 		// Use async pipe in the template for customerData$
 		this.customerData$.pipe(
@@ -50,7 +49,7 @@ ngOnInit(): void {
 				this.storeId = data?.store_id;
 
 				// Dispatch action to load future orders after getting customer profile
-				if (this.storeId && !hasDispatchedFutureOrders) {
+				if (this.storeId) {
 					this.store.dispatch(
 						loadFutureOrders({
 							payload: {
@@ -60,7 +59,6 @@ ngOnInit(): void {
 							}
 						})
 					);
-					hasDispatchedFutureOrders = true;
 				}
 			})
 		).subscribe();

@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
 import { CustomerEntryService } from "../../services/customer-entry.service";
 import { select, Store } from '@ngrx/store';
-import { loadCustomerDetails } from "../../../common/store/actions/customer-details.actions";
+import { loadCustomerDetails, loadCustomerDetailsSuccess } from "../../../common/store/actions/customer-details.actions";
 import { ApiResponse } from "../../models/customer-details";
 import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
 
@@ -140,25 +140,20 @@ export class CustomerDetailsComponent implements OnInit {
 
 	}
 
-		// Handle keydown event on phone input field
-		onPhoneKeyDown(event: KeyboardEvent) {
-			if (event.key === 'Enter') {
-				const value = this.customerDetailsForm.controls['phone'].value;
-				//eslint-disable-next-line
-				const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
-				if (sanitizedValue.length === 10) {
-					this.store.dispatch(loadCustomerDetails({ phone: sanitizedValue }));
-					this.showEmailOptDate = false;
-					this.customerDetailsForm.patchValue({
-						firstName: '', lastName: '', email: '', emailOptIn: false,
-						emailOptOut: false, modeOfDelivery: 'delivery', cellNumber: false, phoneExt: '', datePicker: this.getTodayDate()
-					});
-				}
-				else if(!this.customerDetailsForm.get('phone').value){
-					this.resetCustomerDetailsForm();
-				}
+	// Handle keydown event on phone input field
+	onPhoneKeyDown(event: KeyboardEvent) {
+		if (event.key === 'Enter') {
+			const value = this.customerDetailsForm.controls['phone'].value;
+			//eslint-disable-next-line
+			const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');
+			if (sanitizedValue.length === 10) {
+				this.store.dispatch(loadCustomerDetails({ phone: sanitizedValue }));
+				this.showEmailOptDate = false;
 			}
+		} else if (event.key === 'Backspace' || event.key === 'Delete') {
+			this.store.dispatch(loadCustomerDetailsSuccess({ customerProfile: {} as unknown as ApiResponse }));
 		}
+	}
 
 	onSelectionChange(option: string) {
 		const controls = this.customerDetailsForm.controls;

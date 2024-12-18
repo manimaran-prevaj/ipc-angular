@@ -34,13 +34,16 @@ $category-button-border-color: #148119;
 			}
 
 			.search-modal {
+				position: relative;
 				border: 1px solid $filter-search-bg-color;
 				border-radius: 28px;
 				background-color: $filter-search-bg-color;
 				// padding: 4px;
-				width: 50%;
+				width: 630px;
+				height: 48px;
 
 				mat-form-field {
+					height: 48px;
 
 					.mat-mdc-text-field-wrapper {
 						border-radius: 28px;
@@ -51,18 +54,29 @@ $category-button-border-color: #148119;
 						justify-content: flex-end;
 						color: $primary-font-color;
 
-						.mat-mdc-input-element {
-							padding-left: 15px;
-						}
-
 						mat-form-field {
 							display: flex;
 							align-items: flex-end;
 							width: 100%;  // Ensure the search bar takes up full width of the modal
 
+							.mdc-text-field {
+
+								.mat-mdc-form-field-flex {
+									position: relative;
+									top: -15px;
+									min-height: 48px;
+									max-height: 48px;
+								}
+							}
+
+							.mat-mdc-form-field-infix {
+								min-height: 48px;
+								max-height: 48px;
+							}
+
 							.mat-input-element {
 								text-align: left;
-								line-height: 24px;
+								line-height: 16px;
 								letter-spacing: .5px;
 								color: $primary-font-color;
 								font-size: 16px;
@@ -145,13 +159,14 @@ mat-form-field {
 	}
 
 	.clear-icon {
-		position: relative;
-		right: 12px;
+		cursor: pointer;
+		width: 48px;
+		height: 48px;
 	}
 
 	.search-icon {
-		position: relative;
-		left: 12px;
+		width: 48px;
+		height: 48px;
 	}
 }
 

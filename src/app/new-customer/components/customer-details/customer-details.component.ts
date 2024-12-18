@@ -142,7 +142,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 	// Handle keydown event on phone input field
 	onPhoneKeyDown(event: KeyboardEvent) {
-		if (event.key === 'Enter' || event.key === 'Tab') {
+		if (event.key === 'Enter') {
 			const value = this.customerDetailsForm.controls['phone'].value;
 			//eslint-disable-next-line
 			const sanitizedValue = value.replace(/[\(\)\-\s]/g, '');

@@ -29,7 +29,7 @@
                 <div class="search-modal">
                     <mat-form-field>
                         <div class="search-header">
-                            <mat-icon matPrefix class="search-icon">search</mat-icon>
+                            <mat-icon matPrefix class="search-icon text-xl text-center align-middle content-center relative">search</mat-icon>
                             <input
                             type="text"
                             matInput
@@ -39,7 +39,7 @@
                             placeholder="Menu Search"
                             (input)="filterSearch($event)"
                             />
-                            <mat-icon matSuffix class="clear-icon" (click)="clearSearch()">close</mat-icon>
+                            <mat-icon matSuffix class="clear-icon text-sm text-center align-middle content-center relative" *ngIf="searchProduct" (click)="clearSearch()">close</mat-icon>
                         </div>
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let option of filteredItems" [value]="option.item_name_en" class="w-full">

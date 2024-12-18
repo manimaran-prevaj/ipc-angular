@@ -46,6 +46,7 @@ export class NewCustomerComponent implements OnInit {
 	selectProductsByCategory$: Observable<ProductListResponse[]>;
 	filteredProducts = new FormControl();
 	searchControl = new FormControl('');
+	searchProduct: number = 0;
 
 	constructor(
 		private store: Store,
@@ -124,15 +125,18 @@ export class NewCustomerComponent implements OnInit {
 
 	filterSearch(event: Event) {
 		const value = (event.target as HTMLInputElement).value.toLowerCase();
+		this.searchProduct = value.length;
 		if (value.length >= 0) {
 			return this.filteredItems = this.productData.filter(item =>
 				item.item_name_en?.toLowerCase().includes(value)
 			);
 		}
+		this.searchProduct = value.length;
 		return this.filteredItems = [];
 	}
 
 	filterOptions(value: string) {
+		this.searchProduct = value.length;
 		if (value.length >= 0) {
 			this.filteredItems = this.productData.filter((option) =>
 				option.item_name_en.toLowerCase().includes(value.toLowerCase())
@@ -155,6 +159,8 @@ export class NewCustomerComponent implements OnInit {
 		this.searchQuery = '';
 		this.filteredItems = [];
 		this.showSearchModal = false;
+		this.filteredProducts = new FormControl();
+		this.searchProduct = 0;
 	}
 
 	onCategoryClick(categoryId: string): void {

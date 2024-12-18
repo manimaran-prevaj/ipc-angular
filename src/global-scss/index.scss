@@ -160,6 +160,13 @@ mat-form-field {
 
 		.mat-mdc-text-field-wrapper {
 			border-radius: 28px;
+
+				.mat-mdc-form-field-flex {
+					position: relative;
+					top: -15px;
+					min-height: 48px;
+					max-height: 48px;
+				}
 		}
 
 	}

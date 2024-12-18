@@ -25,29 +25,41 @@
               </div>
             </div>
             <div body>
-             <!-- Menu Search Section -->
-             <div class="search-modal">
-                <div class="search-header">
-                  <mat-form-field appearance="outline" color="accent" class="w-full rounded-input">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <input matInput placeholder="Menu Search" [(ngModel)]="searchQuery" (input)="onSearch($event)" (keyup)="checkEmpty($event)">
-                    <mat-icon matSuffix class="clear-icon" (click)="clearSearch()">close</mat-icon>
-                  </mat-form-field>
+                <!-- Menu Search Section -->
+                <div class="search-modal">
+                    <mat-form-field>
+                        <div class="search-header">
+                            <mat-icon matPrefix class="search-icon">search</mat-icon>
+                            <input
+                            type="text"
+                            matInput
+                            #searchInput
+                            [formControl]="filteredProducts"
+                            [matAutocomplete]="auto"
+                            placeholder="Menu Search"
+                            (input)="filterSearch($event)"
+                            />
+                            <mat-icon matSuffix class="clear-icon" (click)="clearSearch()">close</mat-icon>
+                        </div>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredItems" [value]="option.item_name_en" class="w-full">
+                                <div class="option-row w-full">
+                                    <span class="text-base w-5/6">{{ option.item_name_en }}</span>
+                                    <span
+                                            mat-button
+                                            color="primary"
+                                            class="edit-btn float-right text-xs"
+                                            (click)="editOption(option)"
+                                    >
+                                    {{ option.is_customization ? 'Customize' : 'Add to Order' }}
+                                    </span>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                 </div>
-                <div class="divider"></div>
-                <div class="search-results" *ngIf="filteredItems.length">
-                  <div class="search-results-container">
-                  <ul>
-                    <li *ngFor="let item of filteredItems">
-                      <span>{{ item.item_name_en }}</span>
-                      <button mat-button>{{ item.is_customization ? 'Customize' : 'Add to Order' }}</button>
-                    </li>
-                  </ul>
-                </div>
-                </div>
-              </div>
               <!-- End of Menu Search Section -->
-               
+
               <div class="row category-list w-full">
                 <button *ngFor="let category of categoryList$ | async" mat-stroked-button class="category-button"
                 (click)="onCategoryClick(category.id)">
@@ -65,7 +77,6 @@
               <h2>Payment Information Content</h2>
             </div>
           </app-ccc-accordion>
-
         </mat-accordion>
       </div>
     </div>

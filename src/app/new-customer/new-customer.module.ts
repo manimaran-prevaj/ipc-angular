@@ -17,6 +17,10 @@ import { DwellingTypeDetailsComponent } from './components/dwelling-type-details
 import { ManualAddressDetailsComponent } from './components/manual-address-details/manual-address-details.component';
 import { MAT_DIALOG_DATA, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 export const COMPONENTS = [
 	NewCustomerComponent,
 	CustomerDetailsComponent,
@@ -39,7 +43,10 @@ export const COMPONENTS = [
 		MatRadioModule,
 		MatDialogContent,
 		MatDialogModule,
-		MatDialogTitle
+		MatDialogTitle,
+		MatAutocompleteModule,
+		MatFormFieldModule,
+		MatInputModule,
 	],
 	exports: COMPONENTS,
 	providers:[{provide:MAT_DIALOG_DATA, useValue:{}}]

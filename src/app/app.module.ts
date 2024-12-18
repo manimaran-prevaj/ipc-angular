@@ -39,10 +39,15 @@ import { ApplicationHttpClient } from '../utils/app-http-client';
 import { ProductCategoryComponent } from './new-customer/containers/product-category/product-category.component';
 import { environment } from '../environments/environment';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
 	declarations: [
 		AppComponent,
-  ProductCategoryComponent
+		ProductCategoryComponent
 	],
 	imports: [
 		CommonModule,
@@ -68,9 +73,12 @@ import { environment } from '../environments/environment';
 		GoogleMapsModule.forRoot({
             libraries: ['places']
 		}),
-
+		MatAutocompleteModule,
+		MatFormFieldModule,
+		MatInputModule,
+		ReactiveFormsModule,
 	],
-	
+
 	providers: [
 		GoogleMapsService,
 		provideClientHydration(),

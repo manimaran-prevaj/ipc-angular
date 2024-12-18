@@ -2,156 +2,166 @@
 
 // Define color variables
 $primary-font-color: #1d1b20;
+$filter-search-bg-color: #f8f9f9;
+$item-text-color: #d4400f;
+$divider-bg-color: #e0e0e0;
+$white-bg-color: #fff;
+$category-button-text-color: #49454f;
+$category-button-border-color: #148119;
 
 .app-new-customer {
 	.main-content {
-	  min-height: calc(100vh - 91px);
-  
-	  .app-order-entry {
-		.titleDesc {
-		  align-items: center;
-		  justify-content: flex-end;
-		}
-  
-		.item {
-		  color: #d4400f;
-		}
-  
-		.rounded-input {
-		  mat-form-field {
-			border-radius: 20px;
-		  }
-		}
-  
-		.pizza-count {
-		  align-items: center;
-		}
-  
-		.search-modal {
-		  width: 50%;  // Set a fixed width for the search modal
-		  border: 1px solid #e0e0e0;
-		  border-radius: 8px;
-		  background-color: white;
-		  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-		  //margin: 0 auto;  // Center the search modal horizontally
-  
-		  .search-header {
-			color: $primary-font-color;
-			display: flex;
-			justify-content: flex-end;
-  
-			mat-form-field {
-			  width: 100%;  // Ensure the search bar takes up full width of the modal
-			  display: flex;
-			  align-items: flex-end;
+		min-height: calc(100vh - 91px);
 
-			  .mat-input-element {
-				font-size: 16px;
-				font-weight: 400;
-				line-height: 24px;
-				letter-spacing: 0.5px;
-				text-align: left;
-				color: $primary-font-color;
+		.app-order-entry {
+			.titleDesc {
+				align-items: center;
+				justify-content: flex-end;
 			}
-  
-			  .clear-icon {
-				cursor: pointer;
-			  }
+
+			.item {
+				color: $item-text-color;
 			}
-		  }
-  
-		  .divider {
-			height: 1px;
-			background-color: #e0e0e0;
-			//margin: 8px 0;
-		  }
-		  
-		  .search-results {
-			max-width: 100%;  // Ensure the results container matches the width of the modal
-			position: relative;
-			.search-results-container {
-				position: absolute;
-				background: #FFF;				
-				z-index: 9;
-				height: 31vh;
-				overflow-y: scroll;
-				left: -1px;
+
+			.rounded-input {
+				mat-form-field {
+					border-radius: 20px;
+				}
 			}
-			ul {
-			  list-style-type: none;
-			  padding: 0;
-			  margin: 0;
-  
-			  li {
+
+			.pizza-count {
+				align-items: center;
+			}
+
+			.search-modal {
+				border: 1px solid $filter-search-bg-color;
+				border-radius: 28px;
+				background-color: $filter-search-bg-color;
+				// padding: 4px;
+				width: 50%;
+
+				mat-form-field {
+
+					.mat-mdc-text-field-wrapper {
+						border-radius: 28px;
+					}
+
+					.search-header {
+						display: flex;
+						justify-content: flex-end;
+						color: $primary-font-color;
+
+						.mat-mdc-input-element {
+							padding-left: 15px;
+						}
+
+						mat-form-field {
+							display: flex;
+							align-items: flex-end;
+							width: 100%;  // Ensure the search bar takes up full width of the modal
+
+							.mat-input-element {
+								text-align: left;
+								line-height: 24px;
+								letter-spacing: .5px;
+								color: $primary-font-color;
+								font-size: 16px;
+								font-weight: 400;
+							}
+
+							.clear-icon {
+								cursor: pointer;
+							}
+						}
+					}
+				}
+
+
+
+				.divider {
+					background-color: $divider-bg-color;
+					height: 1px;
+					//margin: 8px 0;
+				}
+
+				.search-results {
+					position: relative;
+					max-width: 100%;  // Ensure the results container matches the width of the modal
+
+					.search-results-container {
+						position: absolute;
+						left: -1px;
+						z-index: 9;
+						background: $white-bg-color;
+						height: 31vh;
+						overflow-y: scroll;
+					}
+				}
+
+				.mat-mdc-form-field-focus-overlay {
+					border-radius: 28px 28px 0 0;
+					background-color: transparent;
+				}
+
+			}
+
+			.category-list {
 				display: flex;
-				justify-content: space-between;
-				padding: 10px 15px;
-				&:hover {
-				  background-color: #f9f9f9;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin-top: 20px;
+
+				.category-button {
+					border: 1px solid $category-button-border-color !important;
+					border-radius: 20px;
+					background-color: $white-bg-color;
+					padding: 5px 15px;
+					text-transform: capitalize;
+					color: $category-button-text-color;
+					font-weight: bold;
+
+					&:hover {
+						background-color: $white-bg-color;
+					}
 				}
-  
-				span {
-					font-size: 16px;
-					font-weight: 400;
-					line-height: 24px;
-					letter-spacing: 0.5px;
-					text-align: left;
-					color: $primary-font-color;
-				}
-  
-				button {
-				  	font-size: 11px;
-				  	font-weight: 500;
-				  	line-height: 16px;
-				  letter-spacing: 0.5px;
-				  color: $primary-font-color;
-				  background: none;
-				  border: none;
-				  cursor: pointer;
-				  text-transform: capitalize;
-				  &:hover {
-					text-decoration: underline;
-				  }
-				}
-			  }
 			}
-		  }
+	  	}
+	}
+}
+
+mat-form-field {
+	.rounded-input {
+		.mat-form-field-wrapper {
+			border-radius: 25px;
 		}
-  
-		.category-list {
-		  display: flex;
-		  flex-wrap: wrap;
-		  gap: 10px;
-		  margin-top: 20px;
-  
-		  .category-button {
-			border-radius: 20px;
-			border: 1px solid #148119 !important;
-			color: #49454f;
-			padding: 5px 15px;
-			font-weight: bold;
-			background-color: white;
-			text-transform: capitalize;
-  
-			&:hover {
-			  background-color: white;
-			}
-		  }
+
+		.mat-form-field-outline {
+			border-radius: 25px;
 		}
-	  }
+
+		.mat-input-element {
+			border-radius: 25px;
+		}
 	}
-  }
-  
-  mat-form-field.rounded-input {
-	.mat-form-field-wrapper {
-	  border-radius: 25px;
+
+	.clear-icon {
+		position: relative;
+		right: 12px;
 	}
-  
-	.mat-form-field-outline {
-	  border-radius: 25px;
+
+	.search-icon {
+		position: relative;
+		left: 12px;
 	}
-  
-	input.mat-input-element {
-	  border-radius: 25px;
+}
+
+.mat-mdc-option {
+	display: table;
+	padding: 12px 10px;
+	width: 100%;
+	vertical-align: middle;
+
+	.mdc-list-item__primary-text {
+		width: 100% !important;
 	}
-  }
+}

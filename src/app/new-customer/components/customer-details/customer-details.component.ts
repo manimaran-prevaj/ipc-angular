@@ -98,7 +98,7 @@ export class CustomerDetailsComponent implements OnInit {
 						emailOptOut: true,  // Opt-Out checked by default for new customers
 						emailOptIn: false  // Default behavior for new customers
 					});
-		
+
 				// Email should not be required for new customers, remove validators
 				this.customerDetailsForm.get('email').clearValidators();
 			}
@@ -107,7 +107,7 @@ export class CustomerDetailsComponent implements OnInit {
 			this.customerDetailsForm.get('email').updateValueAndValidity();
 		});
 		// Subscribe to future times
-    this.store.pipe(select(selectOrderDateTime)).subscribe((times: OrderDateTime[]) => {		
+    this.store.pipe(select(selectOrderDateTime)).subscribe((times: OrderDateTime[]) => {
 			this.orderDateTimeData = []; // Clear previous data
 			this.orderDateTimeData = times;
 			this.mapOrderDateTime(this.orderDateTimeData);
@@ -171,12 +171,12 @@ export class CustomerDetailsComponent implements OnInit {
 			console.warn('Order date-time data is not available or is invalid');
 			return;
 		}
-	
+
 		const today = new Date().toISOString().split('T')[0]; // Get today's date in "YYYY-MM-DD" format
 		const todayData = data.find((item: OrderDateTime) => item.date === today);
-	
+
 		this.orderDateTimeData = []; // Clear previous data
-	
+
 		// If today's data is found, add it with "Today" label
 		if (todayData) {
 			this.orderDateTimeData.push({
@@ -199,7 +199,7 @@ export class CustomerDetailsComponent implements OnInit {
 				this.selectedTime = this.filteredTimes[0]; // Set the first available time for the first date
 			}
 		}
-	
+
 		// Map remaining dates, skipping the one already added
 		data.forEach((item: OrderDateTime) => {
 			if (item.date !== today) {
@@ -214,11 +214,11 @@ export class CustomerDetailsComponent implements OnInit {
 	}
 	onDateChange() {
 		const selectedDate = this.dateTimeForm.controls['date'].value;
-	
+
 		// Ensure orderDateTimeData is an array before calling find()
 		if (Array.isArray(this.orderDateTimeData)) {
 			const selectedData = this.orderDateTimeData.find(item => item.date === selectedDate);
-			
+
 			if (selectedData) {
 				this.filteredTimes = selectedData.times;
 				this.selectedTime = this.filteredTimes[0]; // Set the first available time
@@ -259,7 +259,7 @@ export class CustomerDetailsComponent implements OnInit {
 				content
 			}
 		});
-	
+
 		dialogRef.afterClosed().subscribe(confirm => {
 			if (confirm) {
 				// Check if both date and time are selected
@@ -294,11 +294,11 @@ export class CustomerDetailsComponent implements OnInit {
 	// 		this.showEmailOptDate = (this.customerDetailsForm.get('email').value && (this.customerResponse?.customer_data?.email != this.customerDetailsForm.get('email').value));
 	// 		this.customerDetailsForm.patchValue({ emailOptIn: this.showEmailOptDate, emailOptOut: !this.showEmailOptDate });
 	// 	}
-		
+
 	// }
 
 	emailFocusOut() {
-		this.setEmailValidator(); 
+		this.setEmailValidator();
 	}
 
 	private setEmailValidator() {

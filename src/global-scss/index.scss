@@ -154,6 +154,29 @@ mat-form-field {
 	}
 }
 
+.search-modal {
+
+	mat-form-field {
+
+		.mat-mdc-text-field-wrapper {
+			border-radius: 28px;
+
+				.mat-mdc-form-field-flex {
+					position: relative;
+					top: -15px;
+					min-height: 48px;
+					max-height: 48px;
+				}
+		}
+
+	}
+
+	.mat-mdc-form-field-label-always-float {
+		border-radius: 28px 28px 0 0;
+		background-color: #eff0f0;
+	}
+}
+
 button {
 	&.mat-mdc-outlined-button {
 		border: 1px solid $ccc-btn-darker-orange !important;

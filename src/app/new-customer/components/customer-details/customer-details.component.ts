@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { CCCModalComponent } from "../../../common/ccc-modal/ccc-modal.component";
 import { CustomerEntryService } from "../../services/customer-entry.service";
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { loadCustomerDetails, loadCustomerDetailsSuccess } from "../../../common/store/actions/customer-details.actions";
 import { ApiResponse } from "../../models/customer-details";
 import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
@@ -76,7 +76,7 @@ export class CustomerDetailsComponent implements OnInit {
 			}
 		});
 
-		this.store.pipe(select(selectCustomerProfile)).subscribe((customerProfile: ApiResponse) => {
+		this.store.select(selectCustomerProfile).subscribe((customerProfile: ApiResponse) => {
 			if (customerProfile?.customer_data) {
 					this.customerDetailsForm.patchValue({
 						firstName: customerProfile.customer_data.first_name || '',
@@ -107,7 +107,7 @@ export class CustomerDetailsComponent implements OnInit {
 			this.customerDetailsForm.get('email').updateValueAndValidity();
 		});
 		// Subscribe to future times
-    this.store.pipe(select(selectOrderDateTime)).subscribe((times: OrderDateTime[]) => {
+    this.store.select(selectOrderDateTime).subscribe((times: OrderDateTime[]) => {
 			this.orderDateTimeData = []; // Clear previous data
 			this.orderDateTimeData = times;
 			this.mapOrderDateTime(this.orderDateTimeData);

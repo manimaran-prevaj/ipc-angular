@@ -50,6 +50,8 @@
                                             color="primary"
                                             class="edit-btn float-right text-xs"
                                             (click)="editOption(option)"
+                                            (keyup.enter)="editOption(option)"
+                                            tabindex="0"
                                     >
                                     {{ option.is_customization ? 'Customize' : 'Add to Order' }}
                                     </span>

@@ -1,31 +1,34 @@
 @import 'global-scss-mixing';
 
+$search-bar-bg-color: #f8f9f9;
+
 .order-entry-container {
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-  
-      h2 {
-        margin: 0;
-      }
-  
-      span {
-        margin: 0 1rem;
-      }
-  
-      button {
-        margin: 0 0.5rem;
-      }
-    }
-  
-    .search-bar {
-      padding: 1rem;
-      background-color: #F8F9F9;
-  
-      mat-form-field {
-        width: 50%;
-      }
-    }
+
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem;
+
+		h2 {
+			margin: 0;
+		}
+
+		span {
+			margin: 0 1rem;
+		}
+
+		button {
+			margin: 0 .5rem;
+		}
+	}
+
+	.search-bar {
+		background-color: $search-bar-bg-color;
+		padding: 1rem;
+
+		mat-form-field {
+			width: 50%;
+		}
+	}
   }

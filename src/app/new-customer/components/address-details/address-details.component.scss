@@ -1,5 +1,10 @@
 // Define color variables
-$primary-font-color: #49454f; 
+$primary-font-color: #49454f;
+$store-status-color: #148119;
+$green-text-color: #008000;
+$grey-border-color: #ccc;
+$store-hours-shadow: #000;
+$white-bg-color: #fff;
 
 .app-address-details {
 	.no-results {
@@ -29,137 +34,131 @@ $primary-font-color: #49454f;
 	}
 
 	.default-address {
+		text-align: left;
+		line-height: 24px;
 		font-size: 16px;
 		font-weight: 400;
-		line-height: 24px;
-		text-align: left;
 
-		.default-address-details{
-			font-weight: bold !important;
-			font-size: 16px;
-			font-weight: 400;
-			line-height: 24px;
+		.default-address-details {
 			text-align: left;
-			color: $primary-font-color;
-		}
-		.default-address-details-text{
-			font-weight: 400;
 			line-height: 24px;
-			font-size: 16px;
 			color: $primary-font-color;
+			font-size: 16px;
+			font-weight: bold !important;
+		}
+
+		.default-address-details-text {
+			line-height: 24px;
+			color: $primary-font-color;
+			font-size: 16px;
+			font-weight: 400;
 		}
 	}
 
 	.store-status {
+		color: $store-status-color;
 		font-size: 16px;
-		color: #148119;
 	}
 
 	.restaurant-status {
-		font-size: 16px;
-		font-weight: bold;
 		color: $primary-font-color;
-	}
-
-.store-hours-container {
-	display: inline-flex;
-	align-items: center;
-	position: relative; /* Make the container relative to position the popup absolutely */
-	.mat-icon {
-		height: 18px !important;
-	}
-	.store-hours-header {
 		font-size: 16px;
 		font-weight: bold;
-		margin-right: 5px;
 	}
 
-	.store-hours-status {
-		font-size: 16px;
-		font-weight: normal;
-		display: inline-block;
-		//align-items: center;
-		color: green;
+	.store-hours-container {
+		display: inline-flex;
+		position: relative; /* Make the container relative to position the popup absolutely */
+		align-items: center;
 
-		.open {
-			color: green;
+		.mat-icon {
+			height: 18px !important;
 		}
 
-		.closed {
-			color: green;
-		}
-
-		.dropdown-icon {
-			margin-left: 5px;
+		.store-hours-header {
+			margin-right: 5px;
 			font-size: 16px;
-			//display: inline-flex;
+			font-weight: bold;
+		}
+
+		.store-hours-status {
+			display: inline-block;
+			color: $green-text-color;
+			font-size: 16px;
+			font-weight: normal;
 			//align-items: center;
-			vertical-align: middle;
-	}
-}
 
-	.store-hours-popup {
-		position: absolute;
-		top: 100%; /* Position the popup right below the label */
-		left: 0;
-		background: white;
-		border: 1px solid #ccc;
-		padding: 10px;
-		border-radius: 5px;
-		z-index: 1000;
-		width: fit-content; /* Ensure the width fits the content */
-		margin-top: 5px; /* Add some space between the label and the popup */
-	}
+			.open {
+				color: $green-text-color;
+			}
 
-	.storehourscontent {
-		display: flex;
-		flex-direction: column;
-		padding: 5px 0;
-		gap: 8px; /* Adjust the gap to control spacing between items */
-	}
-	
-	.day-name {
-		font-weight: bold;
-		font-size: 16px;
-		font-weight: 400;
-		line-height: 24px;
-		text-align: left;
-		width: 120px; /* Fixed width for consistent spacing */
-		color: $primary-font-color;
-	}
-	
-	.hours {
-		font-weight: normal;
-		font-size: 16px;
-		font-weight: 400;
-		line-height: 24px;
-		text-align: right;
-		color: $primary-font-color;
-	}
-	
-	/* Ensuring the current day is bold */
-	.current-day .day-name {
-		font-weight: bold;
-	}
+			.closed {
+				color: $green-text-color;
+			}
 
-	.current-day .hours {
-		font-weight: bold;
+			.dropdown-icon {
+				margin-left: 5px;
+				vertical-align: middle;
+				font-size: 16px;
+				//display: inline-flex;
+				//align-items: center;
+			}
+		}
+
+		.store-hours-popup {
+			position: absolute;
+			top: 100%; /* Position the popup right below the label */
+			left: 0;
+			z-index: 1000;
+			margin-top: 5px; /* Add some space between the label and the popup */
+			border: 1px solid $grey-border-color;
+			border-radius: 5px;
+			box-shadow: 0 4px 6px $store-hours-shadow;
+			background: $white-bg-color;
+			padding: 10px;
+			width: fit-content; /* Ensure the width fits the content */
+			min-width: 200px; /* Adjust based on your content */
+		}
+
+		.day-name {
+			width: 120px; /* Fixed width for consistent spacing */
+			text-align: left;
+			line-height: 24px;
+			color: $primary-font-color;
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		.hours {
+			text-align: right;
+			line-height: 24px;
+			color: $primary-font-color;
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		/* Ensuring the current day is bold */
+		.current-day {
+
+			.day-name {
+				font-weight: bold;
+			}
+
+			.hours {
+				font-weight: bold;
+			}
+		}
+
+		.storehourscontent {
+			display: flex;
+			flex-direction: column;
+			padding: 5px 0;
+			gap: 8px; /* Adjust the gap to control spacing between items */
+
+			div {
+				display: flex;
+				justify-content: space-between;
+			}
+		}
 	}
-	
-	.store-hours-popup {
-		padding: 10px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		background-color: white;
-		position: absolute;
-		z-index: 1000;
-		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-		min-width: 200px; /* Adjust based on your content */
-	}
-	
-	.storehourscontent > div {
-		display: flex;
-		justify-content: space-between;
-	}
-}
 }

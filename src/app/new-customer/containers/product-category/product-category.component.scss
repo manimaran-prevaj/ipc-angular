@@ -9,6 +9,7 @@ $input-icon-color: #5a5a5a;
 $icon-size: 16px;
 $icon-color: #d4400f;
 $icon-margin-right: 5px;
+
 :host ::ng-deep .category-dialog-container {
 
   .mat-stroked-button .mat-button-wrapper {
@@ -129,27 +130,27 @@ $icon-margin-right: 5px;
     background-color: #f8f9f9; /* Background color of the search field */
     padding: 0;
     overflow: hidden; /* Ensures the rounded corners apply to the child elements */
-  
-    .mat-form-field-flex {      
+
+    .mat-form-field-flex {
       background-color: inherit; /* Inherit the background color */
     }
-  
+
     .mat-form-field-outline {
       border-radius: 15px; /* Rounded corners for the outline */
       border-color: transparent !important; /* Removes the default border color */
     }
-  
+
     .mat-form-field-prefix {
       display: flex;
       align-items: center;
       margin-right: 8px;
     }
-  
+
     .search-icon {
       font-size: 20px;
       color: $input-icon-color;
     }
-  
+
     .mat-input-element {
       padding-left: 40px;
       background-color: transparent;
@@ -177,7 +178,7 @@ $icon-margin-right: 5px;
       text-align: left;
       color: #49454F;
     }
-    
+
   }
 
   .add-to-order-button {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { selectCategorydata, selectProductData, selectProductsByCategory, selectCustomerProfile, selectStepData } from "../../../common/store";
-import { map, Observable, startWith, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { MatAccordion } from "@angular/material/expansion";
 import { MatDialog } from '@angular/material/dialog';
 import { DeliveryModeService } from '../../../common/services/delivey-mode.service';
@@ -12,10 +12,6 @@ import { ApiResponse, DefaultDeliveryStoreData } from "../../models/customer-det
 import { Category } from '../../models/category-search';
 import { Item } from "../../models/product-search";
 import { ProductListResponse } from "../../models/product-list";
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -46,7 +42,7 @@ export class NewCustomerComponent implements OnInit {
 	selectProductsByCategory$: Observable<ProductListResponse[]>;
 	filteredProducts = new FormControl();
 	searchControl = new FormControl('');
-	searchProduct: number = 0;
+	searchProduct: number;
 
 	constructor(
 		private store: Store,
@@ -59,6 +55,7 @@ export class NewCustomerComponent implements OnInit {
 		this.categoryList$ = this.store.select(selectCategorydata);
 		this.productSerchItems$ = this.store.select(selectProductData);
 		this.selectProductsByCategory$ = this.store.select(selectProductsByCategory);
+		this.searchProduct = 0;
 	}
 
 	ngOnInit(): void {
